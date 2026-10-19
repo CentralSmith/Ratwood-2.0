@@ -46747,6 +46747,10 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
+"jGJ" = (
+/obj/structure/roguemachine/ministry_bureau,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/manor/rockhill)
 "jGS" = (
 /obj/structure/closet/crate/drawer{
 	pixel_y = 6
@@ -622445,7 +622449,7 @@ cQd
 pTR
 tpQ
 ged
-ged
+jGJ
 ged
 wtF
 jZx
