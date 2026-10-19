@@ -21561,6 +21561,23 @@
 /obj/machinery/light/rogue/torchholder/l,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/mountains/decap/rockhill)
+"evn" = (
+/obj/structure/rack/rogue,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
+	loot = list(/obj/item/rogueweapon/shovel = 3, /obj/item/rogueweapon/thresher = 3, /obj/item/flint = 4, /obj/item/rogueweapon/stoneaxe/woodcut = 3, /obj/item/rogueweapon/hammer/iron = 3, /obj/item/rogueweapon/tongs = 3, /obj/item/rogueweapon/pick = 3, /obj/item/rogueweapon/sickle = 3, /obj/item/rogueweapon/huntingknife = 3, /obj/item/rogueweapon/huntingknife/scissors = 3, /obj/item/rogueweapon/hoe = 3)
+	},
+/obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
+	loot = list(/obj/item/rogueweapon/shovel = 3, /obj/item/rogueweapon/thresher = 3, /obj/item/flint = 4, /obj/item/rogueweapon/stoneaxe/woodcut = 3, /obj/item/rogueweapon/hammer/iron = 3, /obj/item/rogueweapon/tongs = 3, /obj/item/rogueweapon/pick = 3, /obj/item/rogueweapon/sickle = 3, /obj/item/rogueweapon/huntingknife = 3, /obj/item/rogueweapon/huntingknife/scissors = 3, /obj/item/rogueweapon/hoe = 3)
+	},
+/obj/item/storage/roguebag,
+/obj/item/storage/roguebag,
+/obj/item/rogueweapon/sickle,
+/obj/item/rogueweapon/hoe,
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 1
+	},
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "evo" = (
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town)
@@ -44301,6 +44318,12 @@
 /obj/machinery/light/rogue/firebowl/standing/green,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
+"jge" = (
+/obj/structure/bookcase/random{
+	density = 0
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "jgf" = (
 /obj/structure/fluff/walldeco/artificerflag,
 /turf/closed/wall/mineral/rogue/craftstone,
@@ -306310,10 +306333,10 @@ uEX
 uEX
 uEX
 rSC
-rSC
-lrs
 rRb
-lrs
+rRb
+rRb
+rRb
 gLf
 rSC
 gLf
@@ -306742,7 +306765,7 @@ uEX
 uEX
 rSC
 rSC
-rSC
+rRb
 lrs
 rRb
 rRb
@@ -307174,7 +307197,7 @@ uEX
 lrs
 rSC
 rSC
-fIL
+rRb
 lrs
 nXf
 lrs
@@ -307606,7 +307629,7 @@ lrs
 lrs
 rSC
 rSC
-uEX
+rRb
 lrs
 fgT
 nXf
@@ -308038,7 +308061,7 @@ rSC
 fIL
 rSC
 uEX
-uEX
+rRb
 pRK
 cVv
 lrs
@@ -311074,8 +311097,8 @@ ukO
 sCn
 gfj
 maO
+jlY
 iJU
-kdN
 kdN
 kdN
 vRu
@@ -311507,7 +311530,7 @@ fcT
 gfj
 jlY
 iJU
-kdN
+iJU
 kdN
 kdN
 iyZ
@@ -311938,7 +311961,7 @@ suU
 gfj
 gfj
 jlY
-sco
+evn
 gMO
 kdN
 kdN
@@ -525352,7 +525375,7 @@ sco
 ydE
 sRP
 dMk
-fpN
+jge
 aWw
 aIh
 sco
