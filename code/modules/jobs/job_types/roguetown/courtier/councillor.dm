@@ -81,6 +81,11 @@
 /datum/outfit/job/roguetown/councillor
 	job_bitflag = BITFLAG_ROYALTY
 
+/datum/outfit/job/roguetown/councillor/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(SSroguemachine.ministry_bureau) // No bureau mapped in, no ministries to be had.
+		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/petition_ministry, H)
+
 /datum/outfit/job/roguetown/councillor/basic/pre_equip(mob/living/carbon/human/H)
 	..()
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
@@ -102,8 +107,6 @@
 		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		cloak = null
-	if(SSroguemachine.ministry_bureau) // No bureau mapped in, no ministries to be had.
-		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/petition_ministry, H)
 
 /datum/outfit/job/roguetown/councillor/huntmaster/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -162,11 +165,25 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	var/active = FALSE
 
 /datum/ministry/Destroy()
+	if(councillor)
+		UnregisterSignal(councillor, COMSIG_QDELETING)
+		if(councillor.ministry_pending == src)
+			councillor.ministry_pending = null
+	if(partner)
+		UnregisterSignal(partner, COMSIG_QDELETING)
+		if(partner.ministry_partner == src)
+			partner.ministry_partner = null
 	councillor = null
 	partner = null
 	ring = null
 	writ = null
 	return ..()
+
+// Pending agreements must not reserve a sponsor after either participant is deleted.
+/datum/ministry/proc/on_participant_deleted(datum/source)
+	SIGNAL_HANDLER
+	if(!active)
+		qdel(src)
 
 /datum/ministry/proc/archive_bonus(mob/living/carbon/human/H)
 	return
@@ -435,6 +452,8 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	head.ministry_partner = proto
 	proto.councillor = councillor
 	proto.partner = head
+	proto.RegisterSignal(councillor, COMSIG_QDELETING, TYPE_PROC_REF(/datum/ministry, on_participant_deleted))
+	proto.RegisterSignal(head, COMSIG_QDELETING, TYPE_PROC_REF(/datum/ministry, on_participant_deleted))
 
 	head.visible_message(span_notice("[head.real_name] takes [councillor.real_name] into their confidence."))
 	to_chat(head, span_notice("I accept the petition. The writ will reach me by post once they are sworn in."))

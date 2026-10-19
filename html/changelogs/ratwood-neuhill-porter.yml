@@ -1,4 +1,4 @@
 author: mypingishuge
 delete-after: true
 changes:
-- code_imp: Ported Ratwood map fixes and Councillor ministries to Neuhill.
+- code_imp: Ported Ratwood Councillor ministries and maple-tree support to Neuhill.
