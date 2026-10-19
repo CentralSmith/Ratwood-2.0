@@ -56393,6 +56393,13 @@
 "lKA" = (
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/town/roofs)
+"lKC" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/maple/c{
+	pixel_x = -32
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/town/roofs)
 "lKF" = (
 /obj/machinery/light/rogue/candle,
 /obj/structure/stairs{
@@ -63896,6 +63903,13 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/town/basement)
+"nju" = (
+/obj/structure/roguewindow{
+	max_integrity = 10000;
+	name = "reinforced window"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "njF" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/grass,
@@ -88379,6 +88393,13 @@
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/church)
+"svu" = (
+/obj/structure/roguewindow/openclose/reinforced{
+	opacity = 0
+	},
+/obj/structure/curtain/directional/orange,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "svy" = (
 /obj/structure/bed/rogue/inn/double,
 /obj/item/bedsheet/rogue/double_pelt,
@@ -90919,6 +90940,14 @@
 /obj/structure/flora/roguegrass/bush/wall/tall,
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/grove)
+"sXO" = (
+/obj/structure/fluff/walldeco/vinez,
+/obj/structure/roguewindow{
+	max_integrity = 10000;
+	name = "reinforced window"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "sXS" = (
 /obj/structure/mineral_door/wood/red{
 	name = "Employee Quarters";
@@ -639354,9 +639383,9 @@ akN
 wOq
 mTT
 fZJ
-fZJ
-fZJ
-fZJ
+nju
+nju
+nju
 fjX
 wXx
 aeB
@@ -639785,14 +639814,14 @@ pRR
 wOq
 wOq
 eWn
+nju
 fZJ
 fZJ
 fZJ
-fZJ
-fjX
+nju
 wXx
 aeB
-rVR
+svu
 vTU
 lux
 sMQ
@@ -640217,11 +640246,11 @@ fGv
 fjv
 fGv
 eWn
+sXO
 fZJ
 fZJ
 fZJ
-fZJ
-fjX
+nju
 wXx
 aeB
 aFG
@@ -640649,13 +640678,13 @@ hsC
 xre
 nNJ
 eWn
+nju
 fZJ
 fZJ
 fZJ
-fZJ
-fjX
+nju
 tjM
-vkJ
+lKC
 rVR
 vdp
 vDT
@@ -641081,14 +641110,14 @@ kfk
 cbg
 nNJ
 iVY
+nju
 fZJ
 fZJ
 fZJ
-fZJ
-ptX
+nju
 feh
 rZi
-pkE
+svu
 wsF
 wsF
 roj
@@ -641514,9 +641543,9 @@ cbg
 rls
 eWn
 fZJ
-fZJ
-fZJ
-fZJ
+nju
+sXO
+nju
 fZJ
 fjX
 rZi
