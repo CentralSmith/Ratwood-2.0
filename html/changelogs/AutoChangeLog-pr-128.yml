@@ -1,6 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - rscadd: "Added whetstones and wooden spades to the loadout for 1 point each."
-  - balance: "Wooden mallets, pouches and bandage rolls now cost 2 loadout points; thorn needles cost 1."
-  - balance: "All chastity loadout items, including cursed chastity, now cost 0 points."
