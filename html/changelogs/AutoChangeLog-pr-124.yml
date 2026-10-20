@@ -1,4 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - bugfix: "Poor-quality forged equipment now starts at its proper durability instead of above 100%."

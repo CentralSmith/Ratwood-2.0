@@ -503,3 +503,5 @@
   - balance: Fabled Lover now costs 1 quirk point instead of 2.
   - bugfix: Arcane Trickster, Amazon and Nudist now appear in Adventurer's class information
       and outfit-preview choices in character setup.
+  - bugfix: Poor-quality forged equipment now starts at its proper durability instead
+      of above 100%.
