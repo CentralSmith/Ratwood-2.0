@@ -505,3 +505,9 @@
       and outfit-preview choices in character setup.
   - bugfix: Poor-quality forged equipment now starts at its proper durability instead
       of above 100%.
+  - qol: Added a dedicated Orbit button to the ghost HUD to open the player list with
+      a left click.
+  - qol: Paired ERP actions now gently warm both participants toward a comfortable
+      temperature.
+  - qol: Added spacing between roleplay ads and made new-ad chat notifications larger
+      and gold.
