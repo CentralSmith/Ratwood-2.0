@@ -515,3 +515,8 @@
   - balance: Wooden mallets, pouches and bandage rolls now cost 2 loadout points;
       thorn needles cost 1.
   - balance: All chastity loadout items, including cursed chastity, now cost 0 points.
+  - rscadd: Added Accursed Tastes, a 1-point quirk providing a stash bag of assorted
+      gear with a cursed collar and cursed chastity cage. Cannot be selected alongside
+      Acquired Tastes.
+  - rscadd: Added a flat chastity cage and leather collar to Acquired Tastes, and
+      a rope leash to both equipment bags.
