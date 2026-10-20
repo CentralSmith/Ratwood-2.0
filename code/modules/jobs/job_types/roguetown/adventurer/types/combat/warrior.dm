@@ -646,6 +646,18 @@
 	subclass_social_rank = SOCIAL_RANK_DIRT
 
 /datum/outfit/job/adventurer/amazon/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	// The character-menu dummy needs a representative outfit without equipment prompts.
+	if(visualsOnly)
+		armor = /obj/item/clothing/suit/roguetown/armor/leather/bikini
+		shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
+		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
+		wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
+		shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
+		gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+		backl = /obj/item/storage/backpack/rogue/satchel
+		belt = /obj/item/storage/belt/rogue/leather
+		neck = /obj/item/storage/belt/rogue/pouch/coins/poor
+		return
 
 	var/armor_styles = list("Leather Kini","Hide Armor Kini","Studded Leather Kini","Half Plate Kini","Plate Kini")
 	var/armor_choice = input(H, "Choose your armor style", "Available armor styles") as anything in armor_styles
