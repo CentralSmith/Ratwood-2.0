@@ -493,7 +493,13 @@
       immediately, Average keeps existing checks, and Large remains tied.
   - balance: Either participant can manually release a Large knot.
   - rscadd: Added toggle for 3x character preview in Character Sheet.
+  - qol: Improved text readability in the ghost Orbit menu
   mypingishuge:
   - qol: In-game roleplay ad edits and removals now apply only to the current round.
       Use character customization or Gnoll Customization to save an ad for future
       rounds.
+  - balance: Both partners can receive 1 Triumph when either climaxes while taking
+      part in a partnered ERP panel action, once per pair each round, up to 3 Triumphs.
+  - balance: Fabled Lover now costs 1 quirk point instead of 2.
+  - bugfix: Arcane Trickster, Amazon and Nudist now appear in Adventurer's class information
+      and outfit-preview choices in character setup.
