@@ -32,6 +32,10 @@
 	var/desire_stop = FALSE
 	/// What is the current performed action
 	var/current_action = null
+	/// Partner captured when our action starts, separate from the selected UI target.
+	var/mob/living/carbon/human/panel_triumph_target
+	/// Other controllers currently performing partnered actions on us.
+	var/list/panel_triumph_actions
 	/// Invalidates oxygen-healing callbacks when a make-out action stops or restarts.
 	var/kissing_oxygen_session = 0
 	/// Recipient-side cooldown shared by every initiator; base recovery cannot stack.
@@ -115,6 +119,10 @@
 	charge = get_max_charge()
 
 /datum/sex_controller/Destroy()
+	clear_panel_triumph_action()
+	for(var/datum/sex_controller/action_controller in panel_triumph_actions?.Copy())
+		action_controller.clear_panel_triumph_action()
+	panel_triumph_actions = null
 	//remove_from_target_receiving()
 	user = null
 	target = null
@@ -814,6 +822,55 @@
 /datum/sex_controller/proc/get_max_charge()
 	return get_max_loads() * CHARGE_FOR_CLIMAX
 
+/// Account pairings are kept in memory for this round only; nothing is saved to disk.
+GLOBAL_LIST_EMPTY(panel_triumph_pairs)
+GLOBAL_LIST_EMPTY(panel_triumph_received)
+
+/// Shared reward for each eligible pairing, independently capped for each player.
+/datum/sex_controller/proc/reward_panel_climax(mob/living/carbon/human/partner)
+	if(QDELETED(user) || QDELETED(partner) || user == partner)
+		return
+	if(!user.client || !partner.client || !user.ckey || !partner.ckey || user.ckey == partner.ckey)
+		return
+	var/pair_key = sorttext(user.ckey, partner.ckey) > 0 ? "[user.ckey]:[partner.ckey]" : "[partner.ckey]:[user.ckey]"
+	if(GLOB.panel_triumph_pairs[pair_key])
+		return
+	// Claim the pair before awarding either player, including when both climax together.
+	GLOB.panel_triumph_pairs[pair_key] = TRUE
+	// Each player has their own cap; a capped partner does not block the other's reward.
+	for(var/mob/living/carbon/human/recipient in list(user, partner))
+		var/received = GLOB.panel_triumph_received[recipient.ckey]
+		if(isnull(received))
+			received = 0
+		if(received >= 3)
+			continue
+		GLOB.panel_triumph_received[recipient.ckey] = received + 1
+		recipient.adjust_triumphs(1)
+
+/// Stop tracking immediately on cancellation, completion or controller deletion.
+/datum/sex_controller/proc/clear_panel_triumph_action()
+	if(panel_triumph_target?.sexcon)
+		LAZYREMOVE(panel_triumph_target.sexcon.panel_triumph_actions, src)
+	panel_triumph_target = null
+
+/// A climax qualifies while participating in a valid partnered panel action, regardless of its cause.
+/datum/sex_controller/proc/reward_active_panel_climax()
+	var/list/active_actions = panel_triumph_actions ? panel_triumph_actions.Copy() : list()
+	if(panel_triumph_target)
+		active_actions |= src
+	for(var/datum/sex_controller/action_controller in active_actions)
+		if(QDELETED(action_controller) || !action_controller.current_action || action_controller.desire_stop)
+			continue
+		var/mob/living/carbon/human/actor = action_controller.user
+		var/mob/living/carbon/human/recipient = action_controller.panel_triumph_target
+		if(QDELETED(actor) || QDELETED(recipient) || action_controller.target != recipient)
+			continue
+		if(user != actor && user != recipient)
+			continue
+		if(!action_controller.can_perform_action(action_controller.current_action, actor.incapacitated()))
+			continue
+		reward_panel_climax(user == actor ? recipient : actor)
+
 /datum/sex_controller/proc/after_ejaculation(consume_charge = TRUE)
 	set_arousal(40)
 	if(consume_charge)
@@ -832,6 +889,8 @@
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
 	try_xylix_confetti_climax()
 	last_ejaculation_time = world.time
+	if(consume_charge)
+		reward_active_panel_climax()
 	record_round_statistic(STATS_PLEASURES)
 
 /datum/sex_controller/proc/try_xylix_confetti_climax()
@@ -1498,12 +1557,14 @@
 	show_ui()
 
 /datum/sex_controller/proc/try_stop_current_action()
+	clear_panel_triumph_action()
 	if(!current_action)
 		return
 	desire_stop = TRUE
 	user.doing = FALSE
 
 /datum/sex_controller/proc/stop_current_action()
+	clear_panel_triumph_action()
 	if(!current_action)
 		return
 	var/datum/sex_action/action = SEX_ACTION(current_action)
@@ -1544,6 +1605,9 @@
 	collar_bell_user = FALSE
 	collar_bell_target = FALSE
 	var/datum/sex_action/action = SEX_ACTION(current_action)
+	if(!action.solo && target != user && target?.sexcon)
+		panel_triumph_target = target
+		LAZYOR(target.sexcon.panel_triumph_actions, src)
 	log_combat(user, target, "Started sex action: [action.name]")
 	INVOKE_ASYNC(src, PROC_REF(sex_action_loop))
 
@@ -1712,6 +1776,8 @@
 */
 
 /datum/sex_controller/proc/set_target(mob/living/carbon/human/new_target)
+	if(new_target != target)
+		clear_panel_triumph_action()
 	//remove_from_target_receiving()
 	target = new_target
 	//var/datum/sex_controller/target_con = new_target.sexcon
