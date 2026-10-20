@@ -1673,6 +1673,10 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 		find_ringing_collar()
 		if(athletics_xp > 0 && user.mind)
 			user.mind.add_sleep_experience(/datum/skill/misc/athletics, athletics_xp, show_xp_popup = FALSE)
+		// Shared body warmth stops just above the cold threshold.
+		if(!action.solo && target != user)
+			user.adjust_bodytemperature(3, max_temp = BODYTEMP_NORMAL_MIN + 5)
+			target.adjust_bodytemperature(3, max_temp = BODYTEMP_NORMAL_MIN + 5)
 		action.on_perform(user, target)
 		do_visual_effects(target, action)
 		suppress_action_messages = FALSE
