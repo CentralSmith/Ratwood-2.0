@@ -46,8 +46,8 @@
 /datum/quirk/fabledlover
 	name = "Fabled Lover"
 	desc = "It's a lucky thing to share my bed."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a fabled lover!"
-	point_cost = 2
+	warning_text = "This quirk does not apply if you are playing a role that is already a fabled lover!"
+	point_cost = 1
 	added_traits = list(TRAIT_GOODLOVER)
 	incompatible_virtues = list(/datum/virtue/utility/socialite, /datum/virtue/background/performer)
 	incompatible_traits = list(TRAIT_GOODLOVER)
