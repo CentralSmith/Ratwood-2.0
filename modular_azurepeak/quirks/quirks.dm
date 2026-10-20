@@ -4,9 +4,16 @@
 
 /datum/quirk/acquiredtastes
 	name = "Acquired Tastes"
-	desc = "Despite my unorthodox tastes, I'm always prepared to handle a guest with the toys I keep stashed."
-	custom_text = "This quirk adds a bag containing various sexual instruments including a small vial of emberwine to your stash."
+	desc = "Despite my unorthodox tastes, I'm always prepared to handle a guest with the toys, assorted gear and emberwine I keep stashed."
+	custom_text = "Adds a Bag of Fetish Gear containing a blindfold, a rope leash, a leather collar, regular and flat chastity cages, a chastity belt, emberwine, a wooden toy, cloth, a chain, a whip, and a branding iron to your stash."
 	added_stashed_items = list("Bag of Fetish Gear" = /obj/item/storage/roguebag/fetish)
+
+/datum/quirk/accursedtastes
+	name = "Accursed Tastes"
+	desc = "Some keepsakes are harder to part with than others. I keep an assortment of toys and a cursed collar and cursed chastity cage stashed for the right company."
+	custom_text = "Adds a Bag of Cursed Fetish Gear containing a cursed collar and chastity cage, a blindfold, a rope leash, emberwine, a wooden dildo, cloth, a chain, a whip, and a branding iron to your stash."
+	added_stashed_items = list("Bag of Cursed Fetish Gear" = /obj/item/storage/roguebag/cursed_keepsakes)
+	incompatible_quirks = list(/datum/quirk/acquiredtastes)
 
 /datum/quirk/annoyingface
 	name = "Annoying Face"
