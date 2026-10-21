@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Gnoll headshots now appear in chat examines when headshots are enabled."
