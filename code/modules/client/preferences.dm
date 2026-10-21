@@ -1928,17 +1928,15 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 				if("subclassoutfit")
 					var/list/choices = list("None")
-					var/datum/job/highest_pref
-					for(var/job in job_preferences)
-						if(job_preferences[job] > highest_pref)
-							highest_pref = SSjob.GetJob(job)
+					var/datum/job/highest_pref = get_preview_job()
 					if(isnull(highest_pref))
 						to_chat(user, "<b>I don't have a Class set to High!</b>")
-					if(length(highest_pref.job_subclasses))
+					if(length(highest_pref?.job_subclasses))
 						for(var/adv in highest_pref.job_subclasses)
 							var/datum/advclass/advpath = adv
 							var/datum/advclass/advref = SSrole_class_handler.get_advclass_by_name(initial(advpath.name))
-							choices[advref.name] = advref
+							if(advref)
+								choices[advref.name] = advref
 					if(length(choices))
 						var/new_choice = input(user, "Choose an outfit preview:", "Outfit Preview")  as anything in choices|null
 						if(new_choice && new_choice != "None")
