@@ -52,6 +52,8 @@
 	var/charge = SEX_MAX_CHARGE
 	/// Whether we want to screw until finished, or non stop
 	var/do_until_finished = TRUE
+	/// Quirk-only panel option; consent is checked on the affected partner at each attempt.
+	var/deny_partner_climax = FALSE
 	/// The bed (if) we're occupying, update on starting an action
 	var/obj/structure/bed/rogue/bed = null
 	var/target_on_bed = FALSE
@@ -872,6 +874,7 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 		reward_panel_climax(user == actor ? recipient : actor)
 
 /datum/sex_controller/proc/after_ejaculation(consume_charge = TRUE)
+	user.remove_stress(/datum/stressevent/denied_release)
 	set_arousal(40)
 	if(consume_charge)
 		adjust_charge(-CHARGE_FOR_CLIMAX)
@@ -1251,7 +1254,39 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 		return FALSE
 	if(!can_ejaculate())
 		return FALSE
+	if(try_deny_panel_climax())
+		return FALSE
 	return TRUE
+
+/// Reuse paired-action tracking; only examine participants when a climax is attempted.
+/datum/sex_controller/proc/try_deny_panel_climax()
+	if(!user?.client?.prefs?.edging || !user.client.prefs.sexable || user.stat == DEAD)
+		return FALSE
+	if(!panel_triumph_target && !length(panel_triumph_actions))
+		return FALSE
+	var/list/active_actions = panel_triumph_actions ? panel_triumph_actions.Copy() : list()
+	if(panel_triumph_target)
+		active_actions |= src
+	for(var/datum/sex_controller/action_controller in active_actions)
+		if(QDELETED(action_controller) || !action_controller.current_action || action_controller.desire_stop)
+			continue
+		var/mob/living/carbon/human/actor = action_controller.user
+		var/mob/living/carbon/human/recipient = action_controller.panel_triumph_target
+		if(QDELETED(actor) || QDELETED(recipient) || actor == recipient || action_controller.target != recipient)
+			continue
+		if(user != actor && user != recipient)
+			continue
+		var/mob/living/carbon/human/partner = user == actor ? recipient : actor
+		if(!partner.client?.prefs?.sexable || partner.stat == DEAD || !partner.sexcon?.deny_partner_climax || !HAS_TRAIT(partner, TRAIT_ORGASM_DENIER))
+			continue
+		if(!action_controller.can_perform_action(action_controller.current_action, actor.incapacitated()))
+			continue
+		set_arousal(30)
+		user.add_stress(/datum/stressevent/denied_release)
+		to_chat(user, span_info(span_italics("Just as release draws near, [partner] holds me back. The feeling fades, leaving me frustrated.")))
+		to_chat(partner, span_info(span_italics("I hold [user] back from release, leaving them frustrated.")))
+		return TRUE
+	return FALSE
 
 /datum/sex_controller/proc/can_ejaculate()
 	if(!user.getorganslot(ORGAN_SLOT_TESTICLES) && !user.getorganslot(ORGAN_SLOT_VAGINA) && !get_manticore_tail(user))
@@ -1446,6 +1481,8 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 	else
 		dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING VISIBLY</a>"
 	dat += "</center><center><a href='?src=[REF(src)];task=set_arousal'>SET AROUSAL</a> | <a href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a></center>"
+	if(HAS_TRAIT(user, TRAIT_ORGASM_DENIER))
+		dat += "<center><a href='?src=[REF(src)];task=toggle_partner_denial'>ORGASM DENIAL: [deny_partner_climax ? "ON" : "OFF"]</a></center>"
 	if(target == user)
 		dat += "<center>Doing unto yourself</center>"
 	else
@@ -1517,6 +1554,9 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 		if("toggle_finished")
 			do_until_finished = !do_until_finished
 			update_exposure()
+		if("toggle_partner_denial")
+			if(HAS_TRAIT(user, TRAIT_ORGASM_DENIER))
+				deny_partner_climax = !deny_partner_climax
 		if("toggle_bottom_exposed")
 			if(user.incapacitated(ignore_restraints = TRUE))
 				to_chat(user, span_warning("I can't do that right now!"))

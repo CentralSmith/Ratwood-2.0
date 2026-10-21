@@ -880,6 +880,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXAMINE_SKIP "examine_skip"
 
 //quirk traits
+#define TRAIT_ORGASM_DENIER "orgasm_denier"
 #define TRAIT_RESILIENT_LOVER "resilient_lover"
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
