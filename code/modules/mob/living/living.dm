@@ -22,6 +22,7 @@
 		do_not_disturb = TRUE
 		to_chat(src, span_notice("You are now marked as private and cannot be scried by an orb until you move or toggle scene privacy off."))
 		log_game("[key_name(src)] has enabled scene privacy at [loc_name(src)].")
+		message_admins("[key_name_admin(src)] has enabled scene privacy at [ADMIN_VERBOSEJMP(src)].")
 
 /mob/living/Initialize(mapload)
 	. = ..()
