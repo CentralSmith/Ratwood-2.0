@@ -1,0 +1,6 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Character previews now display without an outfit when no valid preview job is selected."
+  - bugfix: "Failed character and descriptor previews no longer leave the shared mannequin locked, blocking other players' previews."
+  - bugfix: "Corrected outfit preview job selection and cleanup of old preview sprites."
