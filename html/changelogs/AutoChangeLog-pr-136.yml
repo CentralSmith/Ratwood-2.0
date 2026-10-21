@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - rscadd: "Added Toggle Scene Privacy under IC to block new orb scries until you move or toggle it off."
