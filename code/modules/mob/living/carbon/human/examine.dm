@@ -41,14 +41,19 @@
 	if(!I)
 		return ""
 	var/display_name = I.get_examine_string(user)
-	if(!I.show_examine_hover_tooltip())
+	var/list/highlight_status = I.get_examine_highlight_status()
+	if(highlight_status)
+		display_name = I.get_examine_highlight_labeled_string(highlight_status[1], display_name)
+	if(!highlight_status && !I.show_examine_hover_tooltip())
 		return display_name
 	var/self_examine = (src == user)
 	var/tooltip_html = I.get_hover_examine_html(user, self_examine)
+	if(highlight_status)
+		tooltip_html = I.get_examine_highlight_tooltip_string(highlight_status) + (tooltip_html ? "<br>[tooltip_html]" : "")
 	if(!tooltip_html)
 		return display_name
 	var/label = display_name
-	if(!I.always_show_examine_link)
+	if(!highlight_status && !I.always_show_examine_link)
 		label = "<u><font color='#add8e6'>[display_name]</font></u>"
 	return "<span data-component=\"TooltipHTML\" data-position=\"bottom-start\" data-html=\"[html_encode(tooltip_html)]\">[label]</span>"
 
