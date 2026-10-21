@@ -520,3 +520,29 @@
       Acquired Tastes.
   - rscadd: Added a flat chastity cage and leather collar to Acquired Tastes, and
       a rope leash to both equipment bags.
+2026-10-21:
+  _Rarity:
+  - qol: Nudists can now use Dragonhide ward, and Nude Sleepers can sleep with it
+      active.
+  - bugfix: Character previews now display without an outfit when no valid preview
+      job is selected.
+  - bugfix: Failed character and descriptor previews no longer leave the shared mannequin
+      locked, blocking other players' previews.
+  - bugfix: Corrected outfit preview job selection and cleanup of old preview sprites.
+  - bugfix: Crafting paralytic venom now consumes all its ingredients as intended.
+  - qol: Added a Toggles shortcut beneath Keybinds on the character sheet.
+  - rscadd: Added Toggle Scene Privacy under IC to block new orb scries until you
+      move or toggle it off.
+  - bugfix: Fixed chat auto-scroll falling behind after delayed images, repeated messages,
+      and layout changes.
+  - bugfix: Gnoll headshots now appear in chat examines when headshots are enabled.
+  mypingishuge:
+  - rscadd: Added Orgasm Denier, a 0-point quirk with a toggle that can deny a partner's
+      climax during paired ERP actions if they have Enable Edging Content enabled.
+  - rscadd: Denial resets arousal to 30 and gives a non-stacking, five-minute frustration
+      mood. A successful climax clears it.
+  - rscadd: Gnolls now have Orgasm Denier innately, with its panel toggle off by default.
+  mypingishuge (port), Ryumi and Azure Peak contributors:
+  - qol: Heretical and unusual equipment now has colored examine highlights and hover
+      explanations.
+  - qol: Sacred crown and Inquisition relics receive distinct examine highlights.
