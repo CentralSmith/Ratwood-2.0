@@ -6,6 +6,8 @@
 
 	typing_indicator_enabled = TRUE
 
+	var/tmp/do_not_disturb = FALSE 	// Temporary scene privacy, cleared when a player moves.
+
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
 	var/lastattackerckey = null
