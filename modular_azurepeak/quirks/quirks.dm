@@ -19,7 +19,7 @@
 	name = "Orgasm Denier"
 	point_cost = 0
 	desc = "I know just when to hold back, leaving my partner wanting more."
-	custom_text = "Adds an Orgasm Denial toggle to your ERP panel, off by default. During paired panel actions, it can prevent your partner's climax and reset their arousal to 30, if they have Enable Edging Content turned on. Denial adds 2 stress for 5 minutes without stacking; a successful climax clears it."
+	custom_text = "Adds an Orgasm Denial toggle to your ERP panel, off by default. During paired panel actions, it can prevent your partner's climax and reset their arousal to 30, if they have Enable Edging Content turned on. Denial adds 6 stress for 5 minutes without stacking; a successful climax clears it."
 	added_traits = list(TRAIT_ORGASM_DENIER)
 
 /datum/quirk/annoyingface
