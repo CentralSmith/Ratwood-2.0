@@ -1,5 +1,0 @@
-author: "mypingishuge (port), Ryumi and Azure Peak contributors"
-delete-after: True
-changes:
-  - qol: "Heretical and unusual equipment now has colored examine highlights and hover explanations."
-  - qol: "Sacred crown and Inquisition relics receive distinct examine highlights."

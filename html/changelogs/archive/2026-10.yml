@@ -520,3 +520,8 @@
       Acquired Tastes.
   - rscadd: Added a flat chastity cage and leather collar to Acquired Tastes, and
       a rope leash to both equipment bags.
+2026-10-21:
+  mypingishuge (port), Ryumi and Azure Peak contributors:
+  - qol: Heretical and unusual equipment now has colored examine highlights and hover
+      explanations.
+  - qol: Sacred crown and Inquisition relics receive distinct examine highlights.
