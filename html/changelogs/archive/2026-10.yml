@@ -530,6 +530,7 @@
       locked, blocking other players' previews.
   - bugfix: Corrected outfit preview job selection and cleanup of old preview sprites.
   - bugfix: Crafting paralytic venom now consumes all its ingredients as intended.
+  - qol: Added a Toggles shortcut beneath Keybinds on the character sheet.
   mypingishuge (port), Ryumi and Azure Peak contributors:
   - qol: Heretical and unusual equipment now has colored examine highlights and hover
       explanations.
