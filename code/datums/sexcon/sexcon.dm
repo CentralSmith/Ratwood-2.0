@@ -1408,44 +1408,58 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 			rate = AROUSAL_HIGH_UNHORNY_RATE
 	adjust_arousal(-dt * rate)
 
-/datum/sex_controller/proc/show_ui()
+/// Fixed cells keep changing labels and conditional controls from moving adjacent links.
+/datum/sex_controller/proc/get_controls_html()
 	var/list/dat = list()
 	var/force_name = get_force_string()
 	var/speed_name = get_speed_string()
 	var/manual_arousal_name = get_manual_arousal_string()
 	var/obj/item/organ/penis/got_cock = user.getorganslot(ORGAN_SLOT_PENIS)
 	var/obj/item/organ/vagina/got_pussy = user.getorganslot(ORGAN_SLOT_VAGINA)
-	dat += "<center><a href='?src=[REF(src)];task=speed_down'>\<</a> [speed_name] <a href='?src=[REF(src)];task=speed_up'>\></a> ~|~ <a href='?src=[REF(src)];task=force_down'>\<</a> [force_name] <a href='?src=[REF(src)];task=force_up'>\></a>"
+	dat += {"<style>
+		.sexcon-settings { width: 100%; table-layout: fixed; border-spacing: 4px; margin-bottom: 4px; }
+		.sexcon-settings td { padding: 0; text-align: center; vertical-align: middle; }
+		.sexcon-settings .sexcon-control { height: 26px; }
+		.sexcon-settings .sexcon-label { font-size: 11px; line-height: 16px; }
+		.sexcon-settings .sexcon-toggle { display: block; box-sizing: border-box; height: 26px; margin: 0; padding: 2px 3px; font-size: 13px; line-height: 20px; }
+		.sexcon-stepper { display: table; width: 100%; height: 30px; table-layout: fixed; }
+		.sexcon-stepper a { display: table-cell; width: 10px; margin: 0; padding: 0; line-height: 28px; }
+		.sexcon-stepper .sexcon-value { display: table-cell; font-size: 12px; line-height: 13px; vertical-align: middle; word-wrap: normal; }
+	</style>"}
+	dat += "<table class='sexcon-settings'><colgroup><col style='width: 37%'><col style='width: 26%'><col style='width: 37%'></colgroup><tr>"
+	dat += "<td><div class='sexcon-label'>SPEED</div><div class='sexcon-stepper'><a href='?src=[REF(src)];task=speed_down'>&lt;</a><span class='sexcon-value'>[speed_name]</span><a href='?src=[REF(src)];task=speed_up'>&gt;</a></div></td>"
+	dat += "<td><div class='sexcon-label'>FORCE</div><div class='sexcon-stepper'><a href='?src=[REF(src)];task=force_down'>&lt;</a><span class='sexcon-value'>[force_name]</span><a href='?src=[REF(src)];task=force_up'>&gt;</a></div></td>"
+	dat += "<td>"
 	if(got_cock)
-		dat += " ~|~ <a href='?src=[REF(src)];task=manual_arousal_down'>\<</a> [manual_arousal_name] <a href='?src=[REF(src)];task=manual_arousal_up'>\></a>"
-	dat += "</center><center><a href='?src=[REF(src)];task=toggle_finished'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a>"
+		dat += "<div class='sexcon-label'>AROUSAL</div><div class='sexcon-stepper'><a href='?src=[REF(src)];task=manual_arousal_down'>&lt;</a><span class='sexcon-value'>[manual_arousal_name]</span><a href='?src=[REF(src)];task=manual_arousal_up'>&gt;</a></div>"
+	dat += "</td></tr></table>"
+	dat += "<table class='sexcon-settings'><tr>"
+	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_finished'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a></td>"
+	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "FREEUSE ON" : "FREEUSE OFF"]</a></td></tr><tr>"
+	var/exposure_name = "CROTCH"
 	if(got_cock && !got_pussy)
-		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PINTLE EXPOSED" : "PINTLE CONCEALED"]</a>"
+		exposure_name = "PINTLE"
 	else if(!got_cock && got_pussy)
-		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PUSSY EXPOSED" : "PUSSY CONCEALED"]</a>"
-	else
-		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "CROTCH EXPOSED" : "CROTCH CONCEALED"]</a>"
+		exposure_name = "PUSSY"
+	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_bottom_exposed'>[exposure_name] [bottom_exposed ? "EXPOSED" : "CONCEALED"]</a></td>"
+	dat += "<td class='sexcon-control'>"
 	if(got_cock || got_pussy || user.getorganslot(ORGAN_SLOT_TESTICLES))
-		dat += " | <a href='?src=[REF(src)];task=toggle_hide_pintle_visuals'>[hide_pintle_visuals ? "GENITALS HIDDEN" : "GENITALS VISIBLE"]</a>"
-	dat += " ~|~ <a href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "FREEUSE ON" : "FREEUSE OFF"]</a>"
+		dat += "<a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_hide_pintle_visuals'>[hide_pintle_visuals ? "GENITALS HIDDEN" : "GENITALS VISIBLE"]</a>"
+	dat += "</td></tr><tr><td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_subtle'>[do_subtle_action ? "DOING SUBTLY" : "DOING VISIBLY"]</a></td><td class='sexcon-control'>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
 		if(action.knot_on_finish)
 			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
-				if(do_knot_action)
-					dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#d146f5'>USING KNOT</font></a>"
-				else
-					dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#eac8de'>NOT USING KNOT</font></a>"
+				dat += "<a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_knot'><font color='[do_knot_action ? "#d146f5" : "#eac8de"]'>[do_knot_action ? "USING KNOT" : "NOT USING KNOT"]</font></a>"
 			else if((action.target_sex_part & SEX_PART_COCK) && target?.sexcon?.knot_penis_type())
-				if(do_knot_action_as_bottom)
-					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#d146f5'>FORCING KNOT</font></a>"
-				else
-					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#eac8de'>NOT FORCING KNOT</font></a>"
-	if(do_subtle_action)
-		dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING SUBTLY</a>"
-	else
-		dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING VISIBLY</a>"
-	dat += "</center><center><a href='?src=[REF(src)];task=set_arousal'>SET AROUSAL</a> | <a href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a></center>"
+				dat += "<a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_knot_bottom'><font color='[do_knot_action_as_bottom ? "#d146f5" : "#eac8de"]'>[do_knot_action_as_bottom ? "FORCING KNOT" : "NOT FORCING KNOT"]</font></a>"
+	dat += "</td></tr><tr><td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=set_arousal'>SET AROUSAL</a></td>"
+	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a></td></tr></table>"
+	return dat.Join()
+
+/datum/sex_controller/proc/show_ui()
+	var/list/dat = list()
+	dat += get_controls_html()
 	if(target == user)
 		dat += "<center>Doing unto yourself</center>"
 	else
