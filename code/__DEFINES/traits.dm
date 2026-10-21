@@ -130,6 +130,7 @@
 #define TRAIT_WAGES_SUSPENDED "Wages Suspended" //Stops nerve master daily pay for this guy
 #define TRAIT_SCALEARMOR "Weathered Scales"//Mage armor, refluffed to scales.
 #define TRAIT_HEMOPHAGE "Hemophage"//You can drink blood for heals, but normal food and water makes you ill. Shitty vampire.
+#define TRAIT_BLOOD_DRINKER "Blood Drinker" // Blood quenches thirst without causing nausea.
 #define TRAIT_BAOTHA_FERTILITY_BOON "Marked and shaped by Baotha" //Able to be impregnated, has permanent womb tattoo and stronger version of nympho vice
 // chastity traits are defined in chastity_core.dm since they're pretty specific and it's easier to keep them there, but here are the trait defines for them:
 #define TRAIT_CHASTITY_FULL "Chastity Belt" //Prevents most penetrative sexual activity. Given by chastity belt.

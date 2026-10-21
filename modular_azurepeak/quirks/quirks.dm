@@ -2,6 +2,20 @@
 // At best they should be very minor conveniences as a reward for leaning into vices.
 // The baseline point_cost is one.
 
+/datum/quirk/blooddrinker
+	name = "Blood Drinker"
+	point_cost = 1
+	desc = "Blood quenches my thirst without turning my stomach."
+	custom_text = "Drinking blood, including dirty blood, restores one third as much thirst as the same amount of water, without blood-induced nausea. Normal food and water remain usable."
+	warning_text = "This quirk costs nothing and does not apply to Hemophages, Vampires, Lickers, or others who already do not need food or water when their quirks are applied."
+	added_traits = list(TRAIT_BLOOD_DRINKER)
+	incompatible_traits = list(TRAIT_HEMOPHAGE, TRAIT_NOHUNGER)
+
+/datum/quirk/blooddrinker/blocked_by_incompatible_traits(mob/living/carbon/human/recipient)
+	if(recipient.spawned_as_licker)
+		return "Licker"
+	return ..()
+
 /datum/quirk/acquiredtastes
 	name = "Acquired Tastes"
 	desc = "Despite my unorthodox tastes, I'm always prepared to handle a guest with the toys, assorted gear and emberwine I keep stashed."
