@@ -921,10 +921,10 @@
 	. = list()
 	if(!user.client?.prefs?.top_examine)
 		. += "ø ------------ ø"
-		if ((dna?.species?.id != "gnoll") && (valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot) && (!obscure_name || client?.prefs.masked_examine))
+		if ((valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot) && (!obscure_name || client?.prefs.masked_examine))
 			. += "[chat_headshot(headshot_link)]"
 	else
-		if ((dna?.species?.id != "gnoll") && (valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot) && (!obscure_name || client?.prefs.masked_examine))
+		if ((valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot) && (!obscure_name || client?.prefs.masked_examine))
 			. += "[chat_headshot(headshot_link)]\nø ------------ ø"
 		else
 			. += "ø ------------ ø"
