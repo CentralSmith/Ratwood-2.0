@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Crafting paralytic venom now consumes all its ingredients as intended."
