@@ -533,6 +533,12 @@
   - qol: Added a Toggles shortcut beneath Keybinds on the character sheet.
   - rscadd: Added Toggle Scene Privacy under IC to block new orb scries until you
       move or toggle it off.
+  mypingishuge:
+  - rscadd: Added Orgasm Denier, a 0-point quirk with a toggle that can deny a partner's
+      climax during paired ERP actions if they have Enable Edging Content enabled.
+  - rscadd: Denial resets arousal to 30 and gives a non-stacking, five-minute frustration
+      mood. A successful climax clears it.
+  - rscadd: Gnolls now have Orgasm Denier innately, with its panel toggle off by default.
   mypingishuge (port), Ryumi and Azure Peak contributors:
   - qol: Heretical and unusual equipment now has colored examine highlights and hover
       explanations.
