@@ -443,6 +443,8 @@
 
 // Try to resist orgasm, returns TRUE if we resisted, FALSE if we didn't. ENDVRE. EDGE. WEEP.
 /datum/sex_controller/proc/try_resist_orgasm()
+	if(try_deny_panel_climax())
+		return TRUE
 	if(!HAS_TRAIT(user, TRAIT_PSYDONIAN_GRIT) || !prob(40))
 		return FALSE
 	if(user.client.prefs.edging == FALSE)
@@ -496,6 +498,9 @@
 	after_ejaculation()
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE, source_part = SEX_PART_NULL)
+	// Later bursts belong to an already completed climax.
+	if(consume_charge && try_deny_panel_climax())
+		return
 	// splashed_user is the bottom receiving; for top-initiated actions it matches target, for riding/blowjob it is the rider/sucker while target may be null
 	var/mob/living/carbon/human/effective_target = splashed_user || target
 	if((orifice & SEX_PART_TAIL_MAW) && !get_manticore_tail(effective_target))
@@ -1320,6 +1325,8 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 				adjust_arousal(0.25)
 			else
 				if(prob(3))
+					if(try_deny_panel_climax())
+						return
 					ejaculate(climax_part)
 					if(splashed_user)
 						var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
@@ -1334,6 +1341,8 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 		return
 	if(!can_ejaculate())
 		return FALSE
+	if(try_deny_panel_climax())
+		return
 	ejaculate(climax_part)
 	if(splashed_user)
 		var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
