@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - qol: "Added a Toggles shortcut beneath Keybinds on the character sheet."
