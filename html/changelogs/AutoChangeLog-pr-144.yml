@@ -1,0 +1,4 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - bugfix: "Saigas and fogbeasts now register their damage-triggered dismount handler properly when ridden, allowing hits to the mount to throw off eligible riders using Run intent. Fogbeast riders with Master Riding or higher remain protected."
