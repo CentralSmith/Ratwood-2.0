@@ -111,6 +111,7 @@
 #include "code\__DEFINES\obj_flags.dm"
 #include "code\__DEFINES\offer.dm"
 #include "code\__DEFINES\omens.dm"
+#include "code\__DEFINES\oviposition.dm"
 #include "code\__DEFINES\particle_weather.dm"
 #include "code\__DEFINES\particles.dm"
 #include "code\__DEFINES\playerquality.dm"
@@ -3606,6 +3607,10 @@
 #include "modular_rmh\code\modules\clothing\vladegeg\wintercoat.dm"
 #include "modular_rmh\code\modules\clothing\vladegeg\armor\druid.dm"
 #include "modular_rmh\code\modules\mob\dead\body_markings\body_markings.dm"
+#include "modular_rmh\code\modules\oviposition\egg_settings.dm"
+#include "modular_rmh\code\modules\oviposition\ovi_eggs.dm"
+#include "modular_rmh\code\modules\oviposition\ovi_host.dm"
+#include "modular_rmh\code\modules\oviposition\ovi_organs.dm"
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
 #include "modular_twilight_axis\code\modules\bildings\blueprint_planner.dm"
 // END_INCLUDE
