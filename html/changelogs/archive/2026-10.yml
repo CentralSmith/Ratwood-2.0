@@ -556,3 +556,4 @@
       amulet, and accepts extracted eyes from any race.
   - qol: Blood for Graggar now explains its offerings and cross placement, with clearer
       messages when a body cannot be revived.
+  - bugfix: The Yeen Cackle emote now plays its sound when using the gnoll voice.
