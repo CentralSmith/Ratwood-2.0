@@ -1,0 +1,4 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - rscadd: "Added Blood Drinker, a 1-point quirk that lets blood quench thirst less effectively than water, without blood-induced nausea."
