@@ -139,16 +139,42 @@ export class ChatRenderer {
     this.lastClientHeight = 0;
     this.scrollInputUntil = 0;
     this.scrollInputTop = 0;
+    this.scrollInputAway = false;
+    this.scrollTouchY = null;
     this.scrollPointerDown = false;
     this.mountScrollTimer = null;
-    this.handleScrollInput = () => {
+    this.handleScrollInput = (event) => {
+      if (event?.ctrlKey && event.deltaY !== undefined) {
+        return;
+      }
       // Allow the browser to apply wheel, keyboard and touch scrolling first.
       this.scrollInputUntil = Date.now() + 250;
       this.scrollInputTop = this.scrollNode?.scrollTop || 0;
+      let direction = event?.deltaY || 0;
+      if (event?.key) {
+        direction =
+          ['ArrowUp', 'PageUp', 'Home'].includes(event.key) ||
+          (event.key === ' ' && event.shiftKey)
+            ? -1
+            : 1;
+      }
+      const touchY = event?.touches?.[0]?.clientY;
+      if (touchY !== undefined) {
+        direction = this.scrollTouchY === null ? 0 : this.scrollTouchY - touchY;
+        this.scrollTouchY = touchY;
+      }
+      if (direction) {
+        this.scrollInputAway = direction < 0;
+        if (this.scrollInputAway) {
+          // Yield before native scrolling or a queued message/layout callback.
+          this.setScrollTracking(false);
+        }
+      }
     };
     this.resetScrollInput = () => {
       this.scrollInputUntil = 0;
       this.scrollPointerDown = false;
+      this.scrollTouchY = null;
     };
     this.handleScrollKey = (event) => {
       if (
@@ -163,7 +189,7 @@ export class ChatRenderer {
           ' ',
         ].includes(event.key)
       ) {
-        this.handleScrollInput();
+        this.handleScrollInput(event);
       }
     };
     this.handleScrollPointerDown = () => {
@@ -176,6 +202,7 @@ export class ChatRenderer {
         return;
       }
       this.scrollPointerDown = false;
+      this.scrollTouchY = null;
       this.scrollInputUntil = Date.now() + 250;
     };
     this.handleScroll = () => {
@@ -206,11 +233,31 @@ export class ChatRenderer {
       node.clientHeight !== this.lastClientHeight;
     this.lastScrollHeight = height;
     this.lastClientHeight = node.clientHeight;
+    const userInput =
+      this.scrollPointerDown || Date.now() < this.scrollInputUntil;
+    if (userInput && node.scrollTop < this.scrollInputTop) {
+      this.scrollInputAway = true;
+      this.scrollInputTop = node.scrollTop;
+      this.setScrollTracking(false);
+      return;
+    }
+    if (this.scrollInputAway) {
+      // A scrollbar drag can reverse direction without another wheel/key event.
+      if (
+        this.scrollPointerDown &&
+        !layoutChanged &&
+        node.scrollTop > this.scrollInputTop
+      ) {
+        this.scrollInputAway = false;
+      } else {
+        return;
+      }
+    }
     const bottom = node.scrollTop + node.clientHeight;
     if (height - bottom < SCROLL_TRACKING_TOLERANCE) {
       this.setScrollTracking(true);
     } else if (
-      (this.scrollPointerDown || Date.now() < this.scrollInputUntil) &&
+      userInput &&
       (!layoutChanged || node.scrollTop < this.scrollInputTop)
     ) {
       this.setScrollTracking(false);
@@ -238,6 +285,9 @@ export class ChatRenderer {
       passive: true,
     });
     this.scrollNode.addEventListener('touchmove', this.handleScrollInput, {
+      passive: true,
+    });
+    this.scrollNode.addEventListener('touchstart', this.handleScrollInput, {
       passive: true,
     });
     this.scrollNode.addEventListener('keydown', this.handleScrollKey);
@@ -269,6 +319,7 @@ export class ChatRenderer {
     this.scrollNode?.removeEventListener('scroll', this.handleScroll);
     this.scrollNode?.removeEventListener('wheel', this.handleScrollInput);
     this.scrollNode?.removeEventListener('touchmove', this.handleScrollInput);
+    this.scrollNode?.removeEventListener('touchstart', this.handleScrollInput);
     this.scrollNode?.removeEventListener('keydown', this.handleScrollKey);
     this.scrollNode?.removeEventListener(
       'pointerdown',
@@ -399,6 +450,7 @@ export class ChatRenderer {
     if (!this.scrollNode) {
       return;
     }
+    this.scrollInputAway = false;
     this.setScrollTracking(true);
     // scrollHeight is always bigger than scrollTop and is
     // automatically clamped to the valid range.
