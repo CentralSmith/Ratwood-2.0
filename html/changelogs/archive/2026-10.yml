@@ -569,3 +569,12 @@
   - bugfix: Saigas and fogbeasts now register their damage-triggered dismount handler
       properly when ridden, allowing hits to the mount to throw off eligible riders
       using Run intent. Fogbeast riders with Master Riding or higher remain protected.
+  - bugfix: Using Grab intent on an occupied animal mount now targets its driver;
+      empty mounts can be grabbed with combat mode on or off without automatically
+      mounting them.
+  - bugfix: Grabbed riders can no longer steer their animal mount away until they
+      break free or are released.
+  - bugfix: Tame mounts no longer add characters sharing their tile as enemies when
+      hurt, avoiding hostility toward a rider knocked off by the hit.
+  - balance: Expert trackers can now automatically highlight their marked target's
+      tracks, previously requiring Master Tracking.
