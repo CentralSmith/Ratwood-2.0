@@ -546,3 +546,13 @@
   - qol: Heretical and unusual equipment now has colored examine highlights and hover
       explanations.
   - qol: Sacred crown and Inquisition relics receive distinct examine highlights.
+2026-10-22:
+  _Rarity:
+  - bugfix: Chat should no longer fight small upward scrolls while new messages arrive.
+  mypingishuge:
+  - rscadd: Added Blood Drinker, a 1-point quirk that lets blood quench thirst less
+      effectively than water, without blood-induced nausea.
+  - bugfix: Blood for Graggar no longer requires the caster to carry a psycross or
+      amulet, and accepts extracted eyes from any race.
+  - qol: Blood for Graggar now explains its offerings and cross placement, with clearer
+      messages when a body cannot be revived.

@@ -1,5 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - bugfix: "Blood for Graggar no longer requires the caster to carry a psycross or amulet, and accepts extracted eyes from any race."
-  - qol: "Blood for Graggar now explains its offerings and cross placement, with clearer messages when a body cannot be revived."
