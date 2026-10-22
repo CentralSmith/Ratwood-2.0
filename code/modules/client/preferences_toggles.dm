@@ -143,6 +143,7 @@
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
+		list("id" = "accept_oviposition", "label" = "Accept Egg Implantation", "enabled" = !!owner.prefs.accept_oviposition, "desc" = "Allow partners with an ovipositor to implant eggs in you."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
 		list("id" = "free_use_default", "label" = "Toggle Free Use Default", "enabled" = !!owner.prefs.free_use_default, "desc" = "Start with Free Use enabled by default. You can manually disable it at any point in the ERP panel."),
 		list("id" = "facial_branding", "label" = "Enable Facial Branding", "enabled" = !!owner.prefs.facial_brands, "desc" = "Allow others to brand your face."),
@@ -254,6 +255,8 @@
 				owner.toggle_Chastity_Hardmode()
 			if("extreme_erp")
 				owner.toggle_extreme_ERP()
+			if("accept_oviposition")
+				owner.toggle_accept_oviposition()
 			if("edging")
 				owner.toggle_edging()
 			if("free_use_default")
@@ -626,6 +629,18 @@
 			to_chat(src, "You ENDVRE through orgasms.")
 		else
 			to_chat(src, "You will no longer ENDVRE through orgasms.")
+
+/client/verb/toggle_accept_oviposition()
+	set category = "Options"
+	set name = "Toggle Egg Implantation"
+	set hidden = 1
+	if(prefs)
+		prefs.accept_oviposition = !prefs.accept_oviposition
+		prefs.save_preferences()
+		if(prefs.accept_oviposition)
+			to_chat(src, "Partners with an ovipositor can now implant eggs in you.")
+		else
+			to_chat(src, "Partners with an ovipositor can no longer implant eggs in you.")
 
 /client/verb/toggle_free_use_default()
 	set category = "Options"
