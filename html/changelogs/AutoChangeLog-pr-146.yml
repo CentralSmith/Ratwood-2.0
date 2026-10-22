@@ -1,7 +1,0 @@
-author: "Guidesu"
-delete-after: True
-changes:
-  - rscadd: "Flightless harpies now have talon kicks. Their kicks slash, and they can kick standing targets in the head."
-  - rscadd: "Ovipositor and egg layer options in the genital customizer, with custom egg names, descriptions, colors and clutch sizes."
-  - rscadd: "Lay Eggs and Check Eggs verbs."
-  - rscadd: "\"Accept Egg Implantation\" preference toggle (off by default)."

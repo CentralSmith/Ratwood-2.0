@@ -547,6 +547,13 @@
       explanations.
   - qol: Sacred crown and Inquisition relics receive distinct examine highlights.
 2026-10-22:
+  Guidesu:
+  - rscadd: Flightless harpies now have talon kicks. Their kicks slash, and they can
+      kick standing targets in the head.
+  - rscadd: Ovipositor and egg layer options in the genital customizer, with custom
+      egg names, descriptions, colors and clutch sizes.
+  - rscadd: Lay Eggs and Check Eggs verbs.
+  - rscadd: '"Accept Egg Implantation" preference toggle (off by default).'
   _Rarity:
   - bugfix: Chat should no longer fight small upward scrolls while new messages arrive.
   - bugfix: Alternate-grip weapons no longer switch to normal two-handed attack options
