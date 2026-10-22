@@ -549,6 +549,8 @@
 2026-10-22:
   _Rarity:
   - bugfix: Chat should no longer fight small upward scrolls while new messages arrive.
+  - bugfix: Alternate-grip weapons no longer switch to normal two-handed attack options
+      when equipment changes refresh their intents.
   mypingishuge:
   - rscadd: Added Blood Drinker, a 1-point quirk that lets blood quench thirst less
       effectively than water, without blood-induced nausea.
@@ -557,3 +559,6 @@
   - qol: Blood for Graggar now explains its offerings and cross placement, with clearer
       messages when a body cannot be revived.
   - bugfix: The Yeen Cackle emote now plays its sound when using the gnoll voice.
+  - bugfix: Saigas and fogbeasts now register their damage-triggered dismount handler
+      properly when ridden, allowing hits to the mount to throw off eligible riders
+      using Run intent. Fogbeast riders with Master Riding or higher remain protected.

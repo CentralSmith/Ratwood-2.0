@@ -1,4 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - bugfix: "Alternate-grip weapons no longer switch to normal two-handed attack options when equipment changes refresh their intents."
