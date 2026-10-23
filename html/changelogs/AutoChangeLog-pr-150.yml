@@ -1,0 +1,5 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Several spells no longer consume their cooldown when their target or casting prerequisites are invalid."
+  - bugfix: "Numbing Pleasure now reduces pain for its intended one-minute duration and correctly restores the pain modifier as overlapping casts expire."
