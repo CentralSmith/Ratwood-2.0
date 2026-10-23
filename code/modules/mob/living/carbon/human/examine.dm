@@ -791,8 +791,12 @@
 	for(var/line in lines)
 		. += span_info(line)
 
-	// Only the wearer can identify their covered device; exposure is required for others.
-	if(chastity_device && user == src && !modular_chastity_exposed(src))
+	// Keep covered self-examine feedback, and describe exposed devices without an inline genital note.
+	var/chastity_exposed = modular_chastity_exposed(src)
+	var/show_chastity_fallback = user == src && !chastity_exposed
+	if(chastity_exposed && (user == src || modular_chastity_observer_on(user)))
+		show_chastity_fallback = !modular_chastity_genital_note_visible(src, user, ORGAN_SLOT_PENIS) && !modular_chastity_genital_note_visible(src, user, ORGAN_SLOT_VAGINA)
+	if(chastity_device && show_chastity_fallback)
 		var/chastity_name = get_examine_item_name_with_hover(user, chastity_device)
 		var/chastity_line = "[t_He] [t_is] secured in [chastity_name]."
 		if(!user?.client?.prefs || user.client.prefs.descriptor_color)
