@@ -1,0 +1,5 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - rscadd: "Added the Pleased emote, available through *pleased and the Noises tab (female warrior voice pack only)."
+  - qol: "Characters with a halt verb can now also use *halt or *haltyell in Say."
