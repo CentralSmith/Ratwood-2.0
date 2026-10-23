@@ -1,5 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - qol: "Aligned ERP panel controls into consistent rows and columns to reduce wrapping and movement when toggling settings."
-  - qol: "ERP speed/force/arousal selectors can now be changed by right/left clicking them"

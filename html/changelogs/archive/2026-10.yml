@@ -578,3 +578,9 @@
       hurt, avoiding hostility toward a rider knocked off by the hit.
   - balance: Expert trackers can now automatically highlight their marked target's
       tracks, previously requiring Master Tracking.
+2026-10-23:
+  _Rarity:
+  - qol: Aligned ERP panel controls into consistent rows and columns to reduce wrapping
+      and movement when toggling settings.
+  - qol: ERP speed/force/arousal selectors can now be changed by right/left clicking
+      them
