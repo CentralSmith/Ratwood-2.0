@@ -586,3 +586,7 @@
       them
   - bugfix: Fixed the Atgervi kite shield appearing beside its wearer when equipped
       in one back slot.
+  - bugfix: Several spells no longer consume their cooldown when their target or casting
+      prerequisites are invalid.
+  - bugfix: Numbing Pleasure now reduces pain for its intended one-minute duration
+      and correctly restores the pain modifier as overlapping casts expire.
