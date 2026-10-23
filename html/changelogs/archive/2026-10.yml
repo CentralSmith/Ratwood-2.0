@@ -612,6 +612,10 @@
   - qol: Characters with a halt verb can now also use *halt or *haltyell in Say.
   - bugfix: Chat reliably resumes auto-scrolling when scrolling down to the bottom
       with the mouse wheel.
+  - bugfix: Rolled-up and torn-off sleeves now remove their armor coverage and immediately
+      update clothing appearance.
+  - bugfix: Torn and nonmodifiable sleeves can no longer be restored through sleeve
+      rolling.
   mypingishuge:
   - rscadd: Restores automatic chastity messages and sounds (limited to five tiles
       around), that are only shown to bystanders when the device's area is exposed,

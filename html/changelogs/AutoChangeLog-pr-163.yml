@@ -1,5 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - bugfix: "Rolled-up and torn-off sleeves now remove their armor coverage and immediately update clothing appearance."
-  - bugfix: "Torn and nonmodifiable sleeves can no longer be restored through sleeve rolling."
