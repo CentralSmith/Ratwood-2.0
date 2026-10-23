@@ -137,6 +137,7 @@ export class ChatRenderer {
     this.scrollTracking = true;
     this.lastScrollHeight = 0;
     this.lastClientHeight = 0;
+    this.scrollBoundsDirty = true;
     this.scrollInputUntil = 0;
     this.scrollInputTop = 0;
     this.scrollInputAway = false;
@@ -168,6 +169,17 @@ export class ChatRenderer {
         if (this.scrollInputAway) {
           // Yield before native scrolling or a queued message/layout callback.
           this.setScrollTracking(false);
+        } else if (
+          event?.deltaY > 0 &&
+          !this.scrollTracking &&
+          (this.scrollBoundsDirty ||
+            this.lastScrollHeight -
+              this.scrollInputTop -
+              this.lastClientHeight <
+              SCROLL_TRACKING_TOLERANCE)
+        ) {
+          // A wheel at the bottom may not produce another native scroll event.
+          this.updateScrollTracking();
         }
       }
     };
@@ -218,6 +230,18 @@ export class ChatRenderer {
         this.handleScroll();
       }
     };
+    this.handleScrollResize = () => {
+      this.scrollBoundsDirty = true;
+      if (
+        !this.scrollTracking &&
+        !this.scrollInputAway &&
+        Date.now() < this.scrollInputUntil
+      ) {
+        // A resize can reach the bottom before its observer reports new bounds.
+        this.updateScrollTracking();
+      }
+      this.ensureScrollTracking();
+    };
     // Periodic message pruning
     setInterval(() => this.pruneMessages(), MESSAGE_PRUNE_INTERVAL);
   }
@@ -228,16 +252,30 @@ export class ChatRenderer {
       return;
     }
     const height = node.scrollHeight;
+    const clientHeight = node.clientHeight;
+    const scrollTop = node.scrollTop;
     const layoutChanged =
       height !== this.lastScrollHeight ||
-      node.clientHeight !== this.lastClientHeight;
+      clientHeight !== this.lastClientHeight;
     this.lastScrollHeight = height;
-    this.lastClientHeight = node.clientHeight;
+    this.lastClientHeight = clientHeight;
+    this.scrollBoundsDirty = false;
+    const atBottom =
+      height - scrollTop - clientHeight < SCROLL_TRACKING_TOLERANCE;
     const userInput =
       this.scrollPointerDown || Date.now() < this.scrollInputUntil;
-    if (userInput && node.scrollTop < this.scrollInputTop) {
+    if (
+      layoutChanged &&
+      atBottom &&
+      !this.scrollInputAway &&
+      !this.scrollPointerDown
+    ) {
+      // Shrinking content can clamp the viewport upward to its new bottom.
+      this.scrollInputTop = scrollTop;
+    }
+    if (userInput && scrollTop < this.scrollInputTop) {
       this.scrollInputAway = true;
-      this.scrollInputTop = node.scrollTop;
+      this.scrollInputTop = scrollTop;
       this.setScrollTracking(false);
       return;
     }
@@ -246,19 +284,18 @@ export class ChatRenderer {
       if (
         this.scrollPointerDown &&
         !layoutChanged &&
-        node.scrollTop > this.scrollInputTop
+        scrollTop > this.scrollInputTop
       ) {
         this.scrollInputAway = false;
       } else {
         return;
       }
     }
-    const bottom = node.scrollTop + node.clientHeight;
-    if (height - bottom < SCROLL_TRACKING_TOLERANCE) {
+    if (atBottom) {
       this.setScrollTracking(true);
     } else if (
       userInput &&
-      (!layoutChanged || node.scrollTop < this.scrollInputTop)
+      (!layoutChanged || scrollTop < this.scrollInputTop)
     ) {
       this.setScrollTracking(false);
     }
@@ -299,7 +336,7 @@ export class ChatRenderer {
     window.addEventListener('pointercancel', this.handleScrollPointerUp);
     window.addEventListener('blur', this.resetScrollInput);
     document.addEventListener('visibilitychange', this.resetScrollInput);
-    this.resizeObserver = new ResizeObserver(this.ensureScrollTracking);
+    this.resizeObserver = new ResizeObserver(this.handleScrollResize);
     this.resizeObserver.observe(this.rootNode);
     this.resizeObserver.observe(this.scrollNode);
     this.mountScrollTimer = setTimeout(() => {
@@ -330,6 +367,7 @@ export class ChatRenderer {
     window.removeEventListener('blur', this.resetScrollInput);
     document.removeEventListener('visibilitychange', this.resetScrollInput);
     this.scrollNode = null;
+    this.scrollBoundsDirty = true;
     this.resetScrollInput();
   }
 
@@ -346,6 +384,7 @@ export class ChatRenderer {
   }
 
   assignStyle(style = {}) {
+    this.scrollBoundsDirty = true;
     for (const key of Object.keys(style)) {
       this.rootNode.style.setProperty(key, style[key]);
     }
@@ -457,6 +496,7 @@ export class ChatRenderer {
     this.scrollNode.scrollTop = this.scrollNode.scrollHeight;
     this.lastScrollHeight = this.scrollNode.scrollHeight;
     this.lastClientHeight = this.scrollNode.clientHeight;
+    this.scrollBoundsDirty = false;
   }
 
   changePage(page) {
@@ -467,6 +507,7 @@ export class ChatRenderer {
     }
     this.page = page;
     // Fast clear of the root node
+    this.scrollBoundsDirty = true;
     this.rootNode.textContent = '';
     this.visibleMessages = [];
     // Re-add message nodes
@@ -520,6 +561,7 @@ export class ChatRenderer {
       return;
     }
     // Insert messages
+    this.scrollBoundsDirty = true;
     const fragment = document.createDocumentFragment();
     const countByType = {};
     let node;
