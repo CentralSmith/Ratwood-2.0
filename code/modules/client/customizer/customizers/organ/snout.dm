@@ -125,7 +125,8 @@
 		/datum/sprite_accessory/snout/front/otie,
 		/datum/sprite_accessory/snout/hpanda,
 		/datum/sprite_accessory/snout/vulp,
-		/datum/sprite_accessory/snout/skulldog
+		/datum/sprite_accessory/snout/skulldog,
+		/datum/sprite_accessory/snout/hspots
 		)
 
 /datum/customizer/organ/snout/tajaran
@@ -280,6 +281,7 @@
 		/datum/sprite_accessory/snout/front/drama2,
 		/datum/sprite_accessory/snout/front/noccite,
 		/datum/sprite_accessory/snout/orca,
+		/datum/sprite_accessory/snout/owl,
 		)
 
 /datum/customizer_choice/organ/snout/anthro/dullahan
@@ -493,4 +495,5 @@
 		/datum/sprite_accessory/snout/shortnosed,
 		/datum/sprite_accessory/snout/stubby,
 		/datum/sprite_accessory/snout/stubbyalt,
+		/datum/sprite_accessory/snout/owl,
 	)

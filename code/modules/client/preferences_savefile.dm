@@ -264,10 +264,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["crt"]				>> crt
 	S["grain"]				>> grain
 	S["sexable"]			>> sexable
+	S["erp_visuals"]		>> erp_visuals
 	S["chastenable"]		>> chastenable
 	S["chastity_hardmode"]	>> chastity_hardmode
 	S["extreme_erp"]		>> extreme_erp
+	S["accept_oviposition"]	>> accept_oviposition
 	S["edging"]				>> edging
+	S["free_use_default"]	>> free_use_default
 	S["sensitive_brands"] 	>> sensitive_brands
 	S["facial_brands"] 		>> facial_brands
 	S["pubes"]				>> pubes
@@ -446,10 +449,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["hide_tongue_noise_warnings"], hide_tongue_noise_warnings)
 	WRITE_FILE(S["crt"], crt)
 	WRITE_FILE(S["sexable"], sexable)
+	WRITE_FILE(S["erp_visuals"], erp_visuals)
 	WRITE_FILE(S["chastenable"], chastenable)
 	WRITE_FILE(S["chastity_hardmode"], chastity_hardmode)
 	WRITE_FILE(S["extreme_erp"], extreme_erp)
+	WRITE_FILE(S["accept_oviposition"], accept_oviposition)
 	WRITE_FILE(S["edging"], edging)
+	WRITE_FILE(S["free_use_default"], free_use_default)
 	WRITE_FILE(S["sensitive_brands"], sensitive_brands)
 	WRITE_FILE(S["facial_brands"], facial_brands)
 	WRITE_FILE(S["pubes"], pubes)
@@ -572,6 +578,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vice4 = (vice4_type && ispath(vice4_type)) ? new vice4_type() : null
 	vice5 = (vice5_type && ispath(vice5_type)) ? new vice5_type() : null
 	vice6 = (vice6_type && ispath(vice6_type)) ? new vice6_type() : null
+	S["redolent_type"] >> redolent_type
+	S["redolent_scent"] >> redolent_scent
+	if(isnull(redolent_type)) // legacy savefile key from when this was named malodorous
+		S["malodorous_type"] >> redolent_type
+		S["malodorous_scent"] >> redolent_scent
+	if(redolent_type == "Positive")
+		redolent_type = "Pleasant"
+	if(!(redolent_type in list("Gross", "Neutral", "Pleasant")))
+		redolent_type = "Neutral"
 
 /datum/preferences/proc/_load_culinary_preferences(S)
 	var/list/loaded_culinary_preferences
@@ -593,8 +608,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/_load_virtue(S)
 	var/virtue_type
 	var/virtuetwo_type
+	var/background_type
 	S["virtue"] >> virtue_type
 	S["virtuetwo"] >> virtuetwo_type
+	S["virtue_background"] >> background_type
 
 	// Only instantiate if valid type path exists, otherwise use none
 	if (virtue_type && ispath(virtue_type))
@@ -606,6 +623,24 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		virtuetwo = new virtuetwo_type()
 	else
 		virtuetwo = new /datum/virtue/none
+
+	// Backgrounds live in their own slot (see modular_azurepeak/virtues/background.dm). Guarded with
+	// ispath() against the background subtype so an old save that still points at one of the retired
+	// virtue types can't land a non-background datum in this slot.
+	if(background_type && ispath(background_type, /datum/virtue/background))
+		virtue_background = new background_type
+	else
+		virtue_background = new /datum/virtue/background/none
+
+	//Retired stubs (retired.dm) resolve and display, but grant nothing - tell the player so the
+	//"(Retired)" label on their virtue button doesn't sit there silently forever.
+	if(parent)
+		if(virtue.retired)
+			to_chat(parent, span_boldwarning("This character's Virtue '[virtue.name]' has been retired and no longer grants anything - pick a replacement in character setup. Its old role may now be available as a Background."))
+		if(virtuetwo.retired)
+			to_chat(parent, span_boldwarning("This character's Second Virtue '[virtuetwo.name]' has been retired and no longer grants anything - pick a replacement in character setup."))
+		if(virtue_background.retired)
+			to_chat(parent, span_boldwarning("This character's Background '[virtue_background.name]' has been retired and no longer grants anything - pick a replacement in character setup."))
 
 /datum/preferences/proc/_load_quirks(S)
 	var/list/quirk_types
@@ -952,6 +987,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["flavortext"]			>> flavortext
 	S["ooc_notes"]			>> ooc_notes
+	roleplay_ad = null // Old savefiles and empty slots must not inherit another slot's ad.
+	S["roleplay_ad"] >> roleplay_ad
+	if(!istext(roleplay_ad))
+		roleplay_ad = null
+	else
+		roleplay_ad = copytext(roleplay_ad, 1, MAX_MESSAGE_LEN + 1)
 	S["ooc_extra"]			>> ooc_extra
 	S["ooc_extra_img"]		>> ooc_extra_img
 	S["ooc_extra_img_link"]	>> ooc_extra_img_link
@@ -977,6 +1018,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["char_accent"]		>> char_accent
 	if (!char_accent)
 		char_accent = "No accent"
+	S["char_mannerism"]			>> char_mannerism
+	if (!char_mannerism)
+		char_mannerism = "No mannerism"
 
 	S["pronouns"] >> pronouns
 	S["voice_type"] >> voice_type
@@ -1144,6 +1188,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vice4"], preferences_typepath_or_null(vice4))
 	WRITE_FILE(S["vice5"], preferences_typepath_or_null(vice5))
 	WRITE_FILE(S["vice6"], preferences_typepath_or_null(vice6))
+	WRITE_FILE(S["redolent_type"], redolent_type)
+	WRITE_FILE(S["redolent_scent"], redolent_scent)
 	WRITE_FILE(S["feature_mcolor"]		, features["mcolor"])
 	WRITE_FILE(S["feature_mcolor2"]		, features["mcolor2"])
 	WRITE_FILE(S["feature_mcolor3"]		, features["mcolor3"])
@@ -1193,6 +1239,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["headshot_link"] , headshot_link)
 	WRITE_FILE(S["flavortext"] , html_decode(flavortext))
 	WRITE_FILE(S["ooc_notes"] , html_decode(ooc_notes))
+	WRITE_FILE(S["roleplay_ad"] , roleplay_ad)
 	WRITE_FILE(S["ooc_extra"] ,	ooc_extra)
 	WRITE_FILE(S["ooc_extra_img"] , ooc_extra_img)
 	WRITE_FILE(S["ooc_extra_img_link"] , ooc_extra_img_link)
@@ -1201,6 +1248,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["song_artist"] , song_artist)
 	WRITE_FILE(S["song_title"] , song_title)
 	WRITE_FILE(S["char_accent"] , char_accent)
+	WRITE_FILE(S["char_mannerism"] , char_mannerism)
 	WRITE_FILE(S["voice_type"] , voice_type)
 	WRITE_FILE(S["voice_pack"] , voice_pack)
 	WRITE_FILE(S["pronouns"] , pronouns)
@@ -1214,6 +1262,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!virtue2_typepath)
 		virtue2_typepath = /datum/virtue/none
 	WRITE_FILE(S["virtuetwo"], virtue2_typepath)
+	var/background_typepath = preferences_typepath_or_null(virtue_background)
+	if(!background_typepath)
+		background_typepath = /datum/virtue/background/none
+	WRITE_FILE(S["virtue_background"], background_typepath)
 	WRITE_FILE(S["quirks"], get_quirk_typepaths())
 	WRITE_FILE(S["race_bonus"], race_bonus)
 	WRITE_FILE(S["combat_music"], preferences_typepath_or_null(combat_music))

@@ -10,6 +10,20 @@
 	var/pain_hud_dirty = FALSE
 	var/injury_hud_update_queued = FALSE
 
+/mob/living/verb/toggle_scening()
+	set name = "Toggle Scene Privacy"
+	set category = "IC"
+	set desc = "Prevent orb scrying until you move or toggle scene privacy off."
+	if(do_not_disturb)
+		do_not_disturb = FALSE
+		to_chat(src, span_notice("You are no longer marked as private and can be scried."))
+		log_game("[key_name(src)] has disabled scene privacy at [loc_name(src)].")
+	else
+		do_not_disturb = TRUE
+		to_chat(src, span_notice("You are now marked as private and cannot be scried by an orb until you move or toggle scene privacy off."))
+		log_game("[key_name(src)] has enabled scene privacy at [loc_name(src)].")
+		message_admins("[key_name_admin(src)] has enabled scene privacy at [ADMIN_VERBOSEJMP(src)].")
+
 /mob/living/Initialize(mapload)
 	. = ..()
 	update_a_intents()
@@ -26,8 +40,7 @@
 	cancel_disconnected_admin_alert()
 	surgeries = null
 	if(LAZYLEN(status_effects))
-		for(var/s in status_effects)
-			var/datum/status_effect/S = s
+		for(var/datum/status_effect/S as anything in status_effects.Copy())
 			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
 				qdel(S)
 			else
@@ -52,7 +65,36 @@
 	sharedSoullinks = null
 	if(craftingthing)
 		QDEL_NULL(craftingthing)
+	clear_enemies()
+	enemies = null
 	return ..()
+
+/// Adds a mob to our enemies list, dropping the reference if that mob is ever destroyed.
+/mob/living/proc/add_enemy(mob/living/new_enemy)
+	if(!new_enemy || new_enemy == src || (new_enemy in enemies))
+		return
+	LAZYSET(enemies, new_enemy, null)
+	RegisterSignal(new_enemy, COMSIG_QDELETING, PROC_REF(on_enemy_destroyed))
+
+/// As add_enemy, but stores an associated value against the mob.
+/mob/living/proc/set_enemy(mob/living/new_enemy, value)
+	if(!new_enemy || new_enemy == src)
+		return
+	add_enemy(new_enemy)
+	enemies[new_enemy] = value
+
+/mob/living/proc/add_enemies(list/new_enemies)
+	for(var/mob/living/new_enemy as anything in new_enemies)
+		add_enemy(new_enemy)
+
+/mob/living/proc/on_enemy_destroyed(datum/source)
+	SIGNAL_HANDLER
+	enemies -= source
+
+/mob/living/proc/clear_enemies()
+	for(var/mob/living/enemy as anything in enemies)
+		UnregisterSignal(enemy, COMSIG_QDELETING)
+	enemies = list()
 
 /mob/living/onZImpact(turf/T, levels)
 	if(HAS_TRAIT(src, TRAIT_NOFALLDAMAGE2))
@@ -679,6 +721,8 @@
 				L.Knockdown(1)
 			if(self_points < target_points)
 				Knockdown(30)
+				apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
+				apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
 			if(self_points == target_points)
 				L.Knockdown(1)
 				Knockdown(30)
@@ -787,7 +831,7 @@
 	if(!(src.mobility_flags & MOBILITY_STAND))
 		return TRUE
 	var/list/acceptable = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_R_ARM, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_STOMACH)
-	if(HAS_TRAIT(L, TRAIT_CIVILIZEDBARBARIAN))
+	if(HAS_TRAIT(L, TRAIT_CIVILIZEDBARBARIAN) || HAS_TRAIT(L, TRAIT_TALONKICKS))
 		acceptable.Add(BODY_ZONE_HEAD)
 	if( !(check_zone(L.zone_selected) in acceptable) )
 		to_chat(L, span_warning("I can't reach that."))
@@ -929,6 +973,7 @@
 				O.sublimb_grabbed = item_override
 			else
 				O.sublimb_grabbed = used_limb
+			O.update_grabbed_spell_hud()
 			if(BP)
 				C.update_hud_hand_slot(BP.held_index)
 				C.mark_zone_selector_hud_dirty()
@@ -1340,8 +1385,8 @@
 	. = ..()
 	if(!.)
 		return
-	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check
-		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair, brimming with elixir under a master's hand, could bind it."))
+	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check (Pestrians too now, go forth flesh abominations!)
+		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair brimming with elixir under a master's hand or a power of the fleshtwisting pestrian could bind it."))
 		return FALSE
 
 /// The single DEAD-to-alive transition, every revival and rise routes through it.
@@ -1363,7 +1408,7 @@
 	return TRUE // death() already re-swapped the lists if the updatehealth above re-killed us
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller
+/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller (Pestrians too now, go forth flesh abominations!)
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
@@ -1663,6 +1708,7 @@
 	vis_contents += flaggy
 	Stun(300)
 	Knockdown(300)
+	drop_all_held_items()
 	apply_status_effect(/datum/status_effect/debuff/breedable)
 	apply_status_effect(/datum/status_effect/debuff/submissive)
 	src.visible_message(span_notice("[src] yields!"))
@@ -1774,11 +1820,6 @@
 	resist_chance *= combat_modifier
 	resist_chance = clamp(resist_chance, 5, 95)
 
-	if(!L.compliance || !compliance)
-		if(badluck(7))
-			badluckmessage(src)
-			return
-
 	if(L.compliance)
 		resist_chance = 100
 
@@ -1863,6 +1904,83 @@
 	else if(((!on || fixed) && (movement_type & FLOATING)))
 		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
 		setMovetype(movement_type & ~FLOATING)
+
+// Auto-loot ported from Azure Peak #8556
+/mob/living/proc/is_unclaimed_corpse()
+	return (stat == DEAD) && !mind && !ckey
+
+/mob/living/carbon/is_unclaimed_corpse()
+	return ..() && !last_mind
+
+/mob/living/proc/can_loot_corpse(mob/living/target)
+	if(QDELETED(target) || !isliving(target) || !target.is_unclaimed_corpse())
+		return FALSE
+	if(HAS_TRAIT(target, TRAIT_STUCKITEMS))
+		return FALSE
+	if(!target.Adjacent(src) || !canUseTopic(target, BE_CLOSE, NO_DEXTERITY))
+		return FALSE
+	if(!has_active_hand() || !has_hand_for_held_index(active_hand_index) || check_arm_grabbed(active_hand_index))
+		return FALSE
+	if(istype(src, /mob/living/carbon/spirit))
+		return FALSE
+	return TRUE
+
+/mob/living/simple_animal/can_loot_corpse(mob/living/target)
+	return ..() && canUseTopic(target, BE_CLOSE)
+
+/mob/living/stripPanelUnequipAll(mob/who, loot_filter = LOOT_FILTER_ALL)
+	var/mob/living/target = who
+	if(!(loot_filter in list(LOOT_FILTER_ALL, LOOT_FILTER_FABRIC, LOOT_FILTER_SMELT)))
+		return
+	if(!can_loot_corpse(target))
+		return
+
+	var/list/carried = target.get_equipped_items(TRUE)
+	carried = (carried ? carried : list()) | target.held_items
+	var/list/loot = list()
+	for(var/obj/item/I in carried)
+		if((I.item_flags & ABSTRACT) || !I.matches_loot_filter(loot_filter) || !I.canStrip(src, target))
+			continue
+		loot += I
+
+	var/nothing_msg = "[target] has nothing left worth taking."
+	var/start_msg = "I start looting [target]..."
+	switch(loot_filter)
+		if(LOOT_FILTER_FABRIC)
+			nothing_msg = "[target] has nothing worth cutting up."
+			start_msg = "I start stripping [target] for cloth..."
+		if(LOOT_FILTER_SMELT)
+			nothing_msg = "[target] has nothing worth melting down."
+			start_msg = "I start stripping [target] for metal..."
+	if(!length(loot))
+		to_chat(src, span_warning(nothing_msg))
+		return
+
+	target.visible_message(span_warning("[src] starts looting [target]."), null, null, null, src)
+	to_chat(src, span_notice(start_msg))
+	var/taken = 0
+	for(var/obj/item/I in loot)
+		if(!can_loot_corpse(target))
+			break
+		if(QDELETED(I) || I.loc != target || (I.item_flags & ABSTRACT) || !I.matches_loot_filter(loot_filter) || !I.canStrip(src, target))
+			continue
+		I.add_fingerprint(src)
+		if(!do_after(src, I.strip_delay * STRIP_DELAY_MULT_UNCLAIMED_CORPSE, TRUE, target))
+			break
+		if(!can_loot_corpse(target))
+			break
+		if(QDELETED(I) || I.loc != target || (I.item_flags & ABSTRACT) || !I.matches_loot_filter(loot_filter) || !I.canStrip(src, target))
+			continue
+		if(I.doStrip(src, target))
+			taken++
+			log_combat(src, target, "stripped [I] off")
+
+	if(taken)
+		to_chat(src, span_notice("I take [taken] thing\s from [target]."))
+	if(!QDELETED(target) && Adjacent(target))
+		target.show_inv(src)
+	else
+		src << browse(null,"window=mob[REF(target)]")
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
@@ -2619,7 +2737,7 @@
 			if(marked)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					if(H.current_mark == M && HAS_TRAIT(H, TRAIT_SLEUTH))
+					if(H.current_mark == M)
 						found_ping(get_turf(M), client, "trap")
 					else
 						found_ping(get_turf(M), client, "hidden")
@@ -2654,7 +2772,41 @@
 			found_ping(get_turf(potential_track), client, "hidden")
 			potential_track.handle_revealing(src)
 		//Hearthstone end.
+		// Hunting Tracks Logic
+		check_nearby_hunting_tracks()
 
+///Finds the closest nearby hunting track visible to our party and reports its distance/direction.
+/mob/living/proc/check_nearby_hunting_tracks()
+	var/obj/effect/hunting_track/closest_track
+	var/min_dist = 8
+	for(var/obj/effect/hunting_track/nearby_track in range(7, src))
+		// Check if we are part of the party that can see this track
+		var/can_see_track = FALSE
+		for(var/datum/weakref/party_weakref in nearby_track.party_refs)
+			if(party_weakref.resolve() == src)
+				can_see_track = TRUE
+				break
+		if(!can_see_track)
+			continue
+		found_ping(get_turf(nearby_track), client, "paws")
+		var/dist = get_dist(src, nearby_track)
+		if(dist < min_dist)
+			min_dist = dist
+			closest_track = nearby_track
+	if(!closest_track)
+		return
+	var/dir_text = dir2text(get_dir(src, closest_track))
+	var/dist_text = ""
+	switch(min_dist)
+		if(0 to 1)
+			dist_text = "right beneath your feet"
+		if(2 to 3)
+			dist_text = "very close by"
+		if(4 to 5)
+			dist_text = "a few paces away"
+		else
+			dist_text = "in the distance"
+	to_chat(src, span_notice("You spot a faint trail [dist_text] to the [dir_text]."))
 
 /proc/found_ping(atom/A, client/C, state)
 	if(!A || !C || !state)

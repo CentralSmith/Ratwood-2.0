@@ -1048,6 +1048,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if (H.nutrition > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
+		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
+			hunger_rate *= 0.7 // QOL for hemophages, from number of complaints.
 		if (H.bodytemperature < BODYTEMP_NORMAL_MIN)	//Hunger increased by 50% when cold
 			hunger_rate *= 1.5
 /*		if(H.satiety > MAX_SATIETY)
@@ -1062,7 +1064,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.Jitter(5)
 			hunger_rate = 10 * HUNGER_FACTOR*/
 //		hunger_rate *= H.physiology.hunger_mod
-		H.adjust_nutrition(-hunger_rate)
+		if(!H.mind || world.time < H.time_of_last_move + 10 MINUTES)
+			H.adjust_nutrition(-hunger_rate)
 
 		var/obj/item/organ/breasts/breasts = H.has_breasts()
 		if(breasts)
@@ -1081,8 +1084,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/hunger_rate = HUNGER_FACTOR
 		if (H.bodytemperature > BODYTEMP_NORMAL_MAX)	//thirst increased by 50% when hot
 			hunger_rate *= 1.5
+		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
+			hunger_rate *= 0.8
 //		hunger_rate *= H.physiology.hunger_mod
-		H.adjust_hydration(-hunger_rate)
+		if(!H.mind || world.time < H.time_of_last_move + 10 MINUTES)
+			H.adjust_hydration(-hunger_rate)
 
 
 	if (H.nutrition > NUTRITION_LEVEL_FULL)
@@ -1407,8 +1413,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			span_danger("[attack_message_local][target.next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
 		target.next_attack_msg.Cut()
 
-		target.retaliate(user)
-
 /*		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
 			target.visible_message(span_danger("[user] knocks [target] down!"), \
 							span_danger("You're knocked down by [user]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
@@ -1496,6 +1500,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 			if((!target_table && !target_collateral_mob) || directional_blocked)
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				target.drop_all_held_items()
 				target.visible_message(
 					span_danger("[user.name] shoves [target.name], knocking them down!"),
 					span_danger("You're knocked down from a shove by [user.name]!"),
@@ -1508,6 +1513,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 			else if(target_table)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+				target.drop_all_held_items()
 				target.visible_message(
 					span_danger("[user.name] shoves [target.name] onto \the [target_table]!"),
 					span_danger("I'm shoved onto \the [target_table] by [user.name]!"),
@@ -1521,6 +1527,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 			else if(target_collateral_mob)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+				target.drop_all_held_items()
 				target_collateral_mob.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 				target.visible_message(
 					span_danger("[user.name] shoves [target.name] into [target_collateral_mob.name]!"),
@@ -1630,7 +1637,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/selzone = user.zone_selected
 			var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 			var/damage = user.get_punch_dmg() * 1.4
-			var/armor_block = target.run_armor_check(selzone, "blunt", blade_dulling = BCLASS_BLUNT, damage = damage)
+			var/talons = HAS_TRAIT(user, TRAIT_TALONKICKS)
+			var/kick_bclass = talons ? BCLASS_CUT : BCLASS_BLUNT
+			var/armor_block = target.run_armor_check(selzone, talons ? "slash" : "blunt", blade_dulling = kick_bclass, damage = damage)
 			target.next_attack_msg.Cut()
 			var/nodmg = FALSE
 			if(!target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block))
@@ -1638,8 +1647,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
 			else
 				if(affecting)
-					affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, selzone, crit_message = TRUE)
-					if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+					affecting.bodypart_attacked_by(kick_bclass, damage, user, selzone, crit_message = TRUE)
+					if(talons)
+						target.visible_message(span_danger("[user] rakes [target] with [user.p_their()] talons![target.next_attack_msg.Join()]"), 						span_danger("I'm raked by [user]'s talons![target.next_attack_msg.Join()]"), span_hear("I hear flesh tearing!"), COMBAT_MESSAGE_RANGE, user)
+						to_chat(user, span_danger("I rake [target] with my talons![target.next_attack_msg.Join()]"))
+					else if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
 						target.visible_message(span_danger("[user] stomps [target]![target.next_attack_msg.Join()]"), \
 						span_danger("I'm stomped by [user]![target.next_attack_msg.Join()]"), span_hear("I hear a sickening kick!"), COMBAT_MESSAGE_RANGE, user)
 						to_chat(user, span_danger("I stomp on [target]![target.next_attack_msg.Join()]"))
@@ -1699,6 +1711,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				target.Move(target_shove_turf, shove_dir)
 			else if(HAS_TRAIT(user, TRAIT_STRONGKICK))
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+				target.drop_all_held_items()
 				target.throw_at(target_shove_turf, 1, 1)
 				target.visible_message(span_danger("[user.name] kicks [target.name], knocking them back!"),
 				span_danger("I'm knocked back from a kick by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
@@ -1708,6 +1721,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				if((stander && target.stamina >= target.max_stamina) || target.IsOffBalanced()) //if you are kicked while fatigued, you are knocked down no matter what
 					target.Knockdown(target.IsOffBalanced() ? SHOVE_KNOCKDOWN_SOLID : 100)
+					target.drop_all_held_items()
 					if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
 						target.visible_message(span_danger("[user.name] kicks [target.name], knocking them down!"),
 						span_danger("I'm knocked down from a kick by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
@@ -1733,6 +1747,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							break
 			if((!target_table && !target_collateral_mob) || directional_blocked)
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				target.drop_all_held_items()
 				if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
 					target.visible_message(span_danger("[user.name] kicks [target.name], knocking them down!"),
 									span_danger("I'm knocked down from a kick by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
@@ -1744,6 +1759,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				log_combat(user, target, "kicked", "knocking them down")
 			else if(target_table)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+				target.drop_all_held_items()
 				if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
 					target.visible_message(span_danger("[user.name] kicked [target.name] onto \the [target_table]!"),
 									span_danger("I'm kicked onto \the [target_table] by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
@@ -1757,6 +1773,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				log_combat(user, target, "kicked", "onto [target_table] (table)")
 			else if(target_collateral_mob)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+				target.drop_all_held_items()
 				target_collateral_mob.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 				if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
 					target.visible_message(span_danger("[user.name] kicks [target.name] into [target_collateral_mob.name]!"),
@@ -1783,12 +1800,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 		if(!affecting)
 			affecting = target.get_bodypart(BODY_ZONE_CHEST)
-		var/armor_block = target.run_armor_check(selzone, "blunt", blade_dulling = BCLASS_BLUNT)
+		var/talons = HAS_TRAIT(user, TRAIT_TALONKICKS)
+		var/kick_bclass = talons ? BCLASS_CUT : BCLASS_BLUNT
+		var/armor_block = target.run_armor_check(selzone, talons ? "slash" : "blunt", blade_dulling = kick_bclass)
 		var/damage = user.get_punch_dmg()
 		if(!target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block))
 			target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
 		else
-			affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, selzone)
+			affecting.bodypart_attacked_by(kick_bclass, damage, user, selzone)
 		playsound(target, 'sound/combat/hits/kick/kick.ogg', 100, TRUE, -1)
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
@@ -1931,8 +1950,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/nodmg = FALSE
 
 	if(Iforce)
-		H.retaliate(user)
-
 		var/weakness = H.check_weakness(I, user)
 		H.next_attack_msg.Cut()
 		if(!apply_damage(Iforce * weakness, I.damtype, def_zone, armor_block, H))
@@ -1963,7 +1980,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					var/list/targets = list(H)
 					if(do_after_mob(user,targets, 10, progress = 0, uninterruptible = 1, required_mobility_flags = null))
 						affecting.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class) //It hurts to rip it out, get surgery you dingus.
-						H.emote("paincrit", TRUE)
+						H.emote("paincrit", forced = TRUE)
 						playsound(H, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
 						user.visible_message(span_notice("[user] rips [I] out of [H]'s [affecting.name]!"), span_notice("I rip [I] from [H]'s [affecting.name]."))
 			I.do_special_attack_effect(user, affecting, intent, H, selzone)
@@ -2263,7 +2280,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 			else
 				// Residual heat damage scaling with temp
 				firemodifier = min(firemodifier, 0)
-				burn_damage = round(max(log(2-firemodifier,(H.bodytemperature-BODYTEMP_NORMAL))-5,0))
+				burn_damage = round(max(log(2-firemodifier,max(H.bodytemperature-BODYTEMP_NORMAL, 1))-5,0))
 
 		if(burn_damage > 0)
 			switch(burn_damage)

@@ -89,6 +89,7 @@
 	outfit = /datum/outfit/job/roguetown/mercenary/atgervishaman
 	subclass_languages = list(/datum/language/gronnic)
 	cmode_music = 'sound/music/combat_shaman2.ogg'
+	allowed_races = ALL_BUT_BLOODLESS
 	traits_applied = list(TRAIT_STRONGBITE, TRAIT_CIVILIZEDBARBARIAN, TRAIT_CRITICAL_RESISTANCE, TRAIT_NOPAINSTUN)
 	subclass_stats = list(
 		STATKEY_STR = 3,
@@ -133,6 +134,18 @@
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	beltl = /obj/item/flashlight/flare/torch
 	H.put_in_hands(new /obj/item/rogueweapon/handclaw/gronn, FALSE)
+	
+	var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff") // cool wrestling moves
+	var/technique_choice = input(H,"Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
+	switch(technique_choice)
+		if("Dropkick - Pushback + Extra Damage")
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick)
+		if("Chokeslam - Stamina Damage")
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)
+		if("Stunner - Dazed Debuff")
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
+		if("Headbutt - Vulnerable Debuff")
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
@@ -243,6 +256,13 @@
 	parrysound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	max_integrity = 300
 	experimental_inhand = FALSE
+
+/obj/item/rogueweapon/shield/atgervi/generateonmob(tag, prop, behind = FALSE, mirrored = FALSE, used_index = null)
+	. = ..()
+	if(tag == "onback" && mirrored && .)
+		var/icon/back_icon = .
+		// Mirroring uses a 64px canvas, but this shield's offsets target a 32px sprite.
+		back_icon.Shift(WEST, back_icon.Width() - inhand_x_dimension)
 
 /obj/item/rogueweapon/shield/atgervi/getonmobprop(tag)
 	. = ..()

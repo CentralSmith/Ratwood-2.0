@@ -1,10 +1,8 @@
 /mob/living/simple_animal/hostile/retaliate
-	var/list/enemies = list()
 	stop_automated_movement_when_pulled = TRUE
 	use_lazy_target_scan = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/Destroy()
-	enemies = null
 	return ..()
 	
 /mob/living/simple_animal/hostile/retaliate/attack_hand(mob/living/carbon/human/M)
@@ -12,7 +10,7 @@
 	if(M.used_intent.type == INTENT_HELP)
 		if(enemies.len)
 			if(tame)
-				enemies = list()
+				clear_enemies()
 				src.visible_message(span_notice("[src] calms down."))
 				LoseTarget()
 
@@ -74,8 +72,11 @@
 	for(var/mob/living/bystander in hearers(vision_range, src))
 		if(bystander == src)
 			continue
+		// A thrown rider stays on the mount's tile; don't mistake them for its attacker.
+		if(tame && can_saddle && bystander.loc == loc)
+			continue
 		if(attack_same || !faction_check_mob(bystander))
-			enemies |= bystander
+			add_enemy(bystander)
 
 	if(attack_same)
 		return 0 // we aren't buddies with our faction so we don't warn them about enemies
@@ -83,7 +84,7 @@
 		if(ally.attack_same)
 			continue
 		if(faction_check_mob(ally))
-			ally.enemies |= enemies
+			ally.add_enemies(enemies)
 	return 0
 
 /mob/living/simple_animal/hostile/retaliate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)

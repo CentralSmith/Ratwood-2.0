@@ -323,7 +323,9 @@
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "slingpouch"
 	item_state = "slingpouch"
-	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_NECK
+	// Bad Drakian adjustment: ITEM_SLOT_BACK allows either back slot; retain hip and neck slots.
+	// slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_NECK
+	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_NECK | ITEM_SLOT_BACK
 	max_storage = 20
 	w_class = WEIGHT_CLASS_NORMAL
 	grid_height = 64
@@ -379,6 +381,13 @@
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/iron/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/sling/steel/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/steel/A = new()
 		arrows += A
 	update_icon()
 

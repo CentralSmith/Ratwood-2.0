@@ -75,6 +75,8 @@
 		held += virtue
 	if(virtuetwo)
 		held += virtuetwo
+	if(virtue_background)
+		held += virtue_background
 	held += quirks
 	for(var/datum/customization_trait/pick in held)
 		if(length(pick.incompatible_vices) && (vice_type in pick.incompatible_vices))
@@ -85,7 +87,7 @@
 	return FALSE
 
 /datum/preferences/proc/check_quirk_virtue_conflict(quirk_type, show_message = FALSE, mob/user = null)
-	for(var/datum/virtue/virt in list(virtue, virtuetwo))
+	for(var/datum/virtue/virt in list(virtue, virtuetwo, virtue_background))
 		if(virt && check_pick_virtue_conflict(quirk_type, virt.type, show_message, user))
 			return TRUE
 	return FALSE
@@ -240,6 +242,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"statpack" = statpack,
 		"virtue" = virtue,
 		"virtuetwo" = virtuetwo,
+		"virtue_background" = virtue_background,
 		"quirks" = quirks.Copy(),
 		"vice1" = vice1,
 		"vice2" = vice2,
@@ -247,6 +250,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"vice4" = vice4,
 		"vice5" = vice5,
 		"vice6" = vice6,
+		"redolent_type" = redolent_type,
+		"redolent_scent" = redolent_scent,
 		"loadout" = loadout,
 		"loadout2" = loadout2,
 		"loadout3" = loadout3,
@@ -310,6 +315,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	statpack = snapshot["statpack"]
 	virtue = snapshot["virtue"]
 	virtuetwo = snapshot["virtuetwo"]
+	virtue_background = snapshot["virtue_background"]
 	var/list/quirks_snapshot = snapshot["quirks"]
 	quirks = quirks_snapshot ? quirks_snapshot.Copy() : list()
 	vice1 = snapshot["vice1"]
@@ -318,6 +324,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	vice4 = snapshot["vice4"]
 	vice5 = snapshot["vice5"]
 	vice6 = snapshot["vice6"]
+	redolent_type = snapshot["redolent_type"]
+	redolent_scent = snapshot["redolent_scent"]
 	loadout = snapshot["loadout"]
 	loadout2 = snapshot["loadout2"]
 	loadout3 = snapshot["loadout3"]
@@ -375,6 +383,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"statpack" = statpack?.type,
 		"virtue" = virtue?.type,
 		"virtuetwo" = virtuetwo?.type,
+		"virtue_background" = virtue_background?.type,
 		"quirks" = get_quirk_typepaths(),
 		"vice1" = vice1?.type,
 		"vice2" = vice2?.type,
@@ -382,6 +391,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"vice4" = vice4?.type,
 		"vice5" = vice5?.type,
 		"vice6" = vice6?.type,
+		"redolent_type" = redolent_type,
+		"redolent_scent" = redolent_scent,
 		"loadout" = loadout?.type,
 		"loadout2" = loadout2?.type,
 		"loadout3" = loadout3?.type,
@@ -461,6 +472,14 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	else
 		virtuetwo = new /datum/virtue/none()
 
+	// Backgrounds are their own slot, so presets carry their own entry for them. Guarded against the
+	// background subtype so a preset saved before the slot existed can't land elsewhere.
+	var/background_type = string_to_typepath(preset["virtue_background"])
+	if(background_type && ispath(background_type, /datum/virtue/background))
+		virtue_background = new background_type()
+	else
+		virtue_background = new /datum/virtue/background/none()
+
 	quirks = list()
 	var/quirks_preset = preset["quirks"]
 	if(islist(quirks_preset))
@@ -498,13 +517,14 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		vice5 = new vice5_type()
 	else
 		vice5 = null
-
 	var/vice6_type = string_to_typepath(preset["vice6"])
 	if(vice6_type && ispath(vice6_type, /datum/charflaw))
 		vice6 = new vice6_type()
 	else
 		vice6 = null
-
+	redolent_type = preset["redolent_type"] || "Neutral"
+	redolent_scent = preset["redolent_scent"] || ""
+	
 	// Load loadout types and instantiate them if valid
 	var/loadout_type = string_to_typepath(preset["loadout"])
 	if(loadout_type && ispath(loadout_type, /datum/loadout_item))
@@ -637,6 +657,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		var/datum/virtue/v_temp = new virtue_path()
 		if(v_temp.name != "None")
 			summary += " | [v_temp.name]"
+
+	// Background
+	var/background_path = string_to_typepath(preset["virtue_background"])
+	if(ispath(background_path, /datum/virtue/background))
+		var/datum/virtue/b_temp = new background_path()
+		if(b_temp.name != "None")
+			summary += " | [b_temp.name]"
 
 	// Quirks
 	var/quirk_count = 0
@@ -1116,6 +1143,40 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	html += {"
 			</div>
 		</div>
+		<div class="statpack-section">
+			<h2>Background Selection</h2>
+			<div class="statpack-current">"}
+
+	// Background: its own free slot, separate from the two virtue picks.
+	if(virtue_background && !istype(virtue_background, /datum/virtue/background/none))
+		html += "<div class='statpack-name'>[virtue_background.name]</div>"
+		html += "<div class='statpack-desc'>[virtue_background.desc]</div>"
+		if(virtue_background.background_desc)
+			html += "<div class='statpack-stats' style='margin-top: 4px;'>[virtue_background.background_desc]</div>"
+		if(LAZYLEN(virtue_background.added_traits))
+			html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Traits granted:</strong><br>"
+			for(var/background_trait in virtue_background.added_traits)
+				html += "• [background_trait]<br>"
+			html += "</div>"
+		if(LAZYLEN(virtue_background.added_skills))
+			html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Skills granted:</strong><br>"
+			for(var/background_skill in virtue_background.added_skills)
+				var/list/background_skill_block = background_skill
+				var/datum/skill/background_skill_type = background_skill_block[1]
+				html += "• [initial(background_skill_type.name)]: +[background_skill_block[2]] (max [background_skill_block[3]])<br>"
+			html += "</div>"
+	else
+		html += "<div class='statpack-name'>None Selected</div>"
+
+	html += {"		</div>
+			<div class="actions">
+				<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_background'>Change Background</a>"}
+	if(virtue_background && !istype(virtue_background, /datum/virtue/background/none))
+		html += "<a class='btn btn-clear' href='byond://?src=\ref[src];virtue_action=clear_background'>Clear Background</a>"
+
+	html += {"
+			</div>
+		</div>
 
 		<div class="statpack-section">
 			<h2>Quirk Selection</h2>
@@ -1145,6 +1206,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		html += "<div class='statpack-name'>[current_quirk.name]</div>"
 		html += "<div class='statpack-desc'>[current_quirk.desc]</div>"
 
+		if(istype(current_quirk, /datum/quirk/redolent))
+			var/scent_display = redolent_scent || get_default_redolent_scent(redolent_type)
+			html += "<div class='statpack-stats' style='margin-top: 4px;'><b>[redolent_type]</b>: [scent_display]</div>"
+
 		if(current_quirk.custom_text)
 			html += "<div class='statpack-stats' style='margin-top: 4px;'>" + current_quirk.custom_text + "</div>"
 
@@ -1154,7 +1219,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		if(LAZYLEN(current_quirk.added_traits))
 			html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Traits granted:</strong><br>"
 			for(var/trait in current_quirk.added_traits)
-				html += "• [trait]<br>"
+				html += "• [trait == TRAIT_ORGASM_DENIER ? "Orgasm Denier" : trait == TRAIT_RESILIENT_LOVER ? "Resilient Lover" : trait]<br>"
 			html += "</div>"
 
 		if(LAZYLEN(current_quirk.added_skills))
@@ -1178,6 +1243,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			html += "</div>"
 
 		html += "<div class='actions'>"
+		if(istype(current_quirk, /datum/quirk/redolent))
+			html += "<a class='btn btn-customize' href='byond://?src=\ref[src];redolent_action=configure'>Configure Scent</a>"
 		html += "<a class='btn btn-clear' href='byond://?src=\ref[src];quirk_action=remove;index=[i]'>Remove</a>"
 		html += "</div>"
 		html += "</div>"
@@ -1187,11 +1254,11 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				<a class='btn btn-select' href='byond://?src=\ref[src];quirk_action=add'>Add a Quirk</a>
 			</div>
 		</div>
-
+		
 		<h2 style='color: [theme["text"]]; padding: 0 20px; margin: 20px 0 10px 0; border-bottom: 1px solid [theme["border"]]; padding-bottom: 10px;'>Vice Selection</h2>
 		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>Select up to 6 vices. Each selected vice grants +1 loadout point <span style='color: #4CAF50;'>(you have [get_total_points()] total)</span>.<br>Your <b>first</b> vice is required but grants no Q-Points.<br>Additional vices after it grant at least one each.</p>			<div class="vices-grid">
 	"}
-
+	
 	// Generate 6 vice slots
 	var/no_flaw_active = istype(vice1, /datum/charflaw/noflaw)
 	var/other_vices_populated = (vice2 || vice3 || vice4 || vice5 || vice6)
@@ -1611,6 +1678,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				var/datum/virtue/V = GLOB.virtues[path]
 				if(!V.name)
 					continue
+				// Retired stubs resolve for old saves but never show up as a pick, and backgrounds
+				// have their own list (see the change_background action below).
+				if(V.unlisted || V.retired || istype(V, /datum/virtue/background))
+					continue
 				// Skip if already selected as secondary virtue
 				if(virtuetwo && V.type == virtuetwo.type)
 					continue
@@ -1644,6 +1715,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			for(var/path as anything in GLOB.virtues)
 				var/datum/virtue/V = GLOB.virtues[path]
 				if(!V.name)
+					continue
+				// Retired stubs resolve for old saves but never show up as a pick, and backgrounds
+				// have their own list (see the change_background action below).
+				if(V.unlisted || V.retired || istype(V, /datum/virtue/background))
 					continue
 				// Check if restricted by species
 				if(length(pref_species.restricted_virtues))
@@ -1685,6 +1760,48 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			save_to_history()
 			virtuetwo = GLOB.virtues[/datum/virtue/none]
 			to_chat(usr, span_notice("Cleared your second virtue."))
+			open_vices_menu(usr)
+			return
+
+		if(action == "change_background")
+			save_to_history()
+			var/list/backgrounds_available = list()
+			for(var/path as anything in GLOB.virtues)
+				var/datum/virtue/B = GLOB.virtues[path]
+				if(!istype(B, /datum/virtue/background) || istype(B, /datum/virtue/background/none))
+					continue
+				// Retired stubs resolve for old saves but are never pickable again.
+				if(!B.name || B.unlisted || B.retired)
+					continue
+				if(length(pref_species.restricted_virtues) && (B.type in pref_species.restricted_virtues))
+					continue
+				if(virtue && check_pick_virtue_conflict(B.type, virtue.type, TRUE, usr))
+					continue
+				if(virtuetwo && check_pick_virtue_conflict(B.type, virtuetwo.type, TRUE, usr))
+					continue
+				if(check_quirk_virtue_conflict(B.type, TRUE, usr))
+					continue
+				backgrounds_available[B.name] = B
+
+			if(!length(backgrounds_available))
+				to_chat(usr, span_warning("No backgrounds available to you - everything on offer conflicts with what you already have."))
+				return
+
+			backgrounds_available = sort_list(backgrounds_available)
+			var/choice = tgui_input_list(usr, "What was my lyfe before?", "Background Selection (loadouts are placed within thy stash)", backgrounds_available)
+
+			if(choice)
+				var/datum/virtue/background/selected = backgrounds_available[choice]
+				virtue_background = selected
+				to_chat(usr, span_notice("Selected [choice] as background."))
+				to_chat(usr, process_virtue_text(selected))
+				open_vices_menu(usr)
+			return
+
+		if(action == "clear_background")
+			save_to_history()
+			virtue_background = GLOB.virtues[/datum/virtue/background/none]
+			to_chat(usr, span_notice("Cleared your background."))
 			open_vices_menu(usr)
 			return
 
@@ -1788,6 +1905,44 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				open_vices_menu(usr)
 			return
 	
+	if(href_list["redolent_action"])
+		if(href_list["redolent_action"] != "configure")
+			return
+		if(!has_quirk(/datum/quirk/redolent))
+			return
+
+		var/list/scent_types = list(
+			"Gross" = "Gross",
+			"Neutral" = "Neutral",
+			"Pleasant" = "Pleasant"
+		)
+		var/type_choice = tgui_input_list(usr, "Choose how others perceive your scent:", "Redolent", scent_types)
+		if(!type_choice)
+			return
+		var/new_scent_type = scent_types[type_choice]
+		var/list/scent_actions = list("Describe scent", "Use default")
+		var/scent_action = tgui_input_list(usr, "Describe the scent:", "Redolent", scent_actions)
+		if(!scent_action)
+			return
+		var/new_scent
+		if(scent_action == "Use default")
+			new_scent = get_default_redolent_scent(new_scent_type)
+		else
+			var/scent_leadin = redolent_scent_leadin(new_scent_type)
+			var/scent_prompt = "Describe the scent - a preview of the output in game is shown below:"
+			new_scent = tgui_input_text(usr, scent_prompt, "Redolent", redolent_scent, max_length = 100, multiline = TRUE, preview_leadin = scent_leadin)
+			if(isnull(new_scent))
+				return
+			if(!length(trim(new_scent)))
+				new_scent = get_default_redolent_scent(new_scent_type)
+
+		save_to_history()
+		redolent_type = new_scent_type
+		redolent_scent = new_scent
+		to_chat(usr, span_notice("Set my Redolent scent to [redolent_type]."))
+		open_vices_menu(usr)
+		return
+
 	if(href_list["vice_action"])
 		var/action = href_list["vice_action"]
 		var/slot = text2num(href_list["slot"])
@@ -1830,7 +1985,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					// Check for conflicting vices (eye-related)
 					if(check_vice_vice_conflict(vice_type, selected_vices, TRUE, usr))
 						continue
-
+					
 					vices_available[vice_name] = vice_type
 				
 				vices_available = sort_list(vices_available)
