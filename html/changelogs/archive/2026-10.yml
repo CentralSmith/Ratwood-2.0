@@ -610,3 +610,5 @@
   - rscadd: Added the Pleased emote, available through *pleased and the Noises tab
       (female warrior voice pack only).
   - qol: Characters with a halt verb can now also use *halt or *haltyell in Say.
+  - bugfix: Chat reliably resumes auto-scrolling when scrolling down to the bottom
+      with the mouse wheel.
