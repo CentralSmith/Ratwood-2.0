@@ -603,3 +603,10 @@
       prerequisites are invalid.
   - bugfix: Numbing Pleasure now reduces pain for its intended one-minute duration
       and correctly restores the pain modifier as overlapping casts expire.
+  - bugfix: Arm and leg markings no longer render over clothing/underwear that should
+      cover them.
+  - bugfix: Inventory slot previews no longer remain visible after moving the mouse
+      away!
+  - rscadd: Added the Pleased emote, available through *pleased and the Noises tab
+      (female warrior voice pack only).
+  - qol: Characters with a halt verb can now also use *halt or *haltyell in Say.
