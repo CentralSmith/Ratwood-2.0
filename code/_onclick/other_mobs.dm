@@ -18,6 +18,16 @@
 		to_chat(src, span_warning("Someone is grabbing my arm!"))
 		return
 
+	// Resolve a grab against the driver before applying normal unarmed defenses.
+	if(proximity && used_intent.type == INTENT_GRAB && issimple(A))
+		var/mob/living/simple_animal/mount = A
+		var/datum/component/riding/riding = mount.GetComponent(/datum/component/riding)
+		var/mob/living/mounted_driver = riding?.driver
+		if(!QDELETED(mounted_driver) && mounted_driver != src && buckled != mount && mounted_driver.buckled == mount)
+			if(!CanReach(mounted_driver))
+				return
+			A = mounted_driver
+
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.

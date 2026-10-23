@@ -301,6 +301,12 @@
 	color_keys = 2
 	color_key_names = list("Tail", "Inner")
 
+/datum/sprite_accessory/tail/largestriped
+	name = "Large Striped Tail"
+	icon_state = "largestriped"
+	color_keys = 2
+	color_key_names = list("Tail", "Stripes")
+
 /datum/sprite_accessory/tail/raccoon
 	name = "Raccoon"
 	icon_state = "raccoon"
@@ -359,6 +365,21 @@
 	icon_state = "spade"
 	color_key_defaults = list(KEY_SKIN_COLOR)
 
+/datum/sprite_accessory/tail/tiefling/tailmaw
+	name = "Tiefling (Tailmaw)"
+
+/datum/sprite_accessory/tail/tiefling/heart/tailmaw
+	name = "Succubus (Tailmaw)"
+
+/datum/sprite_accessory/tail/tiefling/spadeheart/tailmaw
+	name = "Succubus (Alt) (Tailmaw)"
+	icon = 'icons/mob/sprite_accessory/tails/tiefling.dmi'
+	icon_state = "spadeheart"
+
+/datum/sprite_accessory/tail/tiefling/spade/tailmaw
+	name = "Spade (Tailmaw)"
+	can_wag = FALSE
+
 /datum/sprite_accessory/tail/dullahan
 	name = "Revenant"
 	icon = 'icons/mob/sprite_accessory/tails/tiefling.dmi'
@@ -398,7 +419,7 @@
 /datum/sprite_accessory/tail/owl
 	name = "Owl"
 	icon_state = "owl"
-	
+
 /datum/sprite_accessory/tail/pinecone
 	name = "Pinecone"
 	icon_state = "expi"
@@ -432,7 +453,7 @@
 
 /datum/sprite_accessory/tail/manticore
 	icon = 'modular/icons/mob/tails/manticore_tail.dmi'
-	name = "Manticore"
+	name = "Tail Maw (Manticore)"
 	icon_state = "manticore"
 	color_keys = 3
 	color_key_names = list("Tail", "Innerds", "Spikes")

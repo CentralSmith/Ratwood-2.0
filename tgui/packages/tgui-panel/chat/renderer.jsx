@@ -51,15 +51,13 @@ const findNearestScrollableParent = (startingNode) => {
   const body = document.body;
   let node = startingNode;
   while (node && node !== body) {
-    // This definitely has a vertical scrollbar, because it reduces
-    // scrollWidth of the element. Might not work if element uses
-    // overflow: hidden.
-    if (node.scrollWidth < node.offsetWidth) {
+    // Works even before the first message makes the pane overflow.
+    if (/^(auto|scroll)$/.test(getComputedStyle(node).overflowY)) {
       return node;
     }
     node = node.parentNode;
   }
-  return window;
+  return document.scrollingElement || document.documentElement;
 };
 
 const createHighlightNode = (text, color) => {
@@ -122,9 +120,9 @@ const updateMessageBadge = (message) => {
   }
 };
 
-class ChatRenderer {
+export class ChatRenderer {
   constructor() {
-    /** @type {HTMLElement} */
+    /** @type {boolean} */
     this.loaded = false;
     /** @type {HTMLElement} */
     this.rootNode = null;
@@ -138,29 +136,132 @@ class ChatRenderer {
     this.scrollNode = null;
     this.scrollTracking = true;
     this.lastScrollHeight = 0;
-    this.handleScroll = (type) => {
-      const node = this.scrollNode;
-      if (!node) {
+    this.lastClientHeight = 0;
+    this.scrollInputUntil = 0;
+    this.scrollInputTop = 0;
+    this.scrollInputAway = false;
+    this.scrollTouchY = null;
+    this.scrollPointerDown = false;
+    this.mountScrollTimer = null;
+    this.handleScrollInput = (event) => {
+      if (event?.ctrlKey && event.deltaY !== undefined) {
         return;
       }
-      const height = node.scrollHeight;
-      const bottom = node.scrollTop + node.offsetHeight;
-      const scrollTracking =
-        Math.abs(height - bottom) < SCROLL_TRACKING_TOLERANCE ||
-        this.lastScrollHeight === 0;
-      if (scrollTracking !== this.scrollTracking) {
-        this.scrollTracking = scrollTracking;
-        this.events.emit('scrollTrackingChanged', scrollTracking);
-        logger.debug('tracking', this.scrollTracking);
+      // Allow the browser to apply wheel, keyboard and touch scrolling first.
+      this.scrollInputUntil = Date.now() + 250;
+      this.scrollInputTop = this.scrollNode?.scrollTop || 0;
+      let direction = event?.deltaY || 0;
+      if (event?.key) {
+        direction =
+          ['ArrowUp', 'PageUp', 'Home'].includes(event.key) ||
+          (event.key === ' ' && event.shiftKey)
+            ? -1
+            : 1;
+      }
+      const touchY = event?.touches?.[0]?.clientY;
+      if (touchY !== undefined) {
+        direction = this.scrollTouchY === null ? 0 : this.scrollTouchY - touchY;
+        this.scrollTouchY = touchY;
+      }
+      if (direction) {
+        this.scrollInputAway = direction < 0;
+        if (this.scrollInputAway) {
+          // Yield before native scrolling or a queued message/layout callback.
+          this.setScrollTracking(false);
+        }
       }
     };
-    this.ensureScrollTracking = () => {
+    this.resetScrollInput = () => {
+      this.scrollInputUntil = 0;
+      this.scrollPointerDown = false;
+      this.scrollTouchY = null;
+    };
+    this.handleScrollKey = (event) => {
+      if (
+        !event.target.closest?.('input, textarea, select, [contenteditable]') &&
+        [
+          'ArrowUp',
+          'ArrowDown',
+          'PageUp',
+          'PageDown',
+          'Home',
+          'End',
+          ' ',
+        ].includes(event.key)
+      ) {
+        this.handleScrollInput(event);
+      }
+    };
+    this.handleScrollPointerDown = () => {
+      // Includes dragging the scrollbar and selecting text into the history.
+      this.scrollPointerDown = true;
+      this.handleScrollInput();
+    };
+    this.handleScrollPointerUp = () => {
+      if (!this.scrollPointerDown) {
+        return;
+      }
+      this.scrollPointerDown = false;
+      this.scrollTouchY = null;
+      this.scrollInputUntil = Date.now() + 250;
+    };
+    this.handleScroll = () => {
+      this.updateScrollTracking();
       if (this.scrollTracking) {
         this.scrollToBottom();
       }
     };
+    this.ensureScrollTracking = () => {
+      if (this.scrollTracking) {
+        // Resolve any player movement before an observer or queued callback
+        // can overwrite it with a programmatic scroll.
+        this.handleScroll();
+      }
+    };
     // Periodic message pruning
     setInterval(() => this.pruneMessages(), MESSAGE_PRUNE_INTERVAL);
+  }
+
+  updateScrollTracking() {
+    const node = this.scrollNode;
+    if (!node) {
+      return;
+    }
+    const height = node.scrollHeight;
+    const layoutChanged =
+      height !== this.lastScrollHeight ||
+      node.clientHeight !== this.lastClientHeight;
+    this.lastScrollHeight = height;
+    this.lastClientHeight = node.clientHeight;
+    const userInput =
+      this.scrollPointerDown || Date.now() < this.scrollInputUntil;
+    if (userInput && node.scrollTop < this.scrollInputTop) {
+      this.scrollInputAway = true;
+      this.scrollInputTop = node.scrollTop;
+      this.setScrollTracking(false);
+      return;
+    }
+    if (this.scrollInputAway) {
+      // A scrollbar drag can reverse direction without another wheel/key event.
+      if (
+        this.scrollPointerDown &&
+        !layoutChanged &&
+        node.scrollTop > this.scrollInputTop
+      ) {
+        this.scrollInputAway = false;
+      } else {
+        return;
+      }
+    }
+    const bottom = node.scrollTop + node.clientHeight;
+    if (height - bottom < SCROLL_TRACKING_TOLERANCE) {
+      this.setScrollTracking(true);
+    } else if (
+      userInput &&
+      (!layoutChanged || node.scrollTop < this.scrollInputTop)
+    ) {
+      this.setScrollTracking(false);
+    }
   }
 
   isReady() {
@@ -168,6 +269,7 @@ class ChatRenderer {
   }
 
   mount(node) {
+    this.unmount();
     // Mount existing root node on top of the new node
     if (this.rootNode) {
       node.appendChild(this.rootNode);
@@ -179,11 +281,56 @@ class ChatRenderer {
     // Find scrollable parent
     this.scrollNode = findNearestScrollableParent(this.rootNode);
     this.scrollNode.addEventListener('scroll', this.handleScroll);
-    setTimeout(() => {
-      this.scrollToBottom();
+    this.scrollNode.addEventListener('wheel', this.handleScrollInput, {
+      passive: true,
+    });
+    this.scrollNode.addEventListener('touchmove', this.handleScrollInput, {
+      passive: true,
+    });
+    this.scrollNode.addEventListener('touchstart', this.handleScrollInput, {
+      passive: true,
+    });
+    this.scrollNode.addEventListener('keydown', this.handleScrollKey);
+    this.scrollNode.addEventListener(
+      'pointerdown',
+      this.handleScrollPointerDown,
+    );
+    window.addEventListener('pointerup', this.handleScrollPointerUp);
+    window.addEventListener('pointercancel', this.handleScrollPointerUp);
+    window.addEventListener('blur', this.resetScrollInput);
+    document.addEventListener('visibilitychange', this.resetScrollInput);
+    this.resizeObserver = new ResizeObserver(this.ensureScrollTracking);
+    this.resizeObserver.observe(this.rootNode);
+    this.resizeObserver.observe(this.scrollNode);
+    this.mountScrollTimer = setTimeout(() => {
+      this.mountScrollTimer = null;
+      this.ensureScrollTracking();
     });
     // Flush the queue
     this.tryFlushQueue();
+  }
+
+  unmount() {
+    if (this.mountScrollTimer !== null) {
+      clearTimeout(this.mountScrollTimer);
+      this.mountScrollTimer = null;
+    }
+    this.resizeObserver?.disconnect();
+    this.scrollNode?.removeEventListener('scroll', this.handleScroll);
+    this.scrollNode?.removeEventListener('wheel', this.handleScrollInput);
+    this.scrollNode?.removeEventListener('touchmove', this.handleScrollInput);
+    this.scrollNode?.removeEventListener('touchstart', this.handleScrollInput);
+    this.scrollNode?.removeEventListener('keydown', this.handleScrollKey);
+    this.scrollNode?.removeEventListener(
+      'pointerdown',
+      this.handleScrollPointerDown,
+    );
+    window.removeEventListener('pointerup', this.handleScrollPointerUp);
+    window.removeEventListener('pointercancel', this.handleScrollPointerUp);
+    window.removeEventListener('blur', this.resetScrollInput);
+    document.removeEventListener('visibilitychange', this.resetScrollInput);
+    this.scrollNode = null;
+    this.resetScrollInput();
   }
 
   onStateLoaded() {
@@ -291,10 +438,25 @@ class ChatRenderer {
     });
   }
 
+  setScrollTracking(value) {
+    if (value !== this.scrollTracking) {
+      this.scrollTracking = value;
+      this.events.emit('scrollTrackingChanged', value);
+      logger.debug('tracking', value);
+    }
+  }
+
   scrollToBottom() {
+    if (!this.scrollNode) {
+      return;
+    }
+    this.scrollInputAway = false;
+    this.setScrollTracking(true);
     // scrollHeight is always bigger than scrollTop and is
     // automatically clamped to the valid range.
     this.scrollNode.scrollTop = this.scrollNode.scrollHeight;
+    this.lastScrollHeight = this.scrollNode.scrollHeight;
+    this.lastClientHeight = this.scrollNode.clientHeight;
   }
 
   changePage(page) {
@@ -356,10 +518,6 @@ class ChatRenderer {
         this.queue = [...this.queue, ...batch];
       }
       return;
-    }
-    // Store last scroll position
-    if (this.scrollNode) {
-      this.lastScrollHeight = this.scrollNode.scrollHeight;
     }
     // Insert messages
     const fragment = document.createDocumentFragment();
@@ -443,7 +601,10 @@ class ChatRenderer {
             );
           } else {
             // Fallback: just render the inner content without the component wrapper
-            reactRoot.render(<span dangerouslySetInnerHTML={oldHtml} />, childNode);
+            reactRoot.render(
+              <span dangerouslySetInnerHTML={oldHtml} />,
+              childNode,
+            );
           }
         }
 
@@ -503,9 +664,10 @@ class ChatRenderer {
       } else {
         this.rootNode.appendChild(fragment);
       }
-      if (this.scrollTracking) {
-        setTimeout(() => this.scrollToBottom());
-      }
+    }
+    // A combined message can add a badge line without adding a message node.
+    if (this.scrollTracking && batch.length > 0) {
+      setTimeout(this.ensureScrollTracking);
     }
     // Notify listeners that we have processed the batch
     if (notifyListeners) {
@@ -540,6 +702,9 @@ class ChatRenderer {
         this.messages = this.messages.filter(
           (message) => message.node !== 'pruned',
         );
+        // Removing old messages can move the browser's scroll anchor upward.
+        // Pruning only runs while following, so keep the viewport at the end.
+        this.scrollToBottom();
         logger.log(`pruned ${fromIndex} visible messages`);
       }
     }
