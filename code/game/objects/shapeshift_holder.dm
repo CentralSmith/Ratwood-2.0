@@ -19,10 +19,10 @@
 	stored.forceMove(src)
 	stored.notransform = TRUE
 	if(source.convert_damage)
-		var/damage_percent = (stored.maxHealth - stored.health)/stored.maxHealth;
-		var/damapply = damage_percent * shape.maxHealth;
+		var/damage_percent = (stored.maxHealth - stored.health)/stored.maxHealth
+		var/damapply = damage_percent * shape.maxHealth
 
-		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE);
+		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
 
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src

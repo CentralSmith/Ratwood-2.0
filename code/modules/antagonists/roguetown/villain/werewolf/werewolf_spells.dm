@@ -138,3 +138,37 @@
 	var/claw_index = extended_claw_record.Find(source)
 	if(claw_index)
 		extended_claw_record[claw_index] = FALSE
+
+/obj/effect/proc_holder/spell/self/shiftback
+	name = "Give In To Daylight"
+	desc = "Allows daylight to revert my verevolf form to normal."
+	overlay_state = "tamebeast"
+	clothes_req = FALSE
+	human_req = FALSE
+	chargedrain = 0
+	chargetime = 0
+	antimagic_allowed = TRUE
+	ignore_cockblock = TRUE
+	recharge_time = 5 SECONDS
+	cooldown_min = 50
+	action_icon_state = "shapeshift"
+
+/obj/effect/proc_holder/spell/self/shiftback/cast(list/targets, mob/user)
+	if(!user)
+		return
+	if(!user.mind)
+		return // bad
+	var/datum/antagonist/werewolf/antag_data = user.mind.has_antag_datum(/datum/antagonist/werewolf)
+	if(!antag_data)
+		to_chat(user, span_warning("I lacketh thine connectte to the varvolf curse!"))
+		return // whatever
+	if(!antag_data.transformed)
+		to_chat(user, span_warning("I possess my mundane form already, and I cannot force the curse myself. I must wait for night."))
+		return
+	antag_data.ready_to_untransform = !antag_data.ready_to_untransform
+	if(antag_data.ready_to_untransform)
+		to_chat(user, span_notice("I release my hold on this cursed form, and allow daytime to return me to mundanity."))
+	else
+		to_chat(user, span_notice("I steel my resolve to maintain my cursed form, daytime shall not rob me of my claws and fur.")) // should be dramatic enough
+
+
