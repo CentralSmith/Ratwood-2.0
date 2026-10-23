@@ -1,0 +1,4 @@
+author: "CentralSmith"
+delete-after: True
+changes:
+  - bugfix: "Cancelling Path of Order or selecting an already-known option no longer spends devotion."
