@@ -584,3 +584,5 @@
       and movement when toggling settings.
   - qol: ERP speed/force/arousal selectors can now be changed by right/left clicking
       them
+  - bugfix: Fixed the Atgervi kite shield appearing beside its wearer when equipped
+      in one back slot.
