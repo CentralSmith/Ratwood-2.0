@@ -1,0 +1,5 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Arm and leg markings no longer render over clothing/underwear that should cover them."
+  - bugfix: "Inventory slot previews no longer remain visible after moving the mouse away!"
