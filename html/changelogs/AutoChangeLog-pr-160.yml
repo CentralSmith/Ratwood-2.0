@@ -1,7 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - rscadd: "Restores automatic chastity messages and sounds (limited to five tiles around), that are only shown to bystanders when the device's area is exposed, the wearer has quiet mode off, and the viewer has chastity content enabled."
-  - rscadd: "Added the Enable Quiet Chastity toggle that mutes automatic device sounds and notifications, including the wearer's own, while leaving examine details, sprites and panel interactions available."
-  - rscadd: "Exposed devices are described alongside the relevant body descriptions."
-  - bugfix: "Cage equip attempts no longer mark a target as equipped before completion or redirect to the applicator; completed equips correctly transfer the held device to its wearer."
