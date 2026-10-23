@@ -267,6 +267,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["erp_visuals"]		>> erp_visuals
 	S["chastenable"]		>> chastenable
 	S["chastity_hardmode"]	>> chastity_hardmode
+	S["private_chastity"]	>> private_chastity
 	S["extreme_erp"]		>> extreme_erp
 	S["accept_oviposition"]	>> accept_oviposition
 	S["edging"]				>> edging
@@ -336,6 +337,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	chatheadshot	= sanitize_integer(chatheadshot, 0, 1, initial(chatheadshot))
 	show_mouseover_role = sanitize_integer(show_mouseover_role, 0, 1, initial(show_mouseover_role))
 	chastity_hardmode = sanitize_integer(chastity_hardmode, CHASTITY_HARDMODE_DISABLED, CHASTITY_HARDMODE_ENABLED, initial(chastity_hardmode))
+	private_chastity = sanitize_integer(private_chastity, 0, 1, initial(private_chastity)) && chastenable
 	max_chat_length = sanitize_integer(max_chat_length, 1, CHAT_MESSAGE_MAX_LENGTH, initial(max_chat_length))
 	see_chat_non_mob	= sanitize_integer(see_chat_non_mob, 0, 1, initial(see_chat_non_mob))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
@@ -452,6 +454,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["erp_visuals"], erp_visuals)
 	WRITE_FILE(S["chastenable"], chastenable)
 	WRITE_FILE(S["chastity_hardmode"], chastity_hardmode)
+	WRITE_FILE(S["private_chastity"], private_chastity)
 	WRITE_FILE(S["extreme_erp"], extreme_erp)
 	WRITE_FILE(S["accept_oviposition"], accept_oviposition)
 	WRITE_FILE(S["edging"], edging)
