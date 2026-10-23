@@ -340,17 +340,6 @@
 		str += beltl.integrity_check(is_smart)
 		. += str
 
-	// chastity cages go HERE, where they SHOULD'VE FUCKING GONE.
-	var/obj/item/chastity/worn_chastity = chastity_device
-	if(worn_chastity)
-		var/chastity_name = get_examine_item_name_with_hover(user, worn_chastity)
-		var/cage_exposed = get_location_accessible(src, BODY_ZONE_PRECISE_GROIN)
-		var/do_we_know_chat = (user == src)
-		if(cage_exposed)
-			. += "[m1] secured in [chastity_name]. "
-		else if(do_we_know_chat)
-			. += span_italics("[m1] covertly secured in [chastity_name]. ")
-	
 	var/chastity_toy_line = human_chastity_toy_examine_line(user, m2, m3)
 	if(chastity_toy_line)
 		. += chastity_toy_line
@@ -801,6 +790,18 @@
 
 	for(var/line in lines)
 		. += span_info(line)
+
+	// Keep covered self-examine feedback, and describe exposed devices without an inline genital note.
+	var/chastity_exposed = modular_chastity_exposed(src)
+	var/show_chastity_fallback = user == src && !chastity_exposed
+	if(chastity_exposed && (user == src || modular_chastity_observer_on(user)))
+		show_chastity_fallback = !modular_chastity_genital_note_visible(src, user, ORGAN_SLOT_PENIS) && !modular_chastity_genital_note_visible(src, user, ORGAN_SLOT_VAGINA)
+	if(chastity_device && show_chastity_fallback)
+		var/chastity_name = get_examine_item_name_with_hover(user, chastity_device)
+		var/chastity_line = "[t_He] [t_is] secured in [chastity_name]."
+		if(!user?.client?.prefs || user.client.prefs.descriptor_color)
+			chastity_line = "<span style='color:#ff66cc'>[chastity_line]</span>"
+		. += span_info(chastity_line)
 
 	// for underwears that don't cover from the rear, genital descriptions are still shown
 	if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN) && src.underwear)

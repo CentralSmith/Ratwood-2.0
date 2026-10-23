@@ -263,3 +263,7 @@
 	/// Current cause-specific collapse balloon and its repeating timer.
 	var/critical_alert_cause
 	var/critical_alert_timer
+	/// Cached content preference for frequent device observer/listener checks.
+	var/chastity_content_enabled = FALSE
+	/// Remember privacy while disconnected, without checking a client on every reaction.
+	var/chastity_quiet_enabled = FALSE

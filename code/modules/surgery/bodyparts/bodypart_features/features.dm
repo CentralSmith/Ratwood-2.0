@@ -94,14 +94,15 @@
 	body_zone = BODY_ZONE_CHEST
 	var/obj/item/chastity/chastity_item
 
-/datum/bodypart_feature/chastity/set_accessory_type(new_accessory_type, colors, mob/living/carbon/owner)
+/datum/bodypart_feature/chastity/set_accessory_type(new_accessory_type, colors, mob/living/carbon/owner, register_device = TRUE)
 	. = ..()
 	if(!chastity_item)
 		var/datum/sprite_accessory/chastity/accessory = SPRITE_ACCESSORY(accessory_type)
 		chastity_item = new accessory.chastity_type(owner)
-	if(owner.chastity_device && owner.chastity_device != chastity_item)
-		QDEL_NULL(owner.chastity_device)
-	owner.chastity_device = chastity_item
+	if(register_device)
+		if(owner.chastity_device && owner.chastity_device != chastity_item)
+			QDEL_NULL(owner.chastity_device)
+		owner.chastity_device = chastity_item
 	chastity_item.chastity_feature = src
 	chastity_item.color = accessory_colors
 

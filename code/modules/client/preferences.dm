@@ -128,6 +128,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/erp_visuals = TRUE
 	var/chastenable = FALSE
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
+	/// Mute automatic device sounds and notifications without hiding exposed devices.
+	var/quiet_chastity = FALSE
 	var/extreme_erp = FALSE
 	var/accept_oviposition = FALSE
 	var/edging = FALSE
