@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Werewolf and gnoll howls now support normal speech formatting for bold, italics, and underlining."
