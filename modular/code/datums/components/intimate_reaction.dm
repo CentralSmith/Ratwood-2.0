@@ -420,6 +420,8 @@
 /// Handles the receive flavor message.
 /// action and acting_mob are threaded through to get_receive_flavor_key so the correct context bank (masturbation, outercourse, penetrative) can be selected.
 /datum/component/intimate_reaction/chastity_receive_flavor/proc/try_handle_receive_flavor(mob/living/carbon/human/source, receiver_part, datum/sex_action/action, mob/living/carbon/human/acting_mob, applied_force, applied_speed)
+	if(modular_chastity_quiet_active(source))
+		return FALSE
 	var/datum/sex_controller/wearer_sexcon = source?.sexcon
 	if(!wearer_sexcon || !wearer_sexcon.chastity_content_enabled_for(source))
 		return FALSE
@@ -444,6 +446,8 @@
 
 /// Handles the arousal message.
 /datum/component/intimate_reaction/chastity_receive_flavor/proc/try_handle_arousal_message(mob/living/carbon/human/source, arousal_amt, applied_force, applied_speed)
+	if(modular_chastity_quiet_active(source))
+		return FALSE
 	var/datum/sex_controller/wearer_sexcon = source?.sexcon
 	if(!wearer_sexcon || !wearer_sexcon.chastity_content_enabled_for(source))
 		return FALSE
@@ -480,13 +484,16 @@
 	if(wearer_sexcon.last_pain != world.time)
 		return FALSE
 
-	var/string_key = get_pain_key(source, pain_amt)
-	var/message = pick_string_bank("chastity_pain_messages.json", string_key)
-	if(!message)
-		return FALSE
+	var/quiet_mode = modular_chastity_quiet_active(source)
+	var/message
+	if(!quiet_mode)
+		var/string_key = get_pain_key(source, pain_amt)
+		message = pick_string_bank("chastity_pain_messages.json", string_key)
+		if(!message)
+			return FALSE
 
-	// Keep the original eligibility and visual feedback; suppress only the quirk holder's text.
-	if(HAS_TRAIT(source, TRAIT_RESILIENT_LOVER))
+	// Preserve visual pain feedback when the quirk or quiet mode suppresses text.
+	if(quiet_mode || HAS_TRAIT(source, TRAIT_RESILIENT_LOVER))
 		if(pain_amt >= PAIN_HIGH_EFFECT)
 			source.fullscreen_redflash("redflash3")
 		else if(pain_amt >= PAIN_MED_EFFECT)
@@ -544,6 +551,8 @@
 /// Movement reaction for chastity devices — dispatched by the base on_wearer_moved handler.
 /// Handles the step counter, high-pop chance scaling, optional chastity sound, and message dispatch.
 /datum/component/intimate_reaction/chastity_receive_flavor/try_handle_wearer_moved(mob/living/carbon/human/source)
+	if(modular_chastity_quiet_active(source))
+		return FALSE
 	var/obj/item/chastity/device = parent
 	if(!device || !is_valid_wearer_source(source))
 		return FALSE

@@ -141,7 +141,7 @@
 		list("id" = "erp_panel", "label" = "Enable ERP Panel Interactions", "enabled" = !!owner.prefs.sexable, "desc" = "Allow others to use ERP panel interactions on you."),
 		list("id" = "erp_visuals", "label" = "Enable ERP Visual Effects", "enabled" = !!owner.prefs.erp_visuals, "desc" = "Enable visual effects like hearts and screen overlays during ERP."),
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
-		list("id" = "private_chastity", "label" = "Private Chastity", "enabled" = !!owner.prefs.private_chastity, "disabled" = !owner.prefs.chastenable, "desc" = "Requires Enabled Chastity Content. Keeps device descriptions, movement sounds and movement messages private, while allowing panel interactions."),
+		list("id" = "quiet_chastity", "label" = "Quiet Chastity", "enabled" = !!owner.prefs.quiet_chastity, "disabled" = !owner.prefs.chastenable, "desc" = "Requires Enabled Chastity Content. Mutes automatic device sounds and notifications, including your own. Exposed devices remain visible when examined and on sprites; panel interactions still work."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
 		list("id" = "accept_oviposition", "label" = "Accept Egg Implantation", "enabled" = !!owner.prefs.accept_oviposition, "desc" = "Allow partners with an ovipositor to implant eggs in you."),
@@ -252,8 +252,8 @@
 				owner.toggle_ERP_visuals()
 			if("chastity")
 				owner.toggle_Chastity()
-			if("private_chastity")
-				owner.toggle_Private_Chastity()
+			if("quiet_chastity")
+				owner.toggle_Quiet_Chastity()
 			if("permanent_binding")
 				owner.toggle_Chastity_Hardmode()
 			if("extreme_erp")
@@ -471,9 +471,9 @@
 	if(prefs)
 		prefs.chastenable = !prefs.chastenable
 		if(!prefs.chastenable)
-			prefs.private_chastity = FALSE
+			prefs.quiet_chastity = FALSE
 		prefs.save_preferences()
-		mob?.update_chastity_content_pref(prefs.chastenable, prefs.private_chastity)
+		mob?.update_chastity_content_pref(prefs.chastenable, prefs.quiet_chastity)
 		if(prefs.chastenable)
 			to_chat(src, "Chastity content enabled.")
 		else
@@ -481,22 +481,22 @@
 				call(src, "modular_handle_chastity_toggle_disable")()
 			to_chat(src, "Chastity content disabled.")
 
-/client/verb/toggle_Private_Chastity() // Requires chastenable — hides your own chastity notifications/sounds/visibility from everyone but yourself while still allowing you to wear devices and use them in ERP actions.
+/client/verb/toggle_Quiet_Chastity() // Mutes automatic feedback without changing device visibility or panel interactions.
 	set category = "Options"
-	set name = "Toggle Private Chastity"
+	set name = "Toggle Quiet Chastity"
 	set hidden = 1
 	if(!prefs)
 		return
 	if(!prefs.chastenable)
 		to_chat(src, span_warning("I must enable chastity content before I can make it private."))
 		return
-	prefs.private_chastity = !prefs.private_chastity
+	prefs.quiet_chastity = !prefs.quiet_chastity
 	prefs.save_preferences()
-	mob?.update_chastity_content_pref(prefs.chastenable, prefs.private_chastity)
-	if(prefs.private_chastity)
-		to_chat(src, "Private chastity enabled. Your device descriptions, movement sounds and movement messages are now private.")
+	mob?.update_chastity_content_pref(prefs.chastenable, prefs.quiet_chastity)
+	if(prefs.quiet_chastity)
+		to_chat(src, "Quiet chastity enabled. Automatic device sounds and notifications are muted. Exposed devices remain visible.")
 	else
-		to_chat(src, "Private chastity disabled.")
+		to_chat(src, "Quiet chastity disabled.")
 
 /client/verb/toggle_Chastity_Hardmode()
 	set category = "Options"

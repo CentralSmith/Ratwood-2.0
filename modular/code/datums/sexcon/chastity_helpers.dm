@@ -1,26 +1,27 @@
 /// Returns TRUE if the observing mob has the "Enable Chastity Content" preference toggle on.
-/// Exposure and the wearer's privacy preference are checked separately.
+/// Uses the cached preference for living observers.
 /proc/modular_chastity_observer_on(mob/user)
 	var/mob/living/living_user = user
 	if(istype(living_user))
 		return living_user.chastity_content_enabled
 	return !!(user?.client?.prefs?.chastenable)
 
-/// Returns TRUE if the wearer has "Private Chastity" active — their own device/messages/sounds
-/// should never be exposed to anyone but themselves, regardless of coverage or observer prefs.
-/proc/modular_chastity_private_active(mob/wearer)
+/// Returns TRUE when automatic device messages and sounds should be muted.
+/proc/modular_chastity_quiet_active(mob/wearer)
 	var/mob/living/living_wearer = wearer
 	if(istype(living_wearer))
-		return living_wearer.chastity_private_enabled
-	return !!(wearer?.client?.prefs?.chastenable && wearer.client.prefs.private_chastity)
+		return living_wearer.chastity_quiet_enabled
+	return !!(wearer?.client?.prefs?.chastenable && wearer.client.prefs.quiet_chastity)
 
 /// Clothing and underwear must both leave the device's area exposed.
 /proc/modular_chastity_exposed(mob/wearer)
 	return wearer && get_location_accessible(wearer, BODY_ZONE_PRECISE_GROIN, skipundies = FALSE)
 
-/// Keep automatic device messages private while covered or opted into privacy.
+/// Mute automatic messages in quiet mode; keep covered-device feedback local otherwise.
 /mob/proc/chastity_visible_message(message, vision_distance = DEFAULT_MESSAGE_RANGE)
-	if(!modular_chastity_exposed(src) || modular_chastity_private_active(src))
+	if(modular_chastity_quiet_active(src))
+		return
+	if(!modular_chastity_exposed(src))
 		if(modular_chastity_observer_on(src))
 			to_chat(src, message)
 		return
@@ -32,7 +33,7 @@
 
 /// Returns TRUE if the given organ slot (penis/vagina) on H is chastity-blocked and watcher is
 /// allowed to know about it — always visible to the wearer (or a null watcher, e.g. self-preview
-/// screens), gated by exposure, privacy and the observer's toggle for anyone else.
+/// screens), gated by exposure and the observer's toggle for anyone else.
 /proc/modular_chastity_genital_note_visible(mob/living/carbon/human/H, mob/watcher, organ_slot)
 	if(!istype(H) || !H.chastity_device || !H.sexcon)
 		return FALSE
@@ -41,9 +42,9 @@
 		return FALSE
 	if(!watcher || watcher == H)
 		return TRUE
-	if(!modular_chastity_exposed(H) || modular_chastity_private_active(H))
+	if(!modular_chastity_observer_on(watcher))
 		return FALSE
-	return modular_chastity_observer_on(watcher)
+	return modular_chastity_exposed(H)
 
 /// Short device name used inline in genital descriptor text (e.g. "secured with a spiked chastity cage").
 /// Uses the actual worn device's name so cages, flat cages, spiked variants, belts/insertables, and cursed devices all read correctly.
@@ -62,17 +63,17 @@
 		return base_description
 	return "[base_description] and secured with [get_chastity_genital_note_text(H)]"
 
-/mob/proc/update_chastity_content_pref(chastity_pref, private_pref = FALSE)
+/mob/proc/update_chastity_content_pref(chastity_pref, quiet_pref = FALSE)
 	var/mob/living/user = src
 	if(!istype(user))
 		return
 	user.chastity_content_enabled = !!chastity_pref
-	user.chastity_private_enabled = !!(chastity_pref && private_pref)
+	user.chastity_quiet_enabled = !!(chastity_pref && quiet_pref)
 
 /proc/playsound_chastity(atom/source, soundin, vol as num, vary, frequency = null, falloff, channel, pressure_affected = FALSE, repeat)
 	if(isarea(source))
 		CRASH("playsound_chastity(): source is an area")
-	if(!ismob(source) || !modular_chastity_exposed(source))
+	if(!ismob(source) || modular_chastity_quiet_active(source) || !modular_chastity_exposed(source))
 		return
 
 	var/turf/turf_source = get_turf(source)
@@ -85,8 +86,7 @@
 	if(!istype(S))
 		S = sound(get_sfx(soundin))
 
-	// Private sounds never search for or reach nearby listeners.
-	var/list/listeners = modular_chastity_private_active(source) ? list(source) : get_hearers_in_view(CHASTITY_MOVE_SOUND_RANGE, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
+	var/list/listeners = get_hearers_in_view(CHASTITY_MOVE_SOUND_RANGE, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
 	. = list()
 	for(var/mob/listener as anything in listeners)
 		var/mob/living/living_listener = listener
@@ -239,7 +239,7 @@
 /// Overrides default_msg if the user has any front/anal chastity device, with a stronger override for spiked variants.
 /// Falls back to default_msg if no chastity is active (pass-through for non-chastity callers).
 /datum/sex_controller/proc/modular_get_chastity_climax_message(default_msg)
-	if(!modular_chastity_exposed(user) || modular_chastity_private_active(user))
+	if(modular_chastity_quiet_active(user) || !modular_chastity_exposed(user))
 		return default_msg
 	var/climax_msg = default_msg
 	if(has_chastity_cage() || has_chastity_anal())

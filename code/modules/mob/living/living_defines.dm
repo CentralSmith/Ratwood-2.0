@@ -266,4 +266,4 @@
 	/// Cached content preference for frequent device observer/listener checks.
 	var/chastity_content_enabled = FALSE
 	/// Remember privacy while disconnected, without checking a client on every reaction.
-	var/chastity_private_enabled = FALSE
+	var/chastity_quiet_enabled = FALSE

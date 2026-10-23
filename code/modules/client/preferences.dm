@@ -128,8 +128,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/erp_visuals = TRUE
 	var/chastenable = FALSE
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
-	/// Hide device descriptions, movement sounds and messages from other players.
-	var/private_chastity = FALSE
+	/// Mute automatic device sounds and notifications without hiding exposed devices.
+	var/quiet_chastity = FALSE
 	var/extreme_erp = FALSE
 	var/accept_oviposition = FALSE
 	var/edging = FALSE
