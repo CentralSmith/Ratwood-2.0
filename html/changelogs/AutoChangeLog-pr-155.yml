@@ -1,5 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Necra's Vow recognizes damage and blood-loss crit and resumes healing after rescue."
-  - balance: "Necra's Vow pauses healing in crit instead of adding oxygen damage."
