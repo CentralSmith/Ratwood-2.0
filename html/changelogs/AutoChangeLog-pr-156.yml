@@ -1,0 +1,4 @@
+author: "CentralSmith"
+delete-after: True
+changes:
+  - bugfix: "Inquisition targets receive their own Absolve and Amend notifications."
