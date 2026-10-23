@@ -37,6 +37,7 @@
 	..()
 	var/message = sanitize(input(howl_prompt_text, howl_prompt_title) as text|null)
 	if(!message) return
+	var/formatted_message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
 
 	var/datum/antagonist/antag_data = user.mind.has_antag_datum(howl_antag_type)
 
@@ -51,7 +52,7 @@
 
 		// Admin ghost visibility
 		if(IsAdminGhost(player))
-			to_chat(player, span_notice("[speaker_name] howls to the [howl_announcement_target]: [message]"))
+			to_chat(player, span_notice("[speaker_name] howls to the [howl_announcement_target]: [formatted_message]"))
 			continue
 
 		// Check each named channel to see if this player qualifies to hear the howl
@@ -63,7 +64,8 @@
 		if(HOWL_CHANNEL_GNOLL in howl_channels)
 			can_hear = can_hear || player.mind.has_antag_datum(/datum/antagonist/gnoll)
 		if(can_hear)
-			to_chat(player, span_boldannounce("[speaker_name] howls to the [howl_announcement_target]: [message]"))
+			// Keep the heading bold while allowing emphasis within the message itself.
+			to_chat(player, span_boldannounce("[speaker_name] howls to the [howl_announcement_target]: <span style='font-weight: normal'>[formatted_message]</span>"))
 
 		//sound played for other players
 		if(player == user) continue
