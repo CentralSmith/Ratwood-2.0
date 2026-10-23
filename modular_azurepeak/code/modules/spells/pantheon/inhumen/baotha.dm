@@ -108,11 +108,14 @@
 		target.visible_message(span_info("[target] begins to twitch as warmth radiates from them!"), span_notice("The pain from my wounds fade, every new one being a mere, pleasent warmth!"))
 		var/datum/physiology/phy = human_target.physiology
 		phy.pain_mod *= 0.5	//Literally halves your pain modifier.
-		addtimer(VARSET_CALLBACK(phy, pain_mod, phy.pain_mod /= 0.5), 1 MINUTES)	//Adds back the 0.5 of pain, basically setting it back to 1.
+		addtimer(CALLBACK(phy, TYPE_PROC_REF(/datum/physiology, end_numbing_pleasure)), 1 MINUTES)
 		target.apply_status_effect(/datum/status_effect/buff/vitae)					//+2 Fortune and mood buff
 		return TRUE
 	revert_cast(user)
 	return FALSE
+
+/datum/physiology/proc/end_numbing_pleasure()
+	pain_mod /= 0.5
 
 // T0 that tells the user the person's vices. If they have Deceiving Meekness (and you're a low-level cleric), this spell will lie to you instead.
 /obj/effect/proc_holder/spell/invoked/baothavice
