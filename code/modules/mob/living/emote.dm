@@ -1051,10 +1051,23 @@
 
 /datum/emote/living/haltyell
 	key = "haltyell"
+	key_third_person = "halt"
 	message = "shouts a halt!"
 	emote_type = EMOTE_AUDIBLE
-	only_forced_audio = TRUE
 	show_runechat = FALSE
+
+/datum/emote/living/haltyell/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
+	if(!..())
+		return FALSE
+	if(intentional && !(/mob/proc/haltyell in user.verbs) && !(/mob/proc/haltyell_exhausting in user.verbs))
+		return FALSE
+	return TRUE
+
+/datum/emote/living/haltyell/run_emote(mob/user, params, type_override, intentional = FALSE, targetted = FALSE)
+	. = ..()
+	// Text commands must retain the cost of the exhausting job verb.
+	if(. && intentional && !(/mob/proc/haltyell in user.verbs) && (/mob/proc/haltyell_exhausting in user.verbs))
+		user.stamina_add(rand(5,15))
 
 /datum/emote/living/rage
 	key = "rage"
@@ -1160,6 +1173,19 @@
 	. = ..()
 	if(.)
 		user.spin(4, 1)
+
+/datum/emote/living/pleased
+	key = "pleased"
+	message = "makes a pleased sound."
+	message_muffled = "makes a muffled pleased sound."
+	emote_type = EMOTE_AUDIBLE
+	show_runechat = FALSE
+
+/mob/living/carbon/human/verb/emote_pleased()
+	set name = "Pleased"
+	set category = "Noises"
+
+	emote("pleased", intentional = TRUE)
 
 /datum/emote/living/sigh
 	key = "sigh"
