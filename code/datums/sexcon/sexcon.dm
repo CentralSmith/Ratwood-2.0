@@ -714,11 +714,6 @@
 	log_combat(user, user, "Ejaculated")
 	if(!from_tailmaw && modular_try_handle_chastity_ejaculation())
 		return
-	if(!from_tailmaw && (has_chastity_cage() || has_chastity_anal()) && prob(50))
-		var/self_mess_msg = "[user] spills over [user.p_their()] own chastity!"
-		user.visible_message(span_love(self_mess_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
-		cum_onto(user)
-		return
 	if(!from_tailmaw && user.getorganslot(ORGAN_SLOT_PENIS) && knotted_status == KNOTTED_AS_TOP && knotted_owner == user && ishuman(knotted_recipient) && !QDELETED(knotted_recipient) && knotted_recipient?.sexcon)
 		var/orifice = knotted_part_partner
 		var/is_oral_knot = (orifice & SEX_PART_JAWS) != SEX_PART_NULL
@@ -734,12 +729,10 @@
 		return
 	var/climax_msg = "[user] makes a mess!"
 	var/modular_climax_msg = from_tailmaw ? null : modular_get_chastity_climax_message(climax_msg)
-	if(istext(modular_climax_msg))
-		climax_msg = modular_climax_msg
+	if(istext(modular_climax_msg) && modular_climax_msg != climax_msg)
+		user.chastity_visible_message(span_love(modular_climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	else
-		if(!from_tailmaw && (has_chastity_cage() || has_chastity_anal()))
-			climax_msg = "[user] climaxes and makes a mess in their chastity device!"
-	user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+		user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	playsound(user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
 	var/semen_vol = get_semen_volume()
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)

@@ -231,7 +231,10 @@
 	if(HAS_TRAIT(user, TRAIT_CHASTITY_SPIKED))
 		self_mess_msg = "[user] spurts over [user.p_their()] own spiked chastity!"
 
-	user.chastity_visible_message(span_love(self_mess_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+	if(modular_chastity_quiet_active(user) || !modular_chastity_exposed(user))
+		user.visible_message(span_love("[user] makes a mess!"), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+	else
+		user.chastity_visible_message(span_love(self_mess_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	cum_onto(user)
 	return TRUE
 
