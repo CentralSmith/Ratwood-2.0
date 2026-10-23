@@ -146,7 +146,7 @@
 	clothes_req = FALSE
 	human_req = FALSE
 	chargedrain = 0
-	chargetime = 0
+	chargetime = 5 SECONDS
 	antimagic_allowed = TRUE
 	ignore_cockblock = TRUE
 	recharge_time = 5 SECONDS
@@ -165,10 +165,27 @@
 	if(!antag_data.transformed)
 		to_chat(user, span_warning("I possess my mundane form already, and I cannot force the curse myself. I must wait for night."))
 		return
+	
+	// can go one of a few ways, while wolf:
+	// at night, where theyd need to wait for day to take effect
+	// at day, where it'd take effect soon
+	// at day, while untransforming, to cancel the transformation
+	// off to on, easy
+	// on to off, extra stuff i guess?
+	var/untfing = antag_data.untransforming
+	var/is_day = GLOB.tod != "night"
 	antag_data.ready_to_untransform = !antag_data.ready_to_untransform
-	if(antag_data.ready_to_untransform)
-		to_chat(user, span_notice("I release my hold on this cursed form, and allow daytime to return me to mundanity."))
-	else
-		to_chat(user, span_notice("I steel my resolve to maintain my cursed form, daytime shall not rob me of my claws and fur.")) // should be dramatic enough
+
+	if(antag_data.ready_to_untransform) // was off, now on
+		if(is_day)
+			to_chat(user, span_notice("I release my hold on this cursed form, and allow daytime to return me to mundanity."))
+		else
+			to_chat(user, span_notice("I release my hold on this cursed form, and when day breaks it shall return me to mundanity."))
+	else // was on, turn off
+		if(untfing) // will end up aborting the tf
+			to_chat(user, span_notice("I fight back against the daylight, returning my hold on this cursed form.")) // should be dramatic enough
+		else
+			to_chat(user, span_notice("I steel my resolve to maintain my cursed form, daytime shall not rob me of my claws and fur.")) // should be dramatic enough
+		antag_data.abort_untransformation(user) // either works
 
 

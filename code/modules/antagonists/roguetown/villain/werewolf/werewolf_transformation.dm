@@ -17,21 +17,26 @@
 /datum/antagonist/werewolf/proc/try_werewolf_auto_tf(mob/living/carbon/human/user)
 	if(!can_transform(user))
 		return
-	// if not werewolf, and its night, and sky...
-	if(time_is_right_under_moonlit_night(user))
-		start_the_transformation(user)
-		return // the furry -> bigfurry pipeline is started
-	if(time_is_day_under_daylight_day(user))
-		start_the_untransformation(user)
-		return
-	// tick whichever transform we're transforming to, if, it
-	if(is_magical_girl_transforming(user))
-		tick_magical_girl_transformation(user)
-	else if(is_unmagical_ungirl_untransforming(user))
-		tick_unmagical_ungirl_untransformation(user)
+
+	if(transformed)
+		if(time_is_day_under_daylight_day(user))
+			if(!is_unmagical_ungirl_untransforming(user))
+				start_the_untransformation(user)
+				return // the furry -> bigfurry pipeline is started
+			tick_unmagical_ungirl_untransformation(user)
+		else if(untransforming)
+			abort_untransformation(user)
+	else
+		if(time_is_right_under_moonlit_night(user))
+			if(!is_magical_girl_transforming(user))
+				start_the_transformation(user)
+				return // the bigfurry -> furry pipeline is started
+			tick_magical_girl_transformation(user)
+		else if(transforming)
+			abort_transformation(user)
 
 /datum/antagonist/werewolf/proc/time_is_day_under_daylight_day(mob/living/carbon/human/user)
-	if(untransforming) // already doing it
+	if(!transformed)
 		return FALSE
 	if(GLOB.tod == "night")
 		return FALSE // define? very fine~
@@ -43,13 +48,13 @@
 
 // Werewolf transforms at night AND under the sky
 /datum/antagonist/werewolf/proc/time_is_right_under_moonlit_night(mob/living/carbon/human/user)
-	if(transformed || transforming)
-		return FALSE // ugh these vars
+	if(transformed)
+		return FALSE
 	if(GLOB.tod != "night")
 		return FALSE
-	var/turf/here = get_turf(user)
-	if(!here)
-		return FALSE
+	var/turf/here = user.loc
+	if(!isturf(here))
+		return FALSE // inside something, or user is a turf and their loc is an area. actually impossible, but something I have to keep reminding myself, about the whole turf.loc = area thing
 	if(!here.can_see_sky())
 		return FALSE
 	return TRUE
@@ -98,9 +103,10 @@
 			if(delta_t < 35 SECONDS)
 				return
 			user.werewolf_transform()
+			ready_to_untransform = FALSE // just in case
 			transforming = FALSE // its both a boolean AND a timer!
 			transformed = TRUE // Mark as transformed
-			tf_stage = null // all done!
+			tf_stage = 0 // all done!
 
 /datum/antagonist/werewolf/proc/tick_unmagical_ungirl_untransformation(mob/living/carbon/human/user)
 	if(!transformed)
@@ -121,9 +127,29 @@
 				return
 			user.emote("rage", forced = TRUE)
 			user.werewolf_untransform()
+			ready_to_untransform = FALSE
 			transformed = FALSE
 			untransforming = FALSE // Reset untransforming phase
-			tf_stage = null
+			tf_stage = 0
+
+/datum/antagonist/werewolf/proc/abort_transformation(mob/living/carbon/human/user)
+	if(!transforming || transformed)
+		return // not wolfing, or already a wolf
+	untransforming = 0
+	tf_stage = 0
+	to_chat(user, span_userdanger("I resist the moonlight's influence! My transformation has ceased!"))
+	user.Stun(10)
+	user.Knockdown(10)
+
+/datum/antagonist/werewolf/proc/abort_untransformation(mob/living/carbon/human/user)
+	if(!untransforming || !transformed)
+		return // not unwolfine, or already not a wolf
+	ready_to_untransform = FALSE
+	untransforming = 0
+	tf_stage = 0
+	to_chat(user, span_userdanger("I reject the daylight's power!"))
+	user.Stun(10)
+	user.Knockdown(10)
 
 /mob/living/carbon/human/species/werewolf/death(gibbed, nocutscene = FALSE)
 	werewolf_untransform(TRUE, gibbed)
