@@ -141,7 +141,7 @@
 		list("id" = "erp_panel", "label" = "Enable ERP Panel Interactions", "enabled" = !!owner.prefs.sexable, "desc" = "Allow others to use ERP panel interactions on you."),
 		list("id" = "erp_visuals", "label" = "Enable ERP Visual Effects", "enabled" = !!owner.prefs.erp_visuals, "desc" = "Enable visual effects like hearts and screen overlays during ERP."),
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
-		list("id" = "quiet_chastity", "label" = "Quiet Chastity", "enabled" = !!owner.prefs.quiet_chastity, "disabled" = !owner.prefs.chastenable, "desc" = "Requires Enabled Chastity Content. Mutes automatic device sounds and notifications, including your own. Exposed devices remain visible when examined and on sprites; panel interactions still work."),
+		list("id" = "quiet_chastity", "label" = "Enable Quiet Chastity", "enabled" = !!owner.prefs.quiet_chastity, "disabled" = !owner.prefs.chastenable, "desc" = "Requires Enabled Chastity Content. Mutes automatic device sounds and notifications, including to yourself."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
 		list("id" = "accept_oviposition", "label" = "Accept Egg Implantation", "enabled" = !!owner.prefs.accept_oviposition, "desc" = "Allow partners with an ovipositor to implant eggs in you."),
