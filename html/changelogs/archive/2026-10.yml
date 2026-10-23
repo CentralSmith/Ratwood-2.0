@@ -616,6 +616,8 @@
       update clothing appearance.
   - bugfix: Torn and nonmodifiable sleeves can no longer be restored through sleeve
       rolling.
+  - bugfix: Werewolf and gnoll howls now support normal speech formatting for bold,
+      italics, and underlining.
   mypingishuge:
   - rscadd: Restores automatic chastity messages and sounds (limited to five tiles
       around), that are only shown to bystanders when the device's area is exposed,
