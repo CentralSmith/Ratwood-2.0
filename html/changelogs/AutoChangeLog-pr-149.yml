@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Fixed the Atgervi kite shield appearing beside its wearer when equipped in one back slot."
