@@ -31,6 +31,7 @@
 		TRAIT_SQUIRE_REPAIR,
 		TRAIT_INQUISITION,
 		TRAIT_RITUALIST, //Handles conversions, too, now.
+		TRAIT_HOMESTEAD_EXPERT,
 		TRAIT_SELF_AWARE //Shows full damage numbers on self-diagnosis, for QOL.
 	)
 
