@@ -1,4 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Bards no longer debuff themselves with their own dirges."

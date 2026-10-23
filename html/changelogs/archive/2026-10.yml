@@ -584,6 +584,7 @@
   - bugfix: Cancelling Path of Order or selecting an already-known option no longer
       spends devotion.
   - bugfix: Inquisition targets receive their own Absolve and Amend notifications.
+  - bugfix: Bards no longer debuff themselves with their own dirges.
   _Rarity:
   - qol: Aligned ERP panel controls into consistent rows and columns to reduce wrapping
       and movement when toggling settings.
