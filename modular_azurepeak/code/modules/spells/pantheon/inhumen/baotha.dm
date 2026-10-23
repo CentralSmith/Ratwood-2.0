@@ -99,17 +99,20 @@
 	devotion_cost = 75
 
 /obj/effect/proc_holder/spell/invoked/painkiller/cast(list/targets, mob/living/user)
-	if(isliving(targets[1]))
+	if(ishuman(targets[1]))
 		var/mob/living/target = targets[1]
 		var/mob/living/carbon/human/human_target = target
-		var/datum/physiology/phy = human_target.physiology
 		if(target.mob_biotypes & MOB_UNDEAD)
+			revert_cast(user)
 			return FALSE	//No, you don't get to feel good. You're a undead mob. Feel bad.
 		target.visible_message(span_info("[target] begins to twitch as warmth radiates from them!"), span_notice("The pain from my wounds fade, every new one being a mere, pleasent warmth!"))
+		var/datum/physiology/phy = human_target.physiology
 		phy.pain_mod *= 0.5	//Literally halves your pain modifier.
 		addtimer(VARSET_CALLBACK(phy, pain_mod, phy.pain_mod /= 0.5), 1 MINUTES)	//Adds back the 0.5 of pain, basically setting it back to 1.
 		target.apply_status_effect(/datum/status_effect/buff/vitae)					//+2 Fortune and mood buff
 		return TRUE
+	revert_cast(user)
+	return FALSE
 
 // T0 that tells the user the person's vices. If they have Deceiving Meekness (and you're a low-level cleric), this spell will lie to you instead.
 /obj/effect/proc_holder/spell/invoked/baothavice
@@ -497,6 +500,7 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if(target.mob_biotypes & MOB_UNDEAD)
+			revert_cast(user)
 			return FALSE
 
 		target.visible_message(
@@ -506,6 +510,8 @@
 		target.adjustToxLoss(3)
 		target.add_stress(/datum/stressevent/lasthigh)
 		return TRUE
+	revert_cast(user)
+	return FALSE
 
 /datum/stressevent/lasthigh
 	timer = 10 MINUTES
