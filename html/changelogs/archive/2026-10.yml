@@ -642,3 +642,5 @@
   - balance: Regular billhooks now have the spear's backstep special.
   - bugfix: Two-handed weapons no longer hide their wielded force in the properties
       panel when held with both hands.
+  - qol: Use the back and belt-side bag hotkeys to load bows, crossbows and slings
+      directly from worn quivers and ammunition pouches.
