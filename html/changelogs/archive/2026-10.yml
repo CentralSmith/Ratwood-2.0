@@ -637,6 +637,11 @@
       other living creatures.
   R3N0mon:
   - rscadd: Added spell "Give In To Daylight" To Werewolves
+  _Rarity:
+  - admin: Players in alternate forms no longer trigger deep-slumber admin warnings
+      for their stored original bodies.
+  - admin: Slumber Fartravel links now reject stored transformation bodies and recheck
+      eligibility after confirmation.
   kilozombie:
   - rscadd: Bathhouse agents can now advertise their services on the Rosewall.
   mypingishuge:

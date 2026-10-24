@@ -1,5 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - admin: "Players in alternate forms no longer trigger deep-slumber admin warnings for their stored original bodies."
-  - admin: "Slumber Fartravel links now reject stored transformation bodies and recheck eligibility after confirmation."
