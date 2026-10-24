@@ -629,3 +629,6 @@
   - bugfix: Cage equip attempts no longer mark a target as equipped before completion
       or redirect to the applicator; completed equips correctly transfer the held
       device to its wearer.
+2026-10-24:
+  R3N0mon:
+  - rscadd: Added spell "Give In To Daylight" To Werewolves
