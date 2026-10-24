@@ -1,0 +1,4 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - bugfix: "Two-handed weapons no longer hide their wielded force in the properties panel when held with both hands."
