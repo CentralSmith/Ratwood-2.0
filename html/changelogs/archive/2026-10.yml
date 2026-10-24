@@ -640,3 +640,5 @@
       of a hunting knife.
   - qol: Item Properties now show innate armour penetration when present.
   - balance: Regular billhooks now have the spear's backstep special.
+  - bugfix: Two-handed weapons no longer hide their wielded force in the properties
+      panel when held with both hands.
