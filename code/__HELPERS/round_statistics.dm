@@ -623,6 +623,7 @@ GLOBAL_LIST_INIT(featured_stats, list(
 		"object_stat" = TRUE
 	),	FEATURED_STATS_VIRTUES = list(
 		"name" = "TOP 10 Virtues",
+		"limit" = 10,
 		"color" = "#df5cb8",
 		"entries" = list(),
 		"object_stat" = TRUE,
@@ -649,12 +650,14 @@ GLOBAL_LIST_INIT(featured_stats, list(
 	),
 	FEATURED_STATS_BACKGROUNDS = list(
 		"name" = "TOP 10 Backgrounds",
+		"limit" = 10,
 		"color" = "#d4b483",
 		"entries" = list(),
 		"object_stat" = TRUE
 	),
 	FEATURED_STATS_BACKGROUNDS_LEAST = list(
 		"name" = "BOTTOM 10 Backgrounds",
+		"limit" = 10,
 		"color" = "#a6b8cf",
 		"entries" = list(),
 		"object_stat" = TRUE,
@@ -724,8 +727,9 @@ GLOBAL_LIST_EMPTY(chronicle_stats)
 	else
 		sortTim(entries, GLOBAL_PROC_REF(cmp_stat_count_desc))
 
+	var/listing_limit = stat_data["limit"] ? stat_data["limit"] : 14
 	var/list/result = list()
-	for(var/i in 1 to min(14, entries.len))
+	for(var/i in 1 to min(listing_limit, entries.len))
 		var/list/entry = entries[i]
 		var/rounded_count = round(entry["count"])
 		result += "[i]. [entry["name"]] - [rounded_count]"
