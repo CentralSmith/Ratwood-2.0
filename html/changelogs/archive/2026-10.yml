@@ -644,3 +644,7 @@
       panel when held with both hands.
   - qol: Use the back and belt-side bag hotkeys to load bows, crossbows and slings
       directly from worn quivers and ammunition pouches.
+  - map: Added Rosewalls to Neuhill's bathhouse, tavern and town street so bathhouse
+      workers can advertise their services.
+  - map: Added a Treasure Seeker at Neuhill's bathhouse service counter for deposits
+      into the bathhouse vault.
