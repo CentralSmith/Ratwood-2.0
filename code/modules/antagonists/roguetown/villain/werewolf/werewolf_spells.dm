@@ -147,6 +147,7 @@
 	human_req = FALSE
 	chargedrain = 0
 	chargetime = 5 SECONDS
+	invocation_type = "none"
 	antimagic_allowed = TRUE
 	ignore_cockblock = TRUE
 	recharge_time = 5 SECONDS
