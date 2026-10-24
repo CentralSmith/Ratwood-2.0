@@ -1,0 +1,4 @@
+author: "kilozombie"
+delete-after: True
+changes:
+  - rscadd: "Bathhouse agents can now advertise their services on the Rosewall."
