@@ -632,3 +632,9 @@
 2026-10-24:
   R3N0mon:
   - rscadd: Added spell "Give In To Daylight" To Werewolves
+  mypingishuge:
+  - rscadd: Forester Wardens can choose between a Billhook, Steel Messer and Iron
+      Shield, Kriegsmesser, Bronze War Axe and Iron Shield or Iron Greataxe, as their
+      starting equipment.
+  - balance: The Forester's former Axe kits now start with a Wardens' seax instead
+      of a hunting knife.
