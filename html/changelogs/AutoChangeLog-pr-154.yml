@@ -1,0 +1,5 @@
+author: "CentralSmith"
+delete-after: True
+changes:
+  - bugfix: "Tug of War no longer accumulates bonuses between casts or falsely reports successful pulls."
+  - balance: "Tug of War no longer has a hidden random failure roll and can target other living creatures."
