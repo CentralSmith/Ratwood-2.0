@@ -9971,12 +9971,6 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/manor/rockhill)
-"caN" = (
-/obj/structure/roguemachine/rosewall{
-	pixel_y = 0
-	},
-/turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/town/bath)
 "caS" = (
 /obj/structure/fluff/railing/fence{
 	dir = 8
@@ -69658,6 +69652,12 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/bog)
+"ouN" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0
+	},
+/turf/closed/wall/mineral/rogue/decostone,
+/area/rogue/indoors/town/bath)
 "ouX" = (
 /obj/effect/spawner/lootdrop/roguetown/sewers,
 /turf/open/floor/rogue/naturalstone,
@@ -94293,15 +94293,6 @@
 /obj/structure/bars/cemetery,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/town/rockhill)
-"tGP" = (
-/obj/structure/roguemachine/rosewall{
-	pixel_y = 0
-	},
-/obj/effect/decal/carpet{
-	pixel_y = 17
-	},
-/turf/open/floor/rogue/ruinedwood/chevron,
-/area/rogue/indoors/town/tavern)
 "tGQ" = (
 /turf/closed/wall/mineral/rogue/pipe,
 /area/rogue/indoors/town/magician/rockhill)
@@ -96829,6 +96820,12 @@
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/church/chapel)
+"ujj" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0
+	},
+/turf/closed/wall/mineral/rogue/stone/moss,
+/area/rogue/indoors/town/tavern)
 "ujr" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -110382,12 +110379,6 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/dungeon/oldgoblincamp)
-"wYY" = (
-/obj/structure/roguemachine/rosewall{
-	pixel_y = 0
-	},
-/turf/open/floor/rogue/greenstone,
-/area/rogue/outdoors/town/rockhill)
 "wZm" = (
 /obj/structure/roguemachine/headeater{
 	pixel_x = 32;
@@ -182736,7 +182727,7 @@ wrB
 sAY
 hSV
 nfP
-caN
+iel
 hnp
 eVY
 gNl
@@ -183167,7 +183158,7 @@ cGQ
 wTZ
 sAY
 lmJ
-eFJ
+ouN
 iey
 hDM
 sey
@@ -403481,7 +403472,7 @@ fnA
 fCu
 lyG
 jdg
-tGP
+oMa
 liB
 tsY
 fGr
@@ -404344,7 +404335,7 @@ thL
 wVI
 fnA
 lyG
-orb
+ujj
 qnD
 liB
 uoN
@@ -410822,7 +410813,7 @@ xAt
 lCU
 hdB
 vCN
-wYY
+hdB
 iAy
 pCV
 utT
