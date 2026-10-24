@@ -1,0 +1,4 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - qol: "Use the back and belt-side bag hotkeys to load bows, crossbows and slings directly from worn quivers and ammunition pouches."
