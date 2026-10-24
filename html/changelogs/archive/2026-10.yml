@@ -632,6 +632,8 @@
 2026-10-24:
   R3N0mon:
   - rscadd: Added spell "Give In To Daylight" To Werewolves
+  kilozombie:
+  - rscadd: Bathhouse agents can now advertise their services on the Rosewall.
   mypingishuge:
   - rscadd: Forester Wardens can choose between a Billhook, Steel Messer and Iron
       Shield, Kriegsmesser, Bronze War Axe and Iron Shield or Iron Greataxe, as their
