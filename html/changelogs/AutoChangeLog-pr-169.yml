@@ -1,0 +1,7 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - qol: "Mercenaries, adventurers and wretches are automatically listed as Available at the mercenary statue after class selection, including late joins."
+  - rscadd: "Newly registered mercenaries, adventurers and wretches receive a one-use chat link, sent five seconds after class setup and valid for five minutes after delivery, to choose their status and add an optional advertisement for the current round."
+  - qol: "Bathmasters and Bathhouse Attendants are automatically listed on the Rosewall, with the same delayed, one-use five-minute link to set their status and advertisement."
+  - qol: "Wretches can edit their alias through the spawn link. Wretch listings, contact menus and hiring replies use a physical descriptor or chosen alias instead of revealing their real name."
