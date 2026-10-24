@@ -135,7 +135,7 @@
 /datum/antagonist/werewolf/proc/abort_transformation(mob/living/carbon/human/user)
 	if(!transforming || transformed)
 		return // not wolfing, or already a wolf
-	untransforming = 0
+	transforming = 0
 	tf_stage = 0
 	to_chat(user, span_userdanger("I resist the moonlight's influence! My transformation has ceased!"))
 	user.Stun(10)
@@ -240,7 +240,7 @@
 	W.AddSpell(new /obj/effect/proc_holder/spell/self/howl)
 	W.AddSpell(new /obj/effect/proc_holder/spell/self/claws)
 	W.AddSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
-	W.AddSpell(new /obj/effect/proc_holder/spell/self/shiftback)
+	W.AddSpell(new /obj/effect/proc_holder/spell/invoked/shiftback)
 
 	ADD_TRAIT(src, TRAIT_NOSLEEP, TRAIT_GENERIC)
 	ADD_TRAIT(W, TRAIT_GRABIMMUNE, TRAIT_GENERIC) // THIS IS THE CORRECT PLACE FOR WEREWOLF TRAITS. GOD.
@@ -304,7 +304,7 @@
 	W.RemoveSpell(new /obj/effect/proc_holder/spell/self/howl)
 	W.RemoveSpell(new /obj/effect/proc_holder/spell/self/claws)
 	W.RemoveSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
-	W.RemoveSpell(new /obj/effect/proc_holder/spell/self/shiftback)
+	W.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/shiftback)
 	W.regenerate_icons()
 
 	to_chat(W, span_userdanger("I return to my facade."))

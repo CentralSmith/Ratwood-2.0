@@ -139,7 +139,7 @@
 	if(claw_index)
 		extended_claw_record[claw_index] = FALSE
 
-/obj/effect/proc_holder/spell/self/shiftback
+/obj/effect/proc_holder/spell/invoked/shiftback
 	name = "Give In To Daylight"
 	desc = "Allows daylight to revert my verevolf form to normal."
 	overlay_state = "tamebeast"
@@ -153,7 +153,10 @@
 	cooldown_min = 50
 	action_icon_state = "shapeshift"
 
-/obj/effect/proc_holder/spell/self/shiftback/cast(list/targets, mob/user)
+/obj/effect/proc_holder/spell/invoked/shiftback/calculate_chargetime(mob/living/user)
+	return chargetime
+
+/obj/effect/proc_holder/spell/invoked/shiftback/cast(list/targets, mob/user)
 	if(!user)
 		return
 	if(!user.mind)
@@ -187,5 +190,5 @@
 		else
 			to_chat(user, span_notice("I steel my resolve to maintain my cursed form, daytime shall not rob me of my claws and fur.")) // should be dramatic enough
 		antag_data.abort_untransformation(user) // either works
-
+	return TRUE
 
