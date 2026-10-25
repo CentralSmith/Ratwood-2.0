@@ -1656,6 +1656,7 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 	grassy_knoll = null
 	collar_bell_user = FALSE
 	collar_bell_target = FALSE
+	popwarning = FALSE
 	using_zones = list()
 
 /datum/sex_controller/proc/try_start_action(action_type)
