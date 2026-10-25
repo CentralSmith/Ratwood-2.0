@@ -669,6 +669,7 @@
 			animate(client, pixel_y)
 	else
 		cmode = TRUE
+		SEND_SIGNAL(L, COMSIG_MOB_COMBAT_MODE_ENABLED)
 		playsound_local(src, 'sound/misc/combon.ogg', 100)
 		if(length(L.cmode_music_override))
 			SSdroning.play_combat_music(L.cmode_music_override, client)
