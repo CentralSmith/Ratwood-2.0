@@ -72,6 +72,7 @@
 		/datum/job/roguetown/orthodoxist,
 		/datum/job/roguetown/absolver,
 		/datum/job/roguetown/keeper,
+		/datum/job/roguetown/martyr,
 
 		)
 	slot_adjust = list(
