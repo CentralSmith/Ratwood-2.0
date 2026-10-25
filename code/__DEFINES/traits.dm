@@ -133,6 +133,7 @@
 #define TRAIT_HEMOPHAGE "Hemophage"//You can drink blood for heals, but normal food and water makes you ill. Shitty vampire.
 #define TRAIT_BLOOD_DRINKER "Blood Drinker" // Blood quenches thirst without causing nausea.
 #define TRAIT_BAOTHA_FERTILITY_BOON "Marked and shaped by Baotha" //Able to be impregnated, has permanent womb tattoo and stronger version of nympho vice
+#define TRAIT_OVERLY_FERTILE "Overly Fertile"
 // chastity traits are defined in chastity_core.dm since they're pretty specific and it's easier to keep them there, but here are the trait defines for them:
 #define TRAIT_CHASTITY_FULL "Chastity Belt" //Prevents most penetrative sexual activity. Given by chastity belt.
 #define TRAIT_CHASTITY_CAGE "Chastity Cage" //Prevents most penis action sexual activity. Given by chastity cage.
@@ -659,6 +660,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STANDARD_BEARER = span_info("The banner is my lifeline. Just as I am to it. The retinue know to rally around me, so long as I keep it safe."),
 	TRAIT_WHITE_STAG = span_info("The power of the white stag lives on inside of me!"),
 	TRAIT_BAOTHA_FERTILITY_BOON = span_info("I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this"),
+	TRAIT_OVERLY_FERTILE = span_info("My exceptional fertility allows me to support pregnancy even without the usual reproductive anatomy, and increases my chance of pregnancy."),
 	TRAIT_FUSILIER = span_suppradio("I've been trained in the safe use of smokepowder. Additionally, knowledge above <b><u>journeyman</u></b> status is attainable."),
 	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),
 	TRAIT_CHASTITY_FULL = span_info("My chastity device prevents me from engaging in most penetrative sex."),
