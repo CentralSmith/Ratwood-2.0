@@ -675,6 +675,10 @@
       rankings.
   - bugfix: Background picks no longer appear in the Virtues ranking.
 2026-10-25:
+  NickBelmont, port by mypingishuge:
+  - rscadd: Use the Offer Quest emote or *quest to toggle an animated quest marker
+      above your character. Turning combat mode on, receiving an attack, or taking
+      damage removes the marker.
   _Rarity:
   - bugfix: Dragon wings now retain their Primary and Membrane colors after loading
       a character slot.
