@@ -1706,8 +1706,8 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "aJZ" = (
-/obj/structure/stairs/cw{
-	dir = 1
+/obj/structure/stairs/cwdown{
+	dir = 8
 	},
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "wooden_floor2";
@@ -2061,7 +2061,9 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/goblinfort)
 "aRE" = (
-/obj/structure/stairs/cw,
+/obj/structure/stairs/cwdown{
+	dir = 4
+	},
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "wooden_floor2";
 	dir = 1
@@ -6684,9 +6686,7 @@
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/town/grove)
 "dhz" = (
-/obj/structure/stairs/cw{
-	dir = 8
-	},
+/obj/structure/stairs/cwdown,
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/shop)
 "dhC" = (
@@ -8181,6 +8181,9 @@
 	},
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/bograt/west)
+"dUZ" = (
+/turf/open/floor/rogue/concrete,
+/area/rogue/outdoors/rtfield/rockhill)
 "dVj" = (
 /obj/item/natural/rock/coal,
 /turf/open/floor/rogue/dirt/road,
@@ -8263,6 +8266,10 @@
 /obj/structure/fluff/statue/gargoyle/moss/candles,
 /turf/open/water/swamp,
 /area/rogue/under/dungeon/sunkenchurch)
+"dXa" = (
+/obj/effect/landmark/start/villager,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/rtfield/rockhill)
 "dXk" = (
 /obj/structure/table/wood/large_table,
 /obj/item/reagent_containers/glass/bottle/rogue/healthpot{
@@ -12540,10 +12547,10 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/physician)
 "gcM" = (
+/obj/machinery/light/rogue/candle/l,
 /obj/structure/stairs/cw{
 	dir = 8
 	},
-/obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "wooden_floor2";
 	dir = 1
@@ -14151,7 +14158,10 @@
 	layer = 2.81;
 	plane = -6
 	},
-/turf/closed/void,
+/turf/open/floor/rogue/ruinedwood{
+	icon_state = "wooden_floor2";
+	dir = 1
+	},
 /area/rogue/indoors/town/shop)
 "gPU" = (
 /obj/structure/bars/grille,
@@ -19318,6 +19328,7 @@
 /area/rogue/under/cavewet)
 "jpJ" = (
 /obj/structure/chair/smallbench,
+/obj/effect/landmark/start/villager,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/rtfield/rockhill)
 "jpO" = (
@@ -25973,7 +25984,10 @@
 	locked = 1;
 	lockid = "shop"
 	},
-/turf/closed/wall/mineral/rogue/decowood,
+/turf/open/floor/rogue/ruinedwood{
+	icon_state = "wooden_floor2";
+	dir = 1
+	},
 /area/rogue/indoors/town/shop)
 "mEE" = (
 /obj/structure/fluff/railing/border,
@@ -31609,6 +31623,7 @@
 /obj/structure/chair/bench{
 	pixel_y = 7
 	},
+/obj/effect/landmark/start/villager,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
 "poT" = (
@@ -36136,7 +36151,7 @@
 /obj/structure/roguemachine/atm{
 	location_tag = "Merchant"
 	},
-/turf/open/floor/rogue/cobble/mossy,
+/turf/open/floor/rogue/concrete,
 /area/rogue/outdoors/rtfield/rockhill)
 "rxy" = (
 /obj/structure/flora/newleaf,
@@ -39023,9 +39038,6 @@
 	dir = 8
 	},
 /turf/open/water/swamp,
-/area/rogue/under/cavewet)
-"sSL" = (
-/turf/closed/wall/mineral/rogue/decostone,
 /area/rogue/under/cavewet)
 "sSP" = (
 /obj/effect/decal/cobbleedge{
@@ -49182,6 +49194,7 @@
 /area/rogue/indoors)
 "xNl" = (
 /obj/structure/chair/smallbench,
+/obj/effect/landmark/start/villager,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/rtfield/rockhill)
 "xNQ" = (
@@ -99521,9 +99534,9 @@ whb
 whb
 whb
 whb
-sSL
-sSL
-sSL
+eea
+eea
+eea
 whb
 whb
 whb
@@ -170178,7 +170191,7 @@ pAV
 tFv
 pAV
 xhC
-uaL
+aaE
 sjP
 sjP
 fxx
@@ -170487,7 +170500,7 @@ fxx
 sjP
 dPb
 bTw
-sjP
+dXa
 hGv
 sjP
 aaL
@@ -176529,7 +176542,7 @@ ryI
 qvR
 qvR
 spp
-qvR
+aaF
 uaL
 qvR
 fxx
@@ -177137,7 +177150,7 @@ gKp
 gpO
 bTo
 eYJ
-xvN
+dUZ
 sjP
 sjP
 xvN
@@ -177439,7 +177452,7 @@ aJZ
 avI
 vMG
 gPF
-uaL
+dUZ
 fxx
 sjP
 xsO
@@ -177741,7 +177754,7 @@ sIN
 vMG
 rfa
 gPF
-qvR
+dUZ
 fxx
 fxx
 uaL
@@ -178043,7 +178056,7 @@ uDv
 ies
 ies
 gPF
-qvR
+dUZ
 fxx
 sjP
 xvN
@@ -178946,10 +178959,10 @@ uaL
 uaL
 uaL
 uaL
-qvR
-sjP
-qvR
-qvR
+uaL
+uaL
+uaL
+uaL
 sjP
 sjP
 qvR

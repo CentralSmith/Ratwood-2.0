@@ -42,7 +42,11 @@
 /obj/structure/roguemachine/goldface{density=0}
 /turf/closed/wall/mineral/rogue/decostone/long{dir=1}
 /turf/closed/wall/mineral/rogue/decostone/long
-/obj/structure/fermentation_keg/water
 /obj/item/reagent_containers/glass/bucket
 /turf/open/floor/rogue/churchmarble
 /turf/closed/mineral/random/rogue
+/turf/open/floor/rogue/metal{icon_state="plating2"}
+/turf/open/floor/rogue/concrete
+/turf/open/floor/rogue/dirt/road
+/obj/effect/landmark/start/villager
+/area/rogue/under/cavewet
