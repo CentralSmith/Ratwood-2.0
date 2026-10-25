@@ -39,3 +39,4 @@ endmap
 map smollhill
 	votable
 endmap
+
