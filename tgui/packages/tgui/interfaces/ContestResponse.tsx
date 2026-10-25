@@ -59,6 +59,8 @@ export function ContestResponse() {
     switch (event.key) {
       case KEY.Space:
       case KEY.Enter:
+        event.preventDefault();
+        event.stopPropagation();
         activate(selected);
         return;
       case KEY.Left:
@@ -81,7 +83,7 @@ export function ContestResponse() {
 
   return (
     <Window width={460} height={250} title={title}>
-      <Window.Content onKeyDown={keyDownHandler}>
+      <Window.Content onKeyDownCapture={keyDownHandler}>
         <Section fill>
           <Stack fill vertical>
             <Stack.Item>

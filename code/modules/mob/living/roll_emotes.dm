@@ -166,7 +166,15 @@ GLOBAL_LIST_INIT(rollable_stats, list(
 		styled_name = "<span style='color:[color_to_use];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>[emotelocation]</b></span>"
 
 	log_message(chat_message, LOG_EMOTE)
-	emotelocation.visible_message(show_name ? "[styled_name] [chat_message]" : chat_message, runechat_message = runechat, log_seen = SEEN_LOG_EMOTE)
+	var/message = show_name ? "[styled_name] [chat_message]" : chat_message
+	var/list/hidden_ghosts = get_hidden_ghosts_for_target(src)
+	var/turf/emote_turf = get_turf(emotelocation)
+	for(var/mob/observer in GLOB.dead_mob_list)
+		if(!observer.client || isnewplayer(observer) || (observer in hidden_ghosts))
+			continue
+		if(observer.stat == DEAD && (observer.client.prefs?.chat_toggles & CHAT_GHOSTSIGHT) && !(observer in viewers(emote_turf, null)))
+			observer.show_message(message)
+	emotelocation.visible_message(message, runechat_message = runechat, log_seen = SEEN_LOG_EMOTE, ignored_mobs = hidden_ghosts)
 
 ///////////////////////////////// ROLL DICE EMOTE //////////////////////////////////
 
@@ -184,6 +192,9 @@ GLOBAL_LIST_INIT(rollable_stats, list(
 		if(!expression)
 			return
 
+	// The prompt may have stayed open while our state or cooldown changed.
+	if(!can_roll_dice())
+		return
 	if(!do_dice_roll(expression))
 		return
 
@@ -207,13 +218,14 @@ GLOBAL_LIST_INIT(rollable_stats, list(
 
 	// An omitted count means a single die, an omitted bonus means none at all. An omitted difficulty
 	// stays null, which is how we tell "no difficulty" apart from "a difficulty of zero".
-	var/count = text2num(dice_expression.group[1]) || 1
+	var/count_text = dice_expression.group[1]
+	var/count = length(count_text) ? text2num(count_text) : 1
 	var/sides = text2num(dice_expression.group[2])
 	var/bonus = text2num(dice_expression.group[3]) || 0
 	var/dc = text2num(dice_expression.group[4])
 
-	if(count > DICE_MAX_COUNT)
-		to_chat(src, span_warning("I cannot throw more than [DICE_MAX_COUNT] dice at once."))
+	if(count < 1 || count > DICE_MAX_COUNT)
+		to_chat(src, span_warning("I must throw between 1 and [DICE_MAX_COUNT] dice at once."))
 		return FALSE
 	if(sides < 2 || sides > DICE_MAX_SIDES)
 		to_chat(src, span_warning("A die has between 2 and [DICE_MAX_SIDES] faces."))
@@ -262,6 +274,7 @@ GLOBAL_LIST_INIT(rollable_stats, list(
 /// Bare `*dice` shortcut - takes no expression, just opens the same prompt as the Roll Dice verb.
 /datum/emote/living/roll_dice_emote
 	key = "dice"
+	mute_time = DICE_ROLL_COOLDOWN
 	mob_type_allowed_typecache = /mob/living/carbon/human
 
 /datum/emote/living/roll_dice_emote/run_emote(mob/user, params, type_override, intentional = FALSE)
@@ -811,6 +824,8 @@ GLOBAL_LIST_INIT(rollable_stats, list(
 
 	var/challenger_stat = GLOB.rollable_stats[challenger_choice]
 
+	if(!can_roll_dice())
+		return
 	to_chat(src, span_notice("Setting my [challenger_stat] against [defender]. Awaiting their answer..."))
 	// Neutral (xylix) styling here, same as the result tokens below - this is the "attempt" half of
 	// a paired roll, the coloured outcome is the other half once the contest resolves.
@@ -832,6 +847,8 @@ GLOBAL_LIST_INIT(rollable_stats, list(
 /// Bare `*contested` shortcut - opens the same target/stat prompts as the Contested Roll verb.
 /datum/emote/living/contested_roll_emote
 	key = "contested"
+	// The asynchronous response sets the cooldown when the contest resolves.
+	mute_time = 0
 	mob_type_allowed_typecache = /mob/living/carbon/human
 
 /datum/emote/living/contested_roll_emote/run_emote(mob/user, params, type_override, intentional = FALSE)
@@ -848,6 +865,8 @@ GLOBAL_LIST_INIT(rollable_stats, list(
 		return
 	if(!roll_contest_check(src, defender))
 		to_chat(src, span_warning("My contest with [defender] comes to nothing."))
+		return
+	if(!can_roll_dice() || !defender.can_roll_dice())
 		return
 
 	var/defender_stat = GLOB.rollable_stats[response]
