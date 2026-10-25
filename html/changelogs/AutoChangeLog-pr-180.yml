@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Dragon wings now retain their Primary and Membrane colors after loading a character slot."
