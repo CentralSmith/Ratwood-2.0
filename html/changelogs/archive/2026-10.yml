@@ -637,6 +637,11 @@
       other living creatures.
   R3N0mon:
   - rscadd: Added spell "Give In To Daylight" To Werewolves
+  _Rarity:
+  - admin: Players in alternate forms no longer trigger deep-slumber admin warnings
+      for their stored original bodies.
+  - admin: Slumber Fartravel links now reject stored transformation bodies and recheck
+      eligibility after confirmation.
   kilozombie:
   - rscadd: Bathhouse agents can now advertise their services on the Rosewall.
   mypingishuge:
@@ -666,3 +671,34 @@
   - qol: Wretches can edit their alias through the spawn link. Wretch listings, contact
       menus and hiring replies use a physical descriptor or chosen alias instead of
       revealing their real name.
+  - rscadd: End-of-round Featured Statistics now includes most and least picked background
+      rankings.
+  - bugfix: Background picks no longer appear in the Virtues ranking.
+2026-10-25:
+  NickBelmont, port by mypingishuge:
+  - rscadd: Use the Offer Quest emote or *quest to toggle an animated quest marker
+      above your character. Turning combat mode on, receiving an attack, or taking
+      damage removes the marker.
+  Ryan180602, zeroisthebiggay, port by mypingishuge:
+  - rscadd: Customize your hairstyle with a pixel editor in character customization,
+      with separate edits for each direction and colors based on your hair and gradients.
+  _Rarity:
+  - bugfix: Dragon wings now retain their Primary and Membrane colors after loading
+      a character slot.
+  - rscadd: Added `*fwing` to keep wings spread while moving or lying down. Use it
+      again to fold them; taking damage also folds them.
+  - rscadd: Guillotines can now be crafted from 3 small logs, 2 iron ingots, and 1
+      rope.
+  - qol: Wooden stakes can mine.
+  - bugfix: Prevent revenant's from popping their head off when they click-drag a
+      bag onto their.
+  - qol: Gnoll Claw can be used to make cured leather from hide.
+  - rscadd: Added Overly Fertile, a free quirk that increases fertility and allows
+      pregnancy without the usual anatomy.
+  changelingonberry, port by mypingishuge:
+  - rscadd: Added freeform dice rolls and contested stat rolls. Use the rolling commands
+      under Emotes.Rolling or the *dice, *stat and *contested shortcuts.
+  - qol: Stat rolls now show their dice, stats and trait modifiers in graphical chat
+      tooltips.
+  - config: Added optional autostart and minimum flavor-text/OOC-note settings, preserving
+      BD's current defaults.

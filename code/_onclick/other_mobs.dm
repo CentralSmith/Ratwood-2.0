@@ -43,6 +43,7 @@
 		rmb_stam_penalty = 1.5	// Uses a modifer instead of a flat addition, less than weapons no matter what rn. 50% extra stam cost basically.
 	if(isliving(A))
 		var/mob/living/L = A
+		SEND_SIGNAL(L, COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY, src)
 		if(!used_intent.noaa)
 			playsound(get_turf(src), pick(GLOB.unarmed_swingmiss), 100, FALSE)
 			// src.emote("attackgrunt")

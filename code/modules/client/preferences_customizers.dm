@@ -263,6 +263,7 @@
 	return null
 
 /datum/preferences/proc/genderize_customizer_entries()
+	clear_hair_preview_cache()
 	customizer_entries = SANITIZE_LIST(customizer_entries)
 	var/datum/species/species = pref_species
 	var/list/customizers = species.customizers

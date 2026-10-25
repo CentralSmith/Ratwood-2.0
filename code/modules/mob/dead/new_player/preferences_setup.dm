@@ -57,6 +57,7 @@
 
 /datum/preferences/proc/update_preview_icon(jobOnly = FALSE)
 	set waitfor = 0
+	clear_hair_preview_cache()
 	if(!parent)
 		return
 	if(parent.is_new_player())
