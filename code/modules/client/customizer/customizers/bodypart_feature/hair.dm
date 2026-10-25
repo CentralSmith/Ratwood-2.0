@@ -99,15 +99,11 @@
 	var/old_accessory = entry.accessory_type
 	..()
 	if(old_accessory != entry.accessory_type)
-		prefs.clear_hair_cache(entry.customizer_type)
 		var/datum/customizer_entry/hair/hair_entry = entry
 		hair_clear(hair_entry)
-		var/datum/custom_hair_ui/ui = prefs?.hair_uis?[entry.customizer_type]
-		if(ui)
-			ui.invalidate_entry_caches()
-			ui.edit_bands = list()
 		var/list/colors = hair_colors(hair_entry)
 		hair_entry.pix_color = colors[1]
+		prefs.clear_hair_cache(entry.customizer_type)
 
 /datum/customizer_entry/hair
 	var/hair_color = "#FFFFFF"
@@ -152,6 +148,7 @@
 	if(href_list["customizer_task"] == "custom_hair_clear")
 		var/datum/customizer_entry/hair/hair_entry = entry
 		hair_clear(hair_entry)
+		prefs.clear_hair_cache(customizer_type)
 		return
 	..()
 
@@ -160,14 +157,26 @@
 	var/tmp/list/hair_uis = list()
 
 /datum/preferences/proc/clear_hair_cache(customizer_type)
-	if(!hairprev_cache)
-		return
 	var/type_key = "[customizer_type]"
 	var/prefix = "[type_key]|"
 	var/prefix_end = length(prefix) + 1
-	for(var/cache_key in hairprev_cache.Copy())
+	for(var/cache_key in hairprev_cache?.Copy())
 		if(cache_key == type_key || copytext(cache_key, 1, prefix_end) == prefix)
 			hairprev_cache -= cache_key
+	var/datum/custom_hair_ui/editor = hair_uis?[type_key]
+	if(editor)
+		editor.invalidate_entry_caches()
+		editor.edit_bands = list()
+		editor.refresh_windows()
+
+/// Guides contain the whole character, not just the hair used to key the band cache.
+/datum/preferences/proc/clear_hair_preview_cache()
+	if(!length(hairprev_cache))
+		return
+	hairprev_cache = list()
+	for(var/key in hair_uis)
+		var/datum/custom_hair_ui/editor = hair_uis[key]
+		editor.refresh_windows()
 
 /datum/preferences/proc/hair_cache(datum/customizer_entry/hair/hair_entry, cache_key, reuse_cache)
 	var/list/cache = reuse_cache ? hairprev_cache[cache_key] : null
@@ -241,6 +250,11 @@
 	var/list/active_masks
 	/// Entry the caches were built against, so a slot/entry swap invalidates them.
 	var/datum/customizer_entry/last_entry
+	var/last_mask_version = -1
+	var/last_palette_key
+	var/last_accessory_type
+	/// Monotonic for this editor, including character-slot and palette changes.
+	var/mask_update_version = 0
 	/// Masks stashed while a guide render temporarily hides them from copy_to.
 	var/list/render_stash_colormasks
 	/// TRUE while a guide render has the entry's masks stashed away.
@@ -265,11 +279,20 @@
 /datum/custom_hair_ui/proc/get_entry()
 	if(!prefs)
 		return null
-	var/datum/customizer_entry/entry = prefs.get_customizer_entry_for_customizer_type(customizer_type)
-	if(entry != last_entry)
+	var/datum/customizer_entry/hair/entry = prefs.get_customizer_entry_for_customizer_type(customizer_type)
+	if(!istype(entry))
+		return null
+	var/palette_key = hair_palette_key(entry)
+	var/appearance_changed = entry != last_entry || entry.accessory_type != last_accessory_type
+	if(appearance_changed || entry.custom_mask_version != last_mask_version || palette_key != last_palette_key)
+		mask_update_version++
 		last_entry = entry
+		last_mask_version = entry.custom_mask_version
+		last_palette_key = palette_key
+		last_accessory_type = entry.accessory_type
 		invalidate_entry_caches()
-		edit_bands = list()
+		if(appearance_changed)
+			edit_bands = list()
 	return entry
 
 /datum/custom_hair_ui/proc/invalidate_entry_caches()
@@ -281,6 +304,11 @@
 	dir_states = null
 	masks_dir = null
 	active_masks = null
+
+/// Appearance changes can change the static drawing rectangle as well as the guide image.
+/datum/custom_hair_ui/proc/refresh_windows()
+	for(var/datum/tgui/ui in open_uis)
+		INVOKE_ASYNC(ui, TYPE_PROC_REF(/datum/tgui, send_full_update), null, TRUE)
 
 /datum/custom_hair_ui/proc/prepare_entry_masks()
 	var/datum/customizer_entry/hair/hair_entry = get_entry()
@@ -318,11 +346,11 @@
 	return pal_colours
 
 /datum/custom_hair_ui/proc/get_direction_states()
-	if(islist(dir_states))
-		return dir_states
 	var/datum/customizer_entry/hair/hair_entry = prepare_entry()
 	if(!hair_entry)
 		return list()
+	if(islist(dir_states))
+		return dir_states
 	dir_states = list()
 	for(var/preview_dir in GLOB.hair_preview_dirs)
 		var/edited = !!hairmask_dir_any(hair_entry.colormasks, preview_dir)
@@ -334,11 +362,11 @@
 	return dir_states
 
 /datum/custom_hair_ui/proc/get_color_masks(preview_dir)
-	if(masks_dir == preview_dir && islist(active_masks))
-		return active_masks
 	var/datum/customizer_entry/hair/hair_entry = prepare_entry()
 	if(!hair_entry)
 		return list()
+	if(masks_dir == preview_dir && islist(active_masks))
+		return active_masks
 	masks_dir = preview_dir
 	active_masks = hairmask_dir_data(hair_entry.colormasks, preview_dir) || list()
 	return active_masks
@@ -427,7 +455,7 @@
 	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 	var/icon/cached_icon
 	if(mannequin)
-		if(QDELETED(src) || hair_entry != get_entry())
+		if(QDELETED(src) || hair_entry != get_entry() || base_icons != get_icons())
 			unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 			base_icons -= pending_key
 			return
@@ -521,6 +549,7 @@
 		"paintColor" = hair_entry.pix_color,
 		"activeGuideIcon" = get_guide_icon(active_dir, user = user),
 		"activeColorMasks" = get_color_masks(active_dir),
+		"maskVersion" = mask_update_version,
 		"directions" = get_direction_states(),
 	)
 
@@ -542,9 +571,19 @@
 			pix_ready = TRUE
 			return TRUE
 		if("clear")
-			hair_clear(hair_entry)
+			if(!isnull(params["dir"]))
+				var/reset_dir = text2num(params["dir"])
+				if(!hair_dir_valid(reset_dir))
+					return TRUE
+				var/list/base_colormasks = hair_entry.colormasks
+				if(render_stash_active && isnull(base_colormasks))
+					base_colormasks = render_stash_colormasks
+				hair_entry.colormasks = hairmask_dir_replace(base_colormasks, reset_dir, list())
+				hair_entry.custom_mask_version++
+			else
+				hair_clear(hair_entry)
 			if(render_stash_active)
-				render_stash_colormasks = null
+				render_stash_colormasks = hair_entry.colormasks
 			invalidate_entry_caches()
 			prepare_entry(TRUE)
 			dirty = TRUE
@@ -563,7 +602,7 @@
 					if(!islist(layer))
 						continue
 					var/color = nearest_palette_colour(layer["color"])
-					var/mask = hairmask_crop_y(layer["mask"], edit_band["minY"], edit_band["maxY"])
+					var/mask = hairmask_crop_bounds(layer["mask"], edit_band["minX"], edit_band["maxX"], edit_band["minY"], edit_band["maxY"])
 					if(!color || !mask)
 						continue
 					dir_layers += list(list(

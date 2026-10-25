@@ -43,6 +43,7 @@ type HairEditorData = {
   paintColor: string;
   activeGuideIcon: string | null;
   activeColorMasks: MaskLayer[];
+  maskVersion: number;
   directions: DirButton[];
   directionIcons: DirGuide[];
 };
@@ -318,6 +319,7 @@ export const HairEditor = () => {
     paintColor: paintColour,
     activeGuideIcon,
     activeColorMasks = [],
+    maskVersion = 0,
     directions = [],
     directionIcons = [],
   } = data;
@@ -345,6 +347,8 @@ export const HairEditor = () => {
   const strokeDirtyRef = useRef<boolean>(false);
   const pendingCommitRef = useRef<string | null>(null);
   const pendingCommitDirRef = useRef<number | null>(null);
+  const pendingCommitVersionRef = useRef<number | null>(null);
+  const maskVersionRef = useRef(maskVersion);
   const pendingPointRef = useRef<PlotPoint | null>(null);
   const strokeFrameRef = useRef<number | null>(null);
   const lastPointRef = useRef<PlotPoint | null>(null);
@@ -360,6 +364,7 @@ export const HairEditor = () => {
     colour: paintColour,
   });
   const [localPaintColour, setLocalPaintColour] = useState<string>(paintColour);
+  const [showResetMenu, setShowResetMenu] = useState(false);
   const paletteSections = [
     {
       title: 'Base Hair',
@@ -401,6 +406,7 @@ export const HairEditor = () => {
   const clearPendingCommit = () => {
     pendingCommitRef.current = null;
     pendingCommitDirRef.current = null;
+    pendingCommitVersionRef.current = null;
   };
 
   const clearQueuedStrokePoint = () => {
@@ -423,7 +429,8 @@ export const HairEditor = () => {
     if (
       pendingCommit &&
       pendingCommitDirRef.current === activeDir &&
-      incomingKey !== pendingCommit
+      incomingKey !== pendingCommit &&
+      maskVersion <= (pendingCommitVersionRef.current ?? maskVersion)
     ) {
       return;
     }
@@ -439,7 +446,19 @@ export const HairEditor = () => {
     );
     strokeDirtyRef.current = false;
     setMaskLayers(incomingLayers);
-  }, [activeColorMasks, activeDir, editMinX, editMaxX, editMinY, editMaxY]);
+  }, [
+    activeColorMasks,
+    activeDir,
+    editMinX,
+    editMaxX,
+    editMinY,
+    editMaxY,
+    maskVersion,
+  ]);
+
+  useEffect(() => {
+    maskVersionRef.current = maskVersion;
+  }, [maskVersion]);
 
   useEffect(() => {
     maskLayersRef.current = maskLayers;
@@ -500,10 +519,17 @@ export const HairEditor = () => {
     }
 
     const image = new Image();
+    let cancelled = false;
     image.onload = () => {
-      drawGuide(image);
+      if (!cancelled) {
+        drawGuide(image);
+      }
     };
     image.src = src;
+    return () => {
+      cancelled = true;
+      image.onload = null;
+    };
   }, [
     activeGuide,
     activeGuideIcon,
@@ -546,6 +572,7 @@ export const HairEditor = () => {
     const nextLayers = cloneMaskLayers(maskLayersRef.current);
     pendingCommitRef.current = maskLayersKey(nextLayers);
     pendingCommitDirRef.current = strokeRef.current.dir;
+    pendingCommitVersionRef.current = maskVersionRef.current;
     setMaskLayers(nextLayers);
     act('plot_commit', {
       dir: strokeRef.current.dir,
@@ -790,7 +817,11 @@ export const HairEditor = () => {
               <Stack.Item>
                 <Stack>
                   <Stack.Item>
-                    <Button color="average" onClick={() => act('clear')}>
+                    <Button
+                      color="average"
+                      selected={showResetMenu}
+                      onClick={() => setShowResetMenu(!showResetMenu)}
+                    >
                       Reset Edits
                     </Button>
                   </Stack.Item>
@@ -803,6 +834,44 @@ export const HairEditor = () => {
               </Stack.Item>
             </Stack>
           </Stack.Item>
+
+          {showResetMenu && (
+            <Stack.Item>
+              <Section title="Reset Edits">
+                <Box mb={1}>Choose which direction to reset.</Box>
+                <Stack wrap="wrap">
+                  {directions.map((dir) => (
+                    <Stack.Item key={dir.dir}>
+                      <Button
+                        onClick={() => {
+                          act('clear', { dir: dir.dir });
+                          setShowResetMenu(false);
+                        }}
+                      >
+                        {dir.label}
+                      </Button>
+                    </Stack.Item>
+                  ))}
+                  <Stack.Item>
+                    <Button
+                      color="average"
+                      onClick={() => {
+                        act('clear');
+                        setShowResetMenu(false);
+                      }}
+                    >
+                      All Directions
+                    </Button>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button onClick={() => setShowResetMenu(false)}>
+                      Cancel
+                    </Button>
+                  </Stack.Item>
+                </Stack>
+              </Section>
+            </Stack.Item>
+          )}
 
           <Stack.Item>
             <Section title="Palette">

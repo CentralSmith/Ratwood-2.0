@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(hair_preview_dirs, list(SOUTH, WEST, NORTH, EAST))
 /proc/hairmask_clean(mask)
 	if(!istext(mask) || length(mask) != 256)
 		return null
-	mask = lowertext(mask)
+	mask = LOWER_TEXT(mask)
 	for(var/i in 1 to 256)
 		var/char_code = text2ascii(mask, i)
 		if(char_code < 48)
@@ -253,6 +253,30 @@ GLOBAL_LIST_INIT(hair_preview_dirs, list(SOUTH, WEST, NORTH, EAST))
 	if(!has_bits)
 		return null
 	return "[repeat_string(prefix_len, "0")][body][repeat_string(suffix_len, "0")]"
+
+/// Restricts an untrusted stroke to the same rectangle exposed by the editor.
+/proc/hairmask_crop_bounds(mask, min_x, max_x, min_y, max_y)
+	mask = hairmask_crop_y(mask, min_y, max_y)
+	if(!mask)
+		return null
+	min_x = clamp(round(min_x), 1, 32)
+	max_x = clamp(round(max_x), 1, 32)
+	if(min_x > max_x)
+		return null
+	var/static/list/hex_digits = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
+	var/list/digits = list()
+	var/has_bits = FALSE
+	for(var/index in 1 to 256)
+		var/value = hairmask_hex_value(mask, index)
+		var/first_x = ((index - 1) % 8) * 4 + 1
+		for(var/bit_index in 0 to 3)
+			var/pixel_x = first_x + bit_index
+			if(pixel_x < min_x || pixel_x > max_x)
+				value &= ~(1 << bit_index)
+		if(value)
+			has_bits = TRUE
+		digits += hex_digits[value + 1]
+	return has_bits ? jointext(digits, "") : null
 
 /// Paints a mask onto an icon, coalescing horizontal runs into single DrawBox calls.
 /proc/hairmask_drawbits(icon/target_icon, mask, fillcolor)
