@@ -2926,3 +2926,28 @@
 	else
 		show_tongue_noise_warning()
 		return
+
+// Ported from Ochre Valley.
+/datum/emote/living/quest
+	key = "quest"
+	key_third_person = "has a quest to offer!"
+	message = "has a quest to offer!"
+	emote_type = EMOTE_AUDIBLE
+	show_runechat = TRUE
+
+/datum/emote/living/quest/run_emote(mob/living/user, params, type_override, intentional, targetted, animal)
+	if(user.overlays_standing[QUEST_OFFER_LAYER])
+		user.clear_overhead_indicator(user.overlays_standing[QUEST_OFFER_LAYER], QUEST_OFFER_LAYER)
+		to_chat(user, span_notice("You have stopped signaling you're offering a quest."))
+		return TRUE
+	. = ..()
+	if(!.)
+		return
+	user.play_overhead_indicator_simple('icons/mob/quest_offer.dmi', "quest", -1, QUEST_OFFER_LAYER, soundin = 'sound/misc/levelup1.ogg', y_offset = 32)
+	to_chat(user, span_notice("You have signaled you are offering a quest. Use the 'Offer Quest' emote again to stop."))
+
+/mob/living/carbon/human/verb/emote_quest()
+	set name = "Offer Quest"
+	set category = "Emotes"
+
+	emote("quest", intentional = TRUE)
