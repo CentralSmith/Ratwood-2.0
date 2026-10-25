@@ -725,6 +725,8 @@
 				user.try_impregnate(knotted_recipient)
 			else if((orifice & SEX_PART_ANUS) && HAS_TRAIT(knotted_recipient, TRAIT_BAOTHA_FERTILITY_BOON) && !knotted_recipient.getorganslot(ORGAN_SLOT_VAGINA))
 				user.try_impregnate(knotted_recipient)
+			else if((orifice & SEX_PART_ANUS) && HAS_TRAIT(knotted_recipient, TRAIT_OVERLY_FERTILE) && !knotted_recipient.getorganslot(ORGAN_SLOT_VAGINA))
+				user.try_impregnate(knotted_recipient)
 		cum_into(oral = is_oral_knot, splashed_user = knotted_recipient, orifice = orifice, skip_knot_try = TRUE)
 		return
 	var/climax_msg = "[user] makes a mess!"

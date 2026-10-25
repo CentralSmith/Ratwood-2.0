@@ -29,6 +29,21 @@
 	added_stashed_items = list("Bag of Cursed Fetish Gear" = /obj/item/storage/roguebag/cursed_keepsakes)
 	incompatible_quirks = list(/datum/quirk/acquiredtastes)
 
+/datum/quirk/overly_fertile
+	name = "Overly Fertile"
+	point_cost = 0
+	desc = "Life finds fertile ground in me. My body has an unusual gift for nurturing new life, even where nature would ordinarily draw the line."
+	custom_text = "Restores fertility to existing reproductive organs and manticore tails, enables pregnancy without the usual reproductive anatomy, and grants the same increased pregnancy chance as Marked by Baotha. Does not add a brand or an addiction, and does not stack with Baotha's fertility boon."
+	added_traits = list(TRAIT_OVERLY_FERTILE)
+
+/datum/quirk/overly_fertile/apply_to_human(mob/living/carbon/human/recipient)
+	var/obj/item/organ/vagina/reproductive_organ = recipient.getorganslot(ORGAN_SLOT_VAGINA)
+	if(reproductive_organ)
+		reproductive_organ.fertility = TRUE
+	var/obj/item/organ/tail/manticore/tail = get_manticore_tail(recipient)
+	if(tail)
+		tail.fertility = TRUE
+
 /datum/quirk/orgasmdenier
 	name = "Orgasm Denier"
 	point_cost = 0
