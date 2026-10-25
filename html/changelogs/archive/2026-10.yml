@@ -687,3 +687,10 @@
       a character slot.
   - rscadd: Added `*fwing` to keep wings spread while moving or lying down. Use it
       again to fold them; taking damage also folds them.
+  changelingonberry, port by mypingishuge:
+  - rscadd: Added freeform dice rolls and contested stat rolls. Use the rolling commands
+      under Emotes.Rolling or the *dice, *stat and *contested shortcuts.
+  - qol: Stat rolls now show their dice, stats and trait modifiers in graphical chat
+      tooltips.
+  - config: Added optional autostart and minimum flavor-text/OOC-note settings, preserving
+      BD's current defaults.
