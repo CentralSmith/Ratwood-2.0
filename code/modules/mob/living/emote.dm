@@ -2934,17 +2934,42 @@
 	message = "has a quest to offer!"
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = TRUE
+	var/static/list/cancel_signals = list(COMSIG_MOB_COMBAT_MODE_ENABLED, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_BULLET_ACT)
 
 /datum/emote/living/quest/run_emote(mob/living/user, params, type_override, intentional, targetted, animal)
 	if(user.overlays_standing[QUEST_OFFER_LAYER])
-		user.clear_overhead_indicator(user.overlays_standing[QUEST_OFFER_LAYER], QUEST_OFFER_LAYER)
-		to_chat(user, span_notice("You have stopped signaling you're offering a quest."))
+		stop_offering_quest(user)
 		return TRUE
 	. = ..()
 	if(!.)
 		return
 	user.play_overhead_indicator_simple('icons/mob/quest_offer.dmi', "quest", -1, QUEST_OFFER_LAYER, soundin = 'sound/misc/levelup1.ogg', y_offset = 32)
+	RegisterSignal(user, cancel_signals, PROC_REF(stop_offering_quest))
+	RegisterSignal(user, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY), PROC_REF(on_hand_attack))
+	RegisterSignal(user, COMSIG_LIVING_IMPACT_ZONE, PROC_REF(on_thrown_hit))
+	RegisterSignal(user, COMSIG_MOB_APPLY_DAMGE, PROC_REF(on_damage))
 	to_chat(user, span_notice("You have signaled you are offering a quest. Use the 'Offer Quest' emote again to stop."))
+
+/datum/emote/living/quest/proc/stop_offering_quest(mob/living/user)
+	SIGNAL_HANDLER
+	UnregisterSignal(user, cancel_signals + list(COMSIG_ATOM_ATTACK_HAND, COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY, COMSIG_LIVING_IMPACT_ZONE, COMSIG_MOB_APPLY_DAMGE))
+	user.clear_overhead_indicator(user.overlays_standing[QUEST_OFFER_LAYER], QUEST_OFFER_LAYER)
+	to_chat(user, span_notice("You have stopped signaling you're offering a quest."))
+
+/datum/emote/living/quest/proc/on_hand_attack(mob/living/user, mob/living/attacker)
+	SIGNAL_HANDLER
+	if(attacker.used_intent?.type != INTENT_HELP)
+		stop_offering_quest(user)
+
+/datum/emote/living/quest/proc/on_thrown_hit(mob/living/user, obj/item/item)
+	SIGNAL_HANDLER
+	if(item.throwforce > 0)
+		stop_offering_quest(user)
+
+/datum/emote/living/quest/proc/on_damage(mob/living/user, damage)
+	SIGNAL_HANDLER
+	if(damage > 0)
+		stop_offering_quest(user)
 
 /mob/living/carbon/human/verb/emote_quest()
 	set name = "Offer Quest"

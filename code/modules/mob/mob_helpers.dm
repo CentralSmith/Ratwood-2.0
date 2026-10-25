@@ -669,9 +669,7 @@
 			animate(client, pixel_y)
 	else
 		cmode = TRUE
-		if(L.overlays_standing[QUEST_OFFER_LAYER])
-			L.clear_overhead_indicator(L.overlays_standing[QUEST_OFFER_LAYER], QUEST_OFFER_LAYER)
-			to_chat(L, span_notice("You have stopped signaling you're offering a quest."))
+		SEND_SIGNAL(L, COMSIG_MOB_COMBAT_MODE_ENABLED)
 		playsound_local(src, 'sound/misc/combon.ogg', 100)
 		if(length(L.cmode_music_override))
 			SSdroning.play_combat_music(L.cmode_music_override, client)
