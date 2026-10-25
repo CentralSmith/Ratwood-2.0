@@ -687,6 +687,14 @@
       a character slot.
   - rscadd: Added `*fwing` to keep wings spread while moving or lying down. Use it
       again to fold them; taking damage also folds them.
+  - rscadd: Guillotines can now be crafted from 3 small logs, 2 iron ingots, and 1
+      rope.
+  - qol: Wooden stakes can mine.
+  - bugfix: Prevent revenant's from popping their head off when they click-drag a
+      bag onto their.
+  - qol: Gnoll Claw can be used to make cured leather from hide.
+  - rscadd: Added Overly Fertile, a free quirk that increases fertility and allows
+      pregnancy without the usual anatomy.
   changelingonberry, port by mypingishuge:
   - rscadd: Added freeform dice rolls and contested stat rolls. Use the rolling commands
       under Emotes.Rolling or the *dice, *stat and *contested shortcuts.
