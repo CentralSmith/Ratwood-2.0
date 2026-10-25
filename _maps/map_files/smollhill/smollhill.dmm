@@ -5055,6 +5055,8 @@
 /obj/machinery/light/rogue/lanternpost{
 	dir = 1
 	},
+/obj/effect/landmark/start/vagrantlate,
+/obj/effect/landmark/start/vagrant,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/rtfield/rockhill)
 "coM" = (
@@ -7520,6 +7522,12 @@
 "dBi" = (
 /turf/open/floor/rogue/blocks/paving,
 /area/rogue/indoors)
+"dBk" = (
+/obj/structure/flora/roguegrass,
+/obj/effect/landmark/start/vagrant,
+/obj/effect/landmark/start/vagrantlate,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/rtfield/rockhill)
 "dBm" = (
 /obj/structure/closet/crate/roguecloset{
 	pixel_x = 3
@@ -10351,6 +10359,24 @@
 /obj/machinery/light/rogue/candle/red,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/dungeon/sunkenchurch)
+"eVs" = (
+/obj/structure/closet/crate/chest{
+	lockid = "church"
+	},
+/obj/item/reagent_containers/food/snacks/butter,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/egg,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/town/basement)
 "eVu" = (
 /obj/effect/spawner/lootdrop/roguetown/sewers,
 /turf/open/floor/rogue/ruinedwood,
@@ -12756,6 +12782,11 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/dungeon/wizarddungeon)
+"ghE" = (
+/obj/effect/landmark/start/vagrantlate,
+/obj/effect/landmark/start/vagrant,
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/rtfield/rockhill)
 "ghH" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	name = "Bunk 1";
@@ -16487,6 +16518,8 @@
 	dir = 10
 	},
 /obj/machinery/light/rogue/lanternpost,
+/obj/effect/landmark/start/vagrant,
+/obj/effect/landmark/start/vagrantlate,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/rtfield/rockhill)
 "hTd" = (
@@ -37102,7 +37135,7 @@
 /obj/effect/landmark/start/inqlate,
 /obj/effect/landmark/start/puritan,
 /turf/open/transparent/openspace,
-/area/rogue/outdoors/rtfield/rockhill)
+/area/rogue/indoors/inq/import)
 "rNO" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -37253,6 +37286,11 @@
 "rQi" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield/rockhill)
+"rQk" = (
+/obj/effect/landmark/start/vagrant,
+/obj/effect/landmark/start/vagrantlate,
+/turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/rtfield/rockhill)
 "rQy" = (
 /obj/structure/bed/rogue{
@@ -38174,6 +38212,12 @@
 /obj/item/rope,
 /turf/open/floor/rogue/twig,
 /area/rogue/under/cavewet)
+"soI" = (
+/obj/structure/flora/roguegrass,
+/obj/effect/landmark/start/vagrantlate,
+/obj/effect/landmark/start/vagrant,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/rtfield/rockhill)
 "soZ" = (
 /obj/structure/vine,
 /turf/closed/wall/mineral/rogue/wooddark,
@@ -43616,12 +43660,6 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement)
-"vbr" = (
-/obj/structure/spider/stickyweb{
-	color = "#d1cdc7"
-	},
-/turf/open/floor/rogue/herringbone,
-/area/rogue/under/town/basement)
 "vbw" = (
 /obj/structure/rack/rogue,
 /obj/item/clothing/cloak/stabard/bog,
@@ -44856,6 +44894,11 @@
 	light_outer_range = 5
 	},
 /area/rogue/indoors/town/physician)
+"vEa" = (
+/obj/effect/landmark/start/vagrant,
+/obj/effect/landmark/start/vagrantlate,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/rtfield/rockhill)
 "vEc" = (
 /obj/structure/fluff/railing/wood/east,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -50118,7 +50161,7 @@
 	startTurfX = 45;
 	startTurfY = 150;
 	endTurfX = 255;
-	endTurfY = 400
+	endTurfY = 300
 	},
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/cavewet)
@@ -82960,7 +83003,7 @@ whb
 cTA
 aPd
 wHU
-vbr
+wHU
 wHU
 scn
 whb
@@ -83260,8 +83303,8 @@ whb
 whb
 whb
 bNC
+eVs
 wHU
-vbr
 wHU
 qes
 scn
@@ -83563,8 +83606,8 @@ whb
 whb
 bNC
 qPg
-vbr
-vbr
+wHU
+wHU
 scn
 scn
 whb
@@ -83864,7 +83907,7 @@ whb
 whb
 whb
 cTA
-vbr
+wHU
 wHU
 aPd
 cTA
@@ -175909,9 +175952,9 @@ ohh
 jyI
 qbG
 hcg
-jXZ
-oXK
-sjP
+rQk
+dBk
+vEa
 hSR
 lcH
 uaL
@@ -177117,9 +177160,9 @@ ohh
 jyI
 qbG
 hcg
-jXZ
-jXZ
-oXK
+ghE
+ghE
+soI
 coC
 fdo
 fxx
