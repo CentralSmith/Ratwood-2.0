@@ -7,7 +7,7 @@
 /datum/map_adjustment/template/smollhill
 	map_file_name = "smollhill.dmm"
 	realm_name = "Rockhill"
-	blacklist = list(//I had wanted the map variable in the roles themselves to bar them from non-desert maps but it still shows up in the Latejoin menu so I'm doing this just to keep it clear)
+	blacklist = list(
 		/datum/job/roguetown/cataphract,
 		// /datum/job/roguetown/vizier,
 		/datum/job/roguetown/headslave,
@@ -69,7 +69,6 @@
 		/datum/job/roguetown/knavewench,
 		/datum/job/roguetown/adventurer/courtagent,
 
-		/datum/job/roguetown/puritan,
 		/datum/job/roguetown/orthodoxist,
 		/datum/job/roguetown/absolver,
 		/datum/job/roguetown/keeper,
@@ -100,7 +99,7 @@
 		THREAT_REGION_ROCKHILL_BOG_SOUTH,
 		THREAT_REGION_ROCKHILL_BOG_SUNKMIRE,
 		THREAT_REGION_ROCKHILL_WOODS_NORTH,
-		THREAT_REGION_ROCKHILL_WOODS_SOUTH
+		THREAT_REGION_ROCKHILL_WOODS_SOUTH,
 	)
 	// The realm is Rockhill here, so the Rockhill trade county becomes Vespermill, its
 	// noble seat. Same region_id and goods; only the identity changes.
