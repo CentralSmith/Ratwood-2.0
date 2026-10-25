@@ -678,3 +678,5 @@
   _Rarity:
   - bugfix: Dragon wings now retain their Primary and Membrane colors after loading
       a character slot.
+  - rscadd: Added `*fwing` to keep wings spread while moving or lying down. Use it
+      again to fold them; taking damage also folds them.
