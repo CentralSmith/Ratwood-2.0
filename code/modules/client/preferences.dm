@@ -2049,6 +2049,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						taur_type = null
 					else
 						taur_type = taur_selection[new_taur_type]
+					validate_customizer_entries()
 
 					var/obj/item/bodypart/taur/tt = taur_type
 					to_chat(user, span_red("Your character now has [tt ? tt::name : "no taurtype."]."))
