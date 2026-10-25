@@ -108,7 +108,7 @@
 	var/hide_pintle_visuals = FALSE
 	/// Bypasses positioning and exposure checks entirely
 	var/freeuse = FALSE
-	// If FALSE, the warning when 
+	// If FALSE, the warning when in danger of belly-popping someone will display
 	var/popwarning = FALSE
 	// Moved here from proc/get_generic_force_adjective to reduce list initialization/destruction
 	var/static/list/stealth_force_adjectives 	= list("subtly", "sneakily", "covertly", "stealthily", "quietly")
