@@ -68,6 +68,7 @@
 		/datum/job/roguetown/tailor,
 		/datum/job/roguetown/knavewench,
 		/datum/job/roguetown/adventurer/courtagent,
+		/datum/job/roguetown/adventurer/courtslave,
 
 		/datum/job/roguetown/orthodoxist,
 		/datum/job/roguetown/absolver,
@@ -76,8 +77,8 @@
 
 		)
 	slot_adjust = list(
-		/datum/job/roguetown/warden = 8,
-		/datum/job/roguetown/adventurer/courtslave = 2,
+		/datum/job/roguetown/warden = 6,
+		/datum/job/roguetown/templar = 2,
 	)
 	title_adjust = list(
 		/datum/job/roguetown/lord = list(display_title = "Duke", f_title = "Duchess"),

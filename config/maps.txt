@@ -37,6 +37,5 @@ map neuhill
 endmap
 
 map smollhill
-	votable
 endmap
 
