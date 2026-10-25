@@ -235,6 +235,7 @@
 #include "code\__HELPERS\cmp.dm"
 #include "code\__HELPERS\config.dm"
 #include "code\__HELPERS\customization.dm"
+#include "code\__HELPERS\hair_customization.dm"
 #include "code\__HELPERS\dates.dm"
 #include "code\__HELPERS\direction.dm"
 #include "code\__HELPERS\dna.dm"
