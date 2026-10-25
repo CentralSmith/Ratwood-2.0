@@ -674,3 +674,7 @@
   - rscadd: End-of-round Featured Statistics now includes most and least picked background
       rankings.
   - bugfix: Background picks no longer appear in the Virtues ranking.
+2026-10-25:
+  _Rarity:
+  - bugfix: Dragon wings now retain their Primary and Membrane colors after loading
+      a character slot.
