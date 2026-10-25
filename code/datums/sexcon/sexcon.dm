@@ -2025,7 +2025,7 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 					groin.add_wound(/datum/wound/fracture)
 
 /datum/sex_controller/proc/try_belly_pop(mob/living/carbon/human/target)
-	var/list/excluded = get_extreme_content_excluded_mobs(target)
+	var/list/excluded = get_extreme_content_excluded_mobs(user)
 	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force == SEX_FORCE_LUDICROUS)
 		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
 			if(prob(10) && !target.has_status_effect(/datum/status_effect/quivering))
