@@ -1,0 +1,8 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - rscadd: "Guillotines can now be crafted from 3 small logs, 2 iron ingots, and 1 rope."
+  - qol: "Wooden stakes can mine."
+  - bugfix: "Prevent revenant's from popping their head off when they click-drag a bag onto their."
+  - qol: "Gnoll Claw can be used to make cured leather from hide."
+  - rscadd: "Added Overly Fertile, a free quirk that increases fertility and allows pregnancy without the usual anatomy."
