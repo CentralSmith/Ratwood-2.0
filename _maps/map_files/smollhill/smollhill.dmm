@@ -4,7 +4,7 @@
 	dir = 4
 	},
 /turf/closed/mineral/rogue/bedrock,
-/area/rogue/under/town/basement)
+/area/rogue/under/cave)
 "aab" = (
 /obj/structure/far_travel,
 /turf/open/floor/rogue/concrete,
@@ -17107,7 +17107,7 @@
 "ikt" = (
 /obj/structure/lever/wall{
 	name = "Store Shutters";
-	step_x = 19;
+	pixel_x = 19;
 	redstone_id = "lowtownstore"
 	},
 /obj/machinery/light/rogue/candle/r,
@@ -27891,11 +27891,11 @@
 /area/rogue/under/dungeon/sunkenchurch)
 "nzC" = (
 /obj/structure/chair/zybantine_sofa/right{
-	step_x = 2;
-	step_y = 10
+	pixel_x = 2;
+	pixel_y = 10
 	},
 /obj/effect/decal/carpet{
-	step_x = -14
+	pixel_x = -14
 	},
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town/shop)
@@ -38734,12 +38734,12 @@
 	dir = 8
 	},
 /obj/structure/roguemachine/mail{
-	step_x = 5;
+	pixel_x = 5;
 	mailtag = "Store"
 	},
 /obj/structure/rack/rogue/shelf/big{
-	step_x = 5;
-	step_y = -1
+	pixel_x = 5;
+	pixel_y = 15
 	},
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "wooden_floor2";
@@ -42481,8 +42481,8 @@
 "uDv" = (
 /obj/machinery/light/rogue/candle,
 /obj/structure/rack/rogue/shelf/biggest{
-	step_x = 3;
-	step_y = 3
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
 	loot = list(/obj/item/rogueweapon/shovel=3, /obj/item/rogueweapon/thresher=3, /obj/item/flint=4, /obj/item/rogueweapon/stoneaxe/woodcut=3, /obj/item/rogueweapon/hammer/iron=3, /obj/item/rogueweapon/tongs=3, /obj/item/rogueweapon/pick=3, /obj/item/rogueweapon/sickle=3, /obj/item/rogueweapon/huntingknife=3, /obj/item/rogueweapon/huntingknife/scissors=3, /obj/item/rogueweapon/hoe=3)
@@ -48784,8 +48784,8 @@
 /area/rogue/indoors/town/warden)
 "xDb" = (
 /obj/structure/rack/rogue/shelf/biggest{
-	step_x = 1;
-	step_y = 3
+	pixel_x = 1;
+	pixel_y = 3
 	},
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
 /turf/open/floor/rogue/ruinedwood{
@@ -49784,8 +49784,8 @@
 	dir = 8
 	},
 /obj/structure/chair/zybantine_sofa/left{
-	step_x = 2;
-	step_y = 10
+	pixel_x = 2;
+	pixel_y = 10
 	},
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/ruinedwood/herringbone,
@@ -246832,7 +246832,7 @@ kKp
 kKp
 "}
 (142,1,3) = {"
-ohh
+sYw
 vRu
 vRu
 xlA
@@ -247134,7 +247134,7 @@ kKp
 kKp
 "}
 (143,1,3) = {"
-ohh
+sYw
 vRu
 xlA
 xlA
@@ -247738,7 +247738,7 @@ kKp
 kKp
 "}
 (145,1,3) = {"
-ohh
+sYw
 vRu
 xlA
 xlA
@@ -248040,7 +248040,7 @@ kKp
 kKp
 "}
 (146,1,3) = {"
-ohh
+sYw
 vRu
 xlA
 xlA
@@ -248342,7 +248342,7 @@ kKp
 kKp
 "}
 (147,1,3) = {"
-ohh
+sYw
 vRu
 xlA
 xlA
