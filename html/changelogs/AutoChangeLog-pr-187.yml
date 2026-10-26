@@ -1,0 +1,6 @@
+author: "tatsu"
+delete-after: True
+changes:
+  - rscadd: "Added optional taur genital sprites and a taur vagina visibility toggle."
+  - image: "Added Ant, Wasp, and Spider ovipositors and Bee tail butt genital sprites."
+  - rscadd: "Added Oviduct alongside existing vagina appearances."
