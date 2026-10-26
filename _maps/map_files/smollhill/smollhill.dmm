@@ -36654,7 +36654,7 @@
 /area/rogue/indoors/town/physician)
 "rBY" = (
 /obj/structure/bondage/gloryhole{
-	dir = 4
+	dir = 8
 	},
 /obj/structure/curtain/brown{
 	icon_state = "curtain-closed";
