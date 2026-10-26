@@ -182,7 +182,8 @@
 				continue
 
 			// Try to insert the organ
-			if(organ.Insert(human_target))
+			organ.Insert(human_target)
+			if(human_target.getorganslot(organ.slot) == organ)
 				human_target.visible_message(
 					span_info("\The [organ] attaches itself to [human_target]!"),
 					span_notice("\The [organ] attaches itself to me!")
