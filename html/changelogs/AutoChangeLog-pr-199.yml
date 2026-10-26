@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Fixed saved customization presets incorrectly restoring selected languages and causing language runtime errors."
