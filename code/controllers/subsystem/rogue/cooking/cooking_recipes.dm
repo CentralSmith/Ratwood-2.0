@@ -36,7 +36,7 @@
 	if(!href_list["show_recipe"] || !usr?.client)
 		return
 	// Only the persistent recipes registered by the cooking subsystem can serve pages.
-	if(!(src in SScooking?.recipe_index[base_item]))
+	if(!(src in SScooking?.recipe_index[base_item]) && !(src in SScooking?.preparation_recipes))
 		return
 	var/datum/browser/popup = new(usr, "food_recipe", name, 650, 650)
 	popup.set_content(generate_html(usr))
@@ -47,9 +47,7 @@
 
 	var/atom/base = base_item
 	if(base)
-		var/datum/food_recipe/producer = SScooking?.result_index[base]
-		var/base_label = producer && producer != src ? producer.get_examine_link(initial(base.name)) : html_encode(initial(base.name))
-		html += "<p><b>Start with:</b> [food_recipe_icon(base, user)] [base_label]</p>"
+		html += "<p><b>Start with:</b> [food_recipe_icon(base, user)] [item_recipe_label(base)]</p>"
 
 	if(length(ingredients))
 		html += "<p>Prepare the ingredients on a table.</p>"
@@ -62,7 +60,7 @@
 				html += "<li>[amt] [UNIT_FORM_STRING(amt)] of [initial(R.name)]</li>"
 			else
 				var/atom/A = entry
-				html += "<li>[food_recipe_icon(A, user)] [initial(A.name)]</li>"
+				html += "<li>[food_recipe_icon(A, user)] [item_recipe_label(A)]</li>"
 		html += "</ul>"
 
 	var/atom/result = result_type
@@ -85,6 +83,28 @@
 				html += "<li>[F.get_examine_link()]</li>"
 			html += "</ul>"
 
+	return html
+
+/// A prerequisite may be an assembly recipe or an existing cooking/slicing transformation.
+/datum/food_recipe/proc/item_recipe_label(atom/item_type)
+	var/datum/food_recipe/producer = SScooking?.result_index[item_type]
+	if(producer && producer != src)
+		return producer.get_examine_link(initial(item_type.name))
+	return html_encode(initial(item_type.name))
+
+/// Read-only pages generated from item variables, never used by food assembly.
+/datum/food_recipe/preparation
+	var/instruction
+	var/result_amount = 1
+
+/datum/food_recipe/preparation/generate_html(mob/user)
+	var/atom/base = base_item
+	var/atom/result = result_type
+	var/html = "<h2>[html_encode(name)]</h2>"
+	html += "<p><b>Start with:</b> [food_recipe_icon(base, user)] [item_recipe_label(base)]</p>"
+	html += "<p>[instruction]</p>"
+	html += "<p><b>Produces:</b> [result_amount] x [food_recipe_icon(result, user)] [html_encode(initial(result.name))]</p>"
+	html += describe_food_result(result)
 	return html
 
 /// Recipe illustrations need no live items or their initialization side effects.
