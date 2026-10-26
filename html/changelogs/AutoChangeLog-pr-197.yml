@@ -1,0 +1,5 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - qol: "Port AP's Food examine text to include clickable recipe suggestions and clearer preparation instructions."
+  - qol: "Recipe pages link ingredients to their known cooking, slicing, drying, or assembly instructions."
