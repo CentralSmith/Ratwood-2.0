@@ -2,6 +2,8 @@ SUBSYSTEM_DEF(cooking)
 	name = "Cooking Controller"
 	flags = SS_NO_FIRE
 	var/list/recipe_index = list() // Key: base_item path | Value: list of recipe datums
+	/// First existing recipe that produces each item; used only for recipe information.
+	var/list/result_index = list()
 
 /datum/controller/subsystem/cooking/Initialize()
 	init_recipes()
@@ -15,6 +17,8 @@ SUBSYSTEM_DEF(cooking)
 		if(!recipe_index[recipe.base_item])
 			recipe_index[recipe.base_item] = list()
 		recipe_index[recipe.base_item] += recipe
+		if(recipe.result_type && !result_index[recipe.result_type])
+			result_index[recipe.result_type] = recipe
 
 /datum/controller/subsystem/cooking/proc/get_recipe(obj/item/base, obj/item/ingredient)
 	if(!recipe_index[base.type])
