@@ -108,6 +108,8 @@
 	var/hide_pintle_visuals = FALSE
 	/// Bypasses positioning and exposure checks entirely
 	var/freeuse = FALSE
+	// If FALSE, the warning when in danger of belly-popping someone will display
+	var/popwarning = FALSE
 	// Moved here from proc/get_generic_force_adjective to reduce list initialization/destruction
 	var/static/list/stealth_force_adjectives 	= list("subtly", "sneakily", "covertly", "stealthily", "quietly")
 	var/static/list/low_force_adjectives 		= list("gently", "carefully", "tenderly", "gingerly", "delicately", "lazily")
@@ -1649,6 +1651,7 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 	grassy_knoll = null
 	collar_bell_user = FALSE
 	collar_bell_target = FALSE
+	popwarning = FALSE
 	using_zones = list()
 
 /datum/sex_controller/proc/try_start_action(action_type)
@@ -2016,6 +2019,25 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 				if(prob(10))
 					var/obj/item/bodypart/groin = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_GROIN))
 					groin.add_wound(/datum/wound/fracture)
+
+/datum/sex_controller/proc/try_belly_pop(mob/living/carbon/human/target)
+	var/list/excluded = get_extreme_content_excluded_mobs(user)
+	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force == SEX_FORCE_LUDICROUS)
+		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
+			if(prob(10) && !target.has_status_effect(/datum/status_effect/quivering))
+				target.apply_status_effect(/datum/status_effect/quivering)
+				target.confused += 25
+				target.OffBalance(30 SECONDS)
+			if(!HAS_TRAIT(target, TRAIT_RESILIENT_LOVER) && !target.has_wound(/datum/wound/slash/disembowel))
+				if(popwarning == FALSE)
+					to_chat(user, span_danger("[target]'s body is straining around my shaft; I may <b><i>BREAK</i></b> them if I keep going."))
+					to_chat(target, span_danger("[user] is being too rough... my skin can't take much more!"))
+					popwarning = TRUE
+				if(prob(5))
+					var/obj/item/bodypart/belly = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_STOMACH))
+					user.visible_message(span_userdanger("[user]'s tip tears open [target]'s belly, their organs spilling out in a bloody burst!"), ignored_mobs = excluded)
+					belly.add_wound(/datum/wound/slash/disembowel)
+					popwarning = FALSE
 
 /datum/sex_controller/proc/try_jaw_crush(mob/living/carbon/human/target)
 	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force > SEX_FORCE_MID)

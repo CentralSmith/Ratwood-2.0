@@ -133,6 +133,13 @@
 	point_cost = 0
 	added_traits = list(TRAIT_RESILIENT_LOVER)
 
+/datum/quirk/poppable
+	name = "Size Sensitive"
+	desc = "My body is fragile during intimacy."
+	custom_text = "Run the risk of being seriously, fatally injured during rough intimacy."
+	point_cost = 0
+	added_traits = list(TRAIT_POPPABLE)
+
 /datum/quirk/redolent
 	name = "Redolent"
 	desc = "My body odor is strong and distinct. Without regular baths, others will notice..."
