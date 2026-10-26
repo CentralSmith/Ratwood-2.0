@@ -3091,6 +3091,9 @@
 	icon_state = "corner"
 	},
 /area/rogue/outdoors/town/grove)
+"boX" = (
+/turf/closed/wall/mineral/rogue/decostone,
+/area/rogue/indoors)
 "bpl" = (
 /obj/effect/wisp,
 /obj/structure/flora/roguegrass/jungle/sparse,
@@ -8965,9 +8968,9 @@
 	},
 /area/rogue/indoors/town/warden)
 "enV" = (
-/obj/structure/toilet,
-/obj/machinery/light/rogue/candle/r,
-/turf/open/floor/rogue/blocks/paving,
+/obj/machinery/light/rogue/torchholder/l,
+/obj/structure/table/wood,
+/turf/open/floor/rogue/tile/masonic,
 /area/rogue/indoors)
 "eob" = (
 /turf/closed/wall/mineral/rogue/wooddark,
@@ -9358,6 +9361,11 @@
 	dir = 8
 	},
 /area/rogue/outdoors/rtfield/rockhill/above)
+"exL" = (
+/turf/closed/wall/mineral/rogue/decostone/long{
+	dir = 1
+	},
+/area/rogue/indoors)
 "exN" = (
 /obj/structure/bars/passage/preopen,
 /turf/open/floor/rogue/concrete,
@@ -10117,7 +10125,6 @@
 /obj/structure/rack/rogue/shelf{
 	pixel_y = 26
 	},
-/obj/structure/bookcase/random,
 /obj/structure/fluff/walldeco/painting/skull{
 	pixel_x = 32
 	},
@@ -10125,6 +10132,7 @@
 	pixel_x = 1;
 	pixel_y = 35
 	},
+/obj/structure/roguemachine/steward,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "eOH" = (
@@ -12294,11 +12302,9 @@
 	},
 /area/rogue/under/cavewet)
 "fSc" = (
-/obj/structure/mineral_door/wood/deadbolt{
-	name = "Privy";
-	dir = 1
+/turf/open/floor/rogue/tile/masonic{
+	dir = 8
 	},
-/turf/open/floor/rogue/blocks/paving,
 /area/rogue/indoors)
 "fSn" = (
 /obj/structure/rack/rogue,
@@ -16367,7 +16373,6 @@
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bograt/sunken)
 "hNC" = (
-/obj/structure/curtain/directional/black,
 /turf/closed/wall/mineral/rogue/stone/window,
 /area/rogue/indoors)
 "hNE" = (
@@ -25741,6 +25746,9 @@
 /obj/structure/fluff/grindwheel,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
+"msw" = (
+/turf/open/floor/rogue/tile/masonic,
+/area/rogue/indoors)
 "msD" = (
 /obj/structure/flora/roguetree,
 /turf/open/floor/rogue/dirt,
@@ -28238,12 +28246,6 @@
 "nDa" = (
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/indoors/town/physician)
-"nDb" = (
-/obj/machinery/light/rogue/campfire/fireplace{
-	pixel_y = 32
-	},
-/turf/open/floor/rogue/ruinedwood,
-/area/rogue/indoors)
 "nDk" = (
 /obj/item/reagent_containers/glass/bottle/alchemical/healthpot,
 /obj/item/reagent_containers/glass/bottle/alchemical/healthpot,
@@ -29389,10 +29391,6 @@
 	color = "#ffd9f2"
 	},
 /area/rogue/under/town/basement)
-"ohH" = (
-/obj/structure/rack/rogue/shelf,
-/turf/open/floor/rogue/ruinedwood,
-/area/rogue/indoors)
 "ohL" = (
 /mob/living/carbon/human/species/skeleton/npc/miner,
 /obj/item/rope,
@@ -33520,6 +33518,14 @@
 /obj/structure/fluff/walldeco/bigpainting/lake,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/under/town/basement)
+"qgr" = (
+/obj/structure/roguethrone{
+	name = "throne of Rockhill"
+	},
+/turf/open/floor/rogue/tile/masonic{
+	dir = 8
+	},
+/area/rogue/indoors)
 "qgI" = (
 /obj/structure/roguemachine/mail{
 	mailtag = "Bog - Flooded Mine Town"
@@ -34241,6 +34247,11 @@
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bograt/north)
+"qzS" = (
+/obj/machinery/light/rogue/torchholder/r,
+/obj/structure/table/wood,
+/turf/open/floor/rogue/tile/masonic,
+/area/rogue/indoors)
 "qzX" = (
 /obj/structure/closet/crate/roguecloset/inn,
 /obj/item/clothing/suit/roguetown/shirt/undershirt/formal,
@@ -34560,7 +34571,7 @@
 	locked = 1;
 	lockid = "walls"
 	},
-/turf/closed/void,
+/turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors/town/warden)
 "qGx" = (
 /obj/structure/rack/rogue/shelf{
@@ -39612,6 +39623,9 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tavern)
+"sZY" = (
+/turf/closed/wall/mineral/rogue/decostone/long,
+/area/rogue/indoors)
 "tac" = (
 /obj/structure/bookcase{
 	name = "inconspicuous bookcase"
@@ -316039,10 +316053,10 @@ xlA
 xlA
 xlA
 xlA
-pAV
-pAV
-pAV
-ohH
+exL
+qgr
+msw
+xbD
 ryI
 wOD
 jxe
@@ -316341,10 +316355,10 @@ xlA
 xlA
 xlA
 xlA
-pAV
-jCh
-tFv
-nDb
+exL
+qzS
+fSc
+xbD
 vGG
 oKn
 oKn
@@ -316643,9 +316657,9 @@ czk
 czk
 czk
 czk
-pAV
-pAV
-pAV
+boX
+sZY
+sZY
 mtB
 gDs
 jCh
@@ -393353,7 +393367,7 @@ xlA
 xlA
 xlA
 pAV
-jCh
+pAV
 pAV
 cGx
 nYw
