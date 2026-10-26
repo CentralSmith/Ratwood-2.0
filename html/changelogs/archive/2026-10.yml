@@ -721,6 +721,13 @@
       assembly instructions.
   - bugfix: Fixed saved customization presets incorrectly restoring selected languages
       and causing language runtime errors.
+  kittysmooch, KatTheFox, Ryan180602, ToasterStrudes, zeskorion, port by mypingishuge:
+  - rscadd: More weapons and tools can be twirled, with skill requirements, visible
+      in-hand animations, and fumbles.
+  - rscadd: Added a configurable Alt-grip / Twirl hotkey, defaulting to Alt+G, for
+      the active held item's right-click action.
+  - rscadd: Weapon twirls display correctly in both hands and while facing east or
+      west.
   mypingishuge:
   - rscadd: Added Folding Table for 2 points and Mess Kit for 3 points to the loadout
       menu.
