@@ -108,6 +108,9 @@
 /obj/item/rogueweapon/scabbard/proc/puke_sword(mob/living/user)
 	if(!sheathed)
 		return FALSE
+	if(user.get_active_held_item())
+		to_chat(user, span_warning("My active hand needs to be empty."))
+		return FALSE
 
 	if(obj_broken)
 		user.visible_message(
@@ -119,9 +122,13 @@
 	if(!move_after(user, sheathe_time, target = user))
 		return FALSE
 
+	if(!sheathed || user.get_active_held_item())
+		return FALSE
 	sheathed.forceMove(user.loc)
 	sheathed.pickup(user)
-	user.put_in_hands(sheathed)
+	if(!user.put_in_active_hand(sheathed))
+		sheathed.forceMove(src)
+		return FALSE
 	sheathed = null
 	update_icon(user)
 
