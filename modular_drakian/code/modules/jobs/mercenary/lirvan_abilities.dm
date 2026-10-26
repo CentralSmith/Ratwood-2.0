@@ -69,7 +69,7 @@ Last, the specials for DRAKKYRMAW and the golden quarterstaff.
 		owner.emote("whimper", forced = TRUE)
 		return
 	to_chat(owner, span_notice("WEALTH answers my call. Every single one of my [wealth_value] pieces of it."))
-	if(wealth_value > 300)
+	if(wealth_value >= 300)
 		ADD_TRAIT(owner, TRAIT_FORTITUDE, TRAIT_STATUS_EFFECT(id))
 		gonna_fort = TRUE
 		to_chat(owner, span_userdanger("FORTIFIED."))
@@ -90,7 +90,7 @@ Last, the specials for DRAKKYRMAW and the golden quarterstaff.
 		effectedstats = list(STATKEY_CON = 1, STATKEY_LCK = 1)
 	else if(wealth_value < 200)
 		effectedstats = list(STATKEY_STR = 1, STATKEY_CON = 1, STATKEY_LCK = 1)
-	else if(wealth_value < 299)
+	else if(wealth_value < 300)
 		effectedstats = list(STATKEY_STR = 2, STATKEY_CON = 1, STATKEY_LCK = 1)
 	else if(wealth_value < 360)
 		effectedstats = list(STATKEY_STR = 2, STATKEY_CON = 2, STATKEY_LCK = 1, STATKEY_SPD = 1)
