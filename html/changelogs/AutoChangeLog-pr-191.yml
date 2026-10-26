@@ -1,0 +1,4 @@
+author: "Lamasmaster, port by mypingishuge"
+delete-after: True
+changes:
+  - rscadd: "Characters now have guts, which spill alongside the stomach during disembowelment instead of ejecting the liver."
