@@ -1,0 +1,5 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - bugfix: "Repeated clicks no longer bypass the wait between hammer repairs."
+  - balance: "Hammer repair steps now use a 0.6-second base interval."
