@@ -722,6 +722,7 @@
   mypingishuge:
   - rscadd: Added Folding Table for 2 points and Mess Kit for 3 points to the loadout
       menu.
+  - bugfix: Grabs no longer break when dragging someone from a diagonal position.
   tatsu:
   - rscadd: Added optional taur genital sprites and a taur vagina visibility toggle.
   - image: Added Ant, Wasp, and Spider ovipositors and Bee tail butt genital sprites.
