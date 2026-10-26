@@ -409,9 +409,14 @@
 			var/pull_dir = get_dir(src, pulling)
 			//puller and pullee more than one tile away or in diagonal position
 			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
-				pulling.moving_from_pull = src
-				pulling.Move(T, get_dir(pulling, T), glide_size) //the pullee tries to reach our previous position
-				pulling.moving_from_pull = null
+				pullee.moving_from_pull = src
+				if(pull_dir in GLOB.cardinals)
+					pullee.Move(T, get_dir(pullee, T), glide_size)
+				else
+					// Follow diagonally without resolving the move as a single cardinal step.
+					pullee.forceMove(T)
+				if(!QDELETED(pullee))
+					pullee.moving_from_pull = null
 			check_pulling()
 
 	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
@@ -539,7 +544,8 @@
 	SET_ACTIVE_MOVEMENT(oldloc, NONE, TRUE, null)
 
 	if(destination)
-		if(pulledby)
+		// Only preserve a grab for an adjacent follow move initiated by its puller.
+		if(pulledby && (moving_from_pull != pulledby || destination.z != pulledby.z || get_dist(destination, pulledby) > 1))
 			pulledby.stop_pulling()
 		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
