@@ -728,6 +728,8 @@
       assembly instructions.
   - bugfix: Fixed saved customization presets incorrectly restoring selected languages
       and causing language runtime errors.
+  - bugfix: Background rankings no longer count the same character's background repeatedly
+      after fartravel and respawning.
   kittysmooch, KatTheFox, Ryan180602, ToasterStrudes, zeskorion, port by mypingishuge:
   - rscadd: More weapons and tools can be twirled, with skill requirements, visible
       in-hand animations, and fumbles.
