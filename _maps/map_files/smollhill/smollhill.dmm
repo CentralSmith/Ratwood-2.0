@@ -5177,7 +5177,8 @@
 /obj/item/quiver/arrows,
 /obj/item/quiver/arrows,
 /obj/item/quiver/arrows,
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow,
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/warden)
 "csc" = (
@@ -34533,7 +34534,7 @@
 	locked = 1;
 	lockid = "walls"
 	},
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
+/turf/closed/void,
 /area/rogue/indoors/town/warden)
 "qGx" = (
 /obj/structure/rack/rogue/shelf{
@@ -254133,7 +254134,7 @@ xlA
 qbG
 efu
 xSv
-xSv
+lFM
 wMB
 qbG
 xlA
@@ -255946,7 +255947,7 @@ qbG
 efu
 xSv
 xSv
-lFM
+wMB
 qbG
 xlA
 xlA
