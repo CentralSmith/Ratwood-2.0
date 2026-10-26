@@ -705,6 +705,13 @@
   - config: Added optional autostart and minimum flavor-text/OOC-note settings, preserving
       BD's current defaults.
 2026-10-26:
+  GarrusVakarian:
+  - map: Fixes random map generation
+  - map: Removes one of the two soilson spots
+  - map: Moves slaughterhouse and the chicken coop to the removed soilson spot
+  - map: Moves the shop, stockpile and shipping thing to the main square
+  - map: Adds a guard tower where the shop used to be
+  - map: Adds hermes and jawbank to the church
   Lamasmaster, port by mypingishuge:
   - rscadd: Characters now have guts, which spill alongside the stomach during disembowelment
       instead of ejecting the liver.

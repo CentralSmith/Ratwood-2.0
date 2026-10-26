@@ -1,9 +1,0 @@
-author: "GarrusVakarian"
-delete-after: True
-changes:
-  - map: "Fixes random map generation"
-  - map: "Removes one of the two soilson spots"
-  - map: "Moves slaughterhouse and the chicken coop to the removed soilson spot"
-  - map: "Moves the shop, stockpile and shipping thing to the main square"
-  - map: "Adds a guard tower where the shop used to be"
-  - map: "Adds hermes and jawbank to the church"
