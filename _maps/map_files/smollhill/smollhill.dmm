@@ -44531,7 +44531,9 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
 "vvy" = (
-/obj/effect/landmark/mapGenerator/rogue/bograt,
+/obj/effect/landmark/mapGenerator/rogue/bograt{
+	endTurfY = 300
+	},
 /turf/closed/basic,
 /area/rogue/under/cavewet)
 "vvP" = (
@@ -49611,7 +49613,9 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bograt/south)
 "xOw" = (
-/obj/effect/landmark/mapGenerator/rogue/bograt,
+/obj/effect/landmark/mapGenerator/rogue/bograt{
+	endTurfY = 300
+	},
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/cavewet)
 "xOH" = (
