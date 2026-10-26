@@ -4,8 +4,9 @@
 	penis.Insert(human)
 	penis.set_accessory_type(/datum/sprite_accessory/penis/knotted)
 	var/datum/sprite_accessory/penis/accessory = SPRITE_ACCESSORY(penis.accessory_type)
-	var/obj/item/bodypart/taur/taur = allocate(/obj/item/bodypart/taur/horse)
-	human.bodyparts += taur
+	human.Taurize(/obj/item/bodypart/taur/horse)
+	var/obj/item/bodypart/taur/taur = human.get_taur_tail()
+	TEST_ASSERT_EQUAL(taur.owner, human, "The test taur body must be attached to its owner.")
 
 	TEST_ASSERT_NULL(accessory.get_taur_icon_state(penis), "Taur mode must default to off.")
 	var/normal_key = penis.get_icon_cache_key()
@@ -53,14 +54,13 @@
 	qdel(loaded)
 
 	var/taur_key = penis.get_icon_cache_key()
-	human.bodyparts -= taur
+	taur.drop_limb(TRUE)
+	qdel(taur)
 	TEST_ASSERT_NULL(accessory.get_taur_icon_state(penis), "Non-taur bodies must use normal sprites.")
 	TEST_ASSERT_NOTEQUAL(taur_key, penis.get_icon_cache_key(), "Removing a taur body must change the effective rendering cache key.")
-	var/obj/item/bodypart/taur/lamia/snake = allocate(/obj/item/bodypart/taur/lamia)
-	human.bodyparts += snake
+	human.Taurize(/obj/item/bodypart/taur/lamia)
 	TEST_ASSERT_NULL(accessory.get_taur_icon_state(penis), "Serpentine bodies must use normal sprites.")
-	human.bodyparts -= snake
-	human.bodyparts += taur
+	human.Taurize(/obj/item/bodypart/taur/horse)
 	var/datum/sprite_accessory/penis/human/plain = SPRITE_ACCESSORY(/datum/sprite_accessory/penis/human)
 	TEST_ASSERT_NULL(plain.get_taur_icon_state(penis), "Unsupported plain penis artwork must fall back to normal sprites.")
 	penis.Remove(human)
@@ -248,8 +248,9 @@
 	var/obj/item/organ/testicles/testes = allocate(/obj/item/organ/testicles)
 	testes.Insert(human)
 	var/datum/sprite_accessory/testicles/accessory = SPRITE_ACCESSORY(testes.accessory_type)
-	var/obj/item/bodypart/taur/taur = allocate(/obj/item/bodypart/taur/horse)
-	human.bodyparts += taur
+	human.Taurize(/obj/item/bodypart/taur/horse)
+	var/obj/item/bodypart/taur/taur = human.get_taur_tail()
+	TEST_ASSERT_EQUAL(taur.owner, human, "The test taur body must be attached to its owner.")
 
 	TEST_ASSERT_NULL(accessory.get_taur_icon_state(testes), "Testicles must use normal sprites when Penis Taur Mode is disabled.")
 	var/normal_key = testes.get_icon_cache_key()
@@ -274,14 +275,13 @@
 	TEST_ASSERT_NULL(accessory.get_appearance(testes, null, "#FFFFFF"), "A slit must continue to hide external testicles.")
 	penis.sheath_type = SHEATH_TYPE_NONE
 	var/taur_key = testes.get_icon_cache_key()
-	human.bodyparts -= taur
+	taur.drop_limb(TRUE)
+	qdel(taur)
 	TEST_ASSERT_NULL(accessory.get_taur_icon_state(testes), "Non-taur bodies must use normal testicle sprites.")
 	TEST_ASSERT_NOTEQUAL(taur_key, testes.get_icon_cache_key(), "Removing the taur body must invalidate the testicle cache.")
-	var/obj/item/bodypart/taur/lamia/snake = allocate(/obj/item/bodypart/taur/lamia)
-	human.bodyparts += snake
+	human.Taurize(/obj/item/bodypart/taur/lamia)
 	TEST_ASSERT_NULL(accessory.get_taur_icon_state(testes), "Serpentine bodies must use normal testicle sprites.")
-	human.bodyparts -= snake
-	human.bodyparts += taur
+	human.Taurize(/obj/item/bodypart/taur/horse)
 	penis.Remove(human)
 	TEST_ASSERT_NULL(accessory.get_taur_icon_state(testes), "Removing the organ carrying the taur toggle must restore normal sprites.")
 	testes.Remove(human)
@@ -354,7 +354,7 @@
 		TEST_ASSERT_EQUAL(accessory.get_icon_state(oviduct, null, human), expected_state, "Arousal Preview must switch the oviduct without a penis, and reset when leaving Hard.")
 	qdel(prefs)
 
-	// Both poses obey standard clothing coverage; deliberate exposure remains an override.
+	// Both poses obey the existing modular clothing visibility rules.
 	var/original_obscured_flags = human.obscured_flags
 	var/obj/item/undies/undies = allocate(/obj/item/undies)
 	for(var/manual_state in list(SEX_MANUAL_AROUSAL_UNAROUSED, SEX_MANUAL_AROUSAL_FULL))
@@ -367,7 +367,7 @@
 		human.underwear = undies
 		TEST_ASSERT_NULL(accessory.get_appearance(oviduct, null, "#FFFFFF"), "Underwear must hide both oviduct poses.")
 		human.sexcon.bottom_exposed = TRUE
-		TEST_ASSERT(accessory.is_visible(oviduct, null, human), "Deliberate bottom exposure must retain its existing visibility override.")
+		TEST_ASSERT(!accessory.is_visible(oviduct, null, human), "Underwear must retain the existing modular visibility rule even with bottom exposure enabled.")
 		human.underwear = null
 		human.sexcon.bottom_exposed = FALSE
 		TEST_ASSERT(accessory.is_visible(oviduct, null, human), "Removing coverage must restore oviduct visibility.")
