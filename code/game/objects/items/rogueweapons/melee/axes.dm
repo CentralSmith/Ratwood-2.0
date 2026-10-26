@@ -53,6 +53,7 @@
 //axe objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/stoneaxe
+	twirly = SKILL_LEVEL_EXPERT
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
 	force = 18
 	force_wielded = 20
@@ -564,6 +565,8 @@
 	desc = "A heavy sweep that cuts through targets to the sides and front."
 
 /obj/item/rogueweapon/greataxe
+	twirly = SKILL_LEVEL_EXPERT
+	twirl_speed = 6
 	force = 15
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
