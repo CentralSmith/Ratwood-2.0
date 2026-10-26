@@ -705,6 +705,9 @@
   - config: Added optional autostart and minimum flavor-text/OOC-note settings, preserving
       BD's current defaults.
 2026-10-26:
+  Lamasmaster, port by mypingishuge:
+  - rscadd: Characters now have guts, which spill alongside the stomach during disembowelment
+      instead of ejecting the liver.
   YakiAttaki:
   - rscadd: Added a 'Size Sensitive' quirk, which may have fatal consequences...
   - rscadd: Added the possibility for those with the Size Sensitive quirk to have
