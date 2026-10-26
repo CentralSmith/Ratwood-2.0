@@ -63,6 +63,7 @@
 			secondary_icon.Blend(colors[2], ICON_MULTIPLY)
 			colored_icon.Blend(secondary_icon, ICON_OVERLAY)
 		taur_icon_cache[cache_key] = colored_icon
+		trim_cache(taur_icon_cache, SPRITE_ACCESSORY_ICON_CACHE_LEN)
 	var/mutable_appearance/appearance = mutable_appearance(taur_icon_cache[cache_key], layer = -BODY_BEHIND_LAYER)
 	// Center the 64px artwork on the 32px character, as SPLURT does.
 	appearance.pixel_x = -16
@@ -190,6 +191,7 @@
 		var/icon/top_icon = icon(icon, top_state)
 		top_icon.Blend(colors[1], ICON_MULTIPLY)
 		paired_icon_cache[cache_key] = list(base_icon, top_icon)
+		trim_cache(paired_icon_cache, SPRITE_ACCESSORY_ICON_CACHE_LEN)
 	var/list/cached_icons = paired_icon_cache[cache_key]
 	// Only tinted icons are shared; placement belongs to each new appearance.
 	var/mutable_appearance/base_appearance = mutable_appearance(cached_icons[1], layer = -BODY_BEHIND_LAYER)
@@ -345,6 +347,7 @@
 		var/icon/colored_icon = icon(taur_icon, state)
 		colored_icon.Blend(colors[1], ICON_MULTIPLY)
 		taur_icon_cache[cache_key] = colored_icon
+		trim_cache(taur_icon_cache, SPRITE_ACCESSORY_ICON_CACHE_LEN)
 	var/mutable_appearance/appearance = mutable_appearance(taur_icon_cache[cache_key], layer = -BODY_FRONT_LAYER)
 	appearance.pixel_x = -16
 	var/list/appearances = list(appearance)
@@ -459,6 +462,7 @@
 		var/list/colors = color_string_to_list(color_string)
 		colored_icon.Blend(colors[1], ICON_MULTIPLY)
 		taur_icon_cache[cache_key] = colored_icon
+		trim_cache(taur_icon_cache, SPRITE_ACCESSORY_ICON_CACHE_LEN)
 	var/mutable_appearance/appearance = mutable_appearance(taur_icon_cache[cache_key], layer = -BODY_FRONT_LAYER)
 	var/list/appearances = list(appearance)
 	adjust_appearance_list(appearances, organ, bodypart, organ.owner)
