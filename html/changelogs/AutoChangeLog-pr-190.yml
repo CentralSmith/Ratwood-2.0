@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Delivery quests and recovery rumors now only select destinations present on the current map."
