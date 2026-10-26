@@ -310,6 +310,7 @@
 //sword objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/sword
+	twirly = SKILL_LEVEL_EXPERT
 	name = "arming sword"
 	desc = "A long steel blade attached to a hilt, separated by a crossguard. The arming sword has been Psydonia's implement of war by excellence for generations."
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK

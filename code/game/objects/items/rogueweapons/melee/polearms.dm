@@ -355,6 +355,8 @@
 //polearm objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/woodstaff
+	twirly = SKILL_LEVEL_JOURNEYMAN
+	twirl_speed = 6
 	force = 10
 	force_wielded = 15
 	possible_item_intents = list(SPEAR_BASH)
@@ -483,6 +485,8 @@
 
 
 /obj/item/rogueweapon/spear
+	twirly = SKILL_LEVEL_EXPERT
+	twirl_speed = 6
 	force = 20
 	force_wielded = 30
 	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_CUT_1H)
