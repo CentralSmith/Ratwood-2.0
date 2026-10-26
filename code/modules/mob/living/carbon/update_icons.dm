@@ -520,7 +520,7 @@
 	update_damage_overlays()
 
 /mob/living/carbon/proc/build_inhand_overlays(obj/item/I, hide_experimental = FALSE)
-	. = list()
+	. = new /list(2)
 	var/mutable_appearance/inhand_overlay
 	var/mutable_appearance/behindhand_overlay
 	if(I.experimental_inhand && !hide_experimental)
