@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/bauernwehr
 	name = "Bauernwehr"
 	path = /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr
-	triumph_cost = 3
+	triumph_cost = 2
 
 /datum/loadout_item/broom
 	name = "broom"
@@ -112,7 +112,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/soap
 	name = "soap"
 	path = /obj/item/soap
-	triumph_cost = 3
+	triumph_cost = 2
 
 /datum/loadout_item/candle
 	name = "candle"
@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/keyring
 	name = "keyring"
 	path = /obj/item/storage/keyring
-	triumph_cost = 3
+	triumph_cost = 2
 
 /datum/loadout_item/wooden_bowl
 	name = "bowl"
@@ -147,12 +147,12 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/zigbox
 	name = "Zig box"
 	path = /obj/item/storage/belt/rogue/pouch/zigarrete/nicotine
-	triumph_cost = 5
+	triumph_cost = 3
 
 /datum/loadout_item/flint
 	name = "Flint"
 	path = /obj/item/flint
-	triumph_cost = 2
+	triumph_cost = 1
 
 /datum/loadout_item/whetstone
 	name = "Whetstone"
@@ -177,12 +177,22 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/sack
 	name = "Sack"
 	path = /obj/item/storage/roguebag
-	triumph_cost = 2
+	triumph_cost = 1
 
 /datum/loadout_item/mallet
 	name = "Wooden Mallet"
 	path = /obj/item/rogueweapon/hammer/wood
 	triumph_cost = 2
+
+/datum/loadout_item/folding_table
+	name = "Folding Table"
+	path = /obj/item/folding_table_stored
+	triumph_cost = 2
+
+/datum/loadout_item/mess_kit
+	name = "Mess Kit"
+	path = /obj/item/storage/gadget/messkit
+	triumph_cost = 3
 
 //ANCIENT TOOLS (Ancient Alloy)
 
@@ -272,17 +282,17 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/small_tent
     name = "Small Tent"
     path = /obj/item/tent_kit
-    triumph_cost = 4
+    triumph_cost = 2
 
 /datum/loadout_item/ger_kit
     name = "Ger Tent"
     path = /obj/item/tent_kit/ger
-    triumph_cost = 6
+    triumph_cost = 4
 
 /datum/loadout_item/yurt_tent
      name = "Yurt Tent"
      path = /obj/item/tent_kit/yurt
-     triumph_cost = 8
+     triumph_cost = 6
 
 /datum/loadout_item/bedroll
      name = "Bedroll"
