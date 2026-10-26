@@ -4921,6 +4921,10 @@
 "cmB" = (
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/woodsrat/north)
+"cmE" = (
+/obj/effect/landmark/start/orphan,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield/rockhill)
 "cmL" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/reagent_containers/glass/bottle/rogue,
@@ -5043,6 +5047,7 @@
 	},
 /obj/effect/landmark/start/vagrantlate,
 /obj/effect/landmark/start/vagrant,
+/obj/effect/landmark/start/orphanlate,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/rtfield/rockhill)
 "coM" = (
@@ -5630,6 +5635,7 @@
 /obj/structure/chair/bench{
 	pixel_y = 7
 	},
+/obj/effect/landmark/start/orphan,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/rockhill)
 "cEU" = (
@@ -7526,6 +7532,7 @@
 /obj/structure/flora/roguegrass,
 /obj/effect/landmark/start/vagrant,
 /obj/effect/landmark/start/vagrantlate,
+/obj/effect/landmark/start/orphanlate,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/rtfield/rockhill)
 "dBm" = (
@@ -12835,6 +12842,7 @@
 "ghE" = (
 /obj/effect/landmark/start/vagrantlate,
 /obj/effect/landmark/start/vagrant,
+/obj/effect/landmark/start/orphanlate,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/rtfield/rockhill)
 "ghH" = (
@@ -16566,6 +16574,7 @@
 /obj/machinery/light/rogue/lanternpost,
 /obj/effect/landmark/start/vagrant,
 /obj/effect/landmark/start/vagrantlate,
+/obj/effect/landmark/start/orphanlate,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/rtfield/rockhill)
 "hTd" = (
@@ -19083,6 +19092,10 @@
 /obj/item/clothing/neck/roguetown/psicross/xylix,
 /obj/item/clothing/neck/roguetown/psicross/eora,
 /obj/machinery/light/rogue/candle/l,
+/obj/item/reagent_containers/lux_impure,
+/obj/item/storage/roguebag,
+/obj/item/storage/roguebag,
+/obj/item/storage/roguebag,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/church)
 "jgs" = (
@@ -20144,6 +20157,10 @@
 "jDE" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/bograt/sunken)
+"jDT" = (
+/obj/machinery/light/rogue/torchholder/l,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/under/town/basement)
 "jEd" = (
 /obj/structure/fluff/pillow/green,
 /turf/open/floor/carpet/royalblack,
@@ -22521,6 +22538,10 @@
 	},
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/outdoors/rtfield/eora)
+"kSb" = (
+/obj/effect/landmark/start/orphan,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/rtfield/rockhill)
 "kSe" = (
 /obj/structure/closet/dirthole/grave,
 /turf/open/floor/rogue/dirt/road,
@@ -23313,6 +23334,7 @@
 /obj/structure/toilet{
 	layer = 3.5
 	},
+/obj/effect/landmark/start/orphan,
 /turf/open/transparent/openspace,
 /area/rogue/indoors)
 "llg" = (
@@ -23988,6 +24010,10 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab,
 /turf/open/floor/rogue/AzureSand,
 /area/rogue/outdoors/bograt/west)
+"lFe" = (
+/obj/effect/landmark/start/orphan,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/rtfield/rockhill)
 "lFf" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/dirt,
@@ -37301,6 +37327,7 @@
 "rQk" = (
 /obj/effect/landmark/start/vagrant,
 /obj/effect/landmark/start/vagrantlate,
+/obj/effect/landmark/start/orphanlate,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/rtfield/rockhill)
 "rQy" = (
@@ -38226,6 +38253,7 @@
 /obj/structure/flora/roguegrass,
 /obj/effect/landmark/start/vagrantlate,
 /obj/effect/landmark/start/vagrant,
+/obj/effect/landmark/start/orphanlate,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/rtfield/rockhill)
 "soZ" = (
@@ -44862,6 +44890,7 @@
 "vEa" = (
 /obj/effect/landmark/start/vagrant,
 /obj/effect/landmark/start/vagrantlate,
+/obj/effect/landmark/start/orphanlate,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/rtfield/rockhill)
 "vEc" = (
@@ -82890,7 +82919,7 @@ whb
 whb
 cTA
 aPd
-wHU
+jDT
 wHU
 wHU
 scn
@@ -158978,7 +159007,7 @@ kJT
 hHF
 vpU
 pOX
-qvR
+cmE
 vYO
 qvR
 qvR
@@ -162637,7 +162666,7 @@ wsY
 fBT
 cfd
 pOX
-uaL
+lFe
 qvR
 uaL
 wSn
@@ -169584,7 +169613,7 @@ vdE
 vdE
 bdP
 hHI
-qvR
+cmE
 aad
 kIO
 aaf
@@ -179225,7 +179254,7 @@ htE
 htE
 htE
 htE
-uaL
+lFe
 sjP
 qvR
 uaL
@@ -180714,7 +180743,7 @@ gjg
 fdq
 fdq
 gjg
-wSn
+kSb
 qvR
 uaL
 wSn
