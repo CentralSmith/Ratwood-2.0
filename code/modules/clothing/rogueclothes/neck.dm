@@ -531,9 +531,9 @@
 
 	return TRUE
 
-/obj/item/clothing/neck/roguetown/psicross/attack_right(mob/user)
-	if(!ismob(loc))
-		return ..()
+/obj/item/clothing/neck/roguetown/psicross/MiddleClick(mob/user, params)
+	if(loc != user || user.incapacitated())
+		return
 
 	wrist_display = !wrist_display
 	to_chat(user, span_info("You adjust \the [src] to [wrist_display ? "display on your wrists" : "display around your neck"]."))
@@ -547,7 +547,11 @@
 	if(isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_clothes()
-	return ..()
+	return TRUE
+
+/obj/item/clothing/neck/roguetown/psicross/examine(mob/user)
+	. = ..()
+	. += span_info("Middle-click to adjust the amulet's wrist/neck display. Right-click to pray if you know how.")
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen
 	name = "inverted psycross"

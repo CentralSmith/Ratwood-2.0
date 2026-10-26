@@ -144,11 +144,16 @@
 			add_fingerprint(usr)
 
 
-/obj/item/rogueweapon/scabbard/attack_hand(mob/user)
+/obj/item/rogueweapon/scabbard/attack_right(mob/user)
+	if(user.incapacitated())
+		return
 	if(sheathed)
 		return puke_sword(user)
 
-	..()
+	return ..()
+
+/obj/item/rogueweapon/scabbard/rmb_self(mob/user)
+	return attack_right(user)
 
 
 /obj/item/rogueweapon/scabbard/attackby(obj/item/I, mob/user, params)
@@ -162,7 +167,7 @@
 			attackby(held_item, user)
 		return TRUE
 	if(sheathed)
-		attack_hand(user)
+		puke_sword(user)
 	return TRUE
 
 
@@ -170,7 +175,7 @@
 	. = ..()
 
 	if(sheathed)
-		. += span_notice("The sheath is occupied by [sheathed]. Left-click to pull it out.")
+		. += span_notice("The sheath is occupied by [sheathed]. Right-click to draw it; left-click with an empty hand to pick up the sheath.")
 
 
 /obj/item/rogueweapon/scabbard/update_icon(mob/living/user)
