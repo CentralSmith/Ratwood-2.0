@@ -718,3 +718,7 @@
   mypingishuge:
   - rscadd: Added Folding Table for 2 points and Mess Kit for 3 points to the loadout
       menu.
+  tatsu:
+  - rscadd: Added optional taur genital sprites and a taur vagina visibility toggle.
+  - image: Added Ant, Wasp, and Spider ovipositors and Bee tail butt genital sprites.
+  - rscadd: Added Oviduct alongside existing vagina appearances.
