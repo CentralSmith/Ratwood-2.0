@@ -723,6 +723,8 @@
   - rscadd: Added Folding Table for 2 points and Mess Kit for 3 points to the loadout
       menu.
   - bugfix: Grabs no longer break when dragging someone from a diagonal position.
+  - bugfix: Repeated clicks no longer bypass the wait between hammer repairs.
+  - balance: Hammer repair steps now use a 0.6-second base interval.
   tatsu:
   - rscadd: Added optional taur genital sprites and a taur vagina visibility toggle.
   - image: Added Ant, Wasp, and Spider ovipositors and Bee tail butt genital sprites.
