@@ -3416,6 +3416,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	else
 		character.real_name = real_name
 	character.name = character.real_name
+	if(!character_setup)
+		character.set_background_stat_identity(parent?.ckey, real_name)
 
 	if((selected_title != "None" && pref_species.use_titles) && selected_title != null)
 		character.dna.species.name = selected_title

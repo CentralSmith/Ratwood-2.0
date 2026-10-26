@@ -129,8 +129,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		else
 			to_chat(character, "Incorrect Background parameters! It will not be applied.")
 	else
-		record_featured_object_stat(FEATURED_STATS_BACKGROUNDS, "None")
-		record_featured_object_stat(FEATURED_STATS_BACKGROUNDS_LEAST, "None")
+		record_background_pick(character)
 
 /// Background validation, the counterpart to virtue_check() - they are applied to the same character
 /// from their own preference slot, so they get their own gate rather than sharing the virtue one.
