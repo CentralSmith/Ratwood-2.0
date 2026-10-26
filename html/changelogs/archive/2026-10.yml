@@ -704,3 +704,7 @@
       tooltips.
   - config: Added optional autostart and minimum flavor-text/OOC-note settings, preserving
       BD's current defaults.
+2026-10-26:
+  _Rarity:
+  - bugfix: Delivery quests and recovery rumors now only select destinations present
+      on the current map.
