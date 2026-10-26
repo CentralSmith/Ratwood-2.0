@@ -405,6 +405,7 @@
 	force = clamp(force + amt, SEX_FORCE_MIN, max_setting)
 /datum/sex_controller/proc/adjust_arousal_manual(amt)
 	manual_arousal = clamp(manual_arousal + amt, SEX_MANUAL_AROUSAL_MIN, SEX_MANUAL_AROUSAL_MAX)
+	update_erect_state()
 
 /datum/sex_controller/proc/update_pink_screen()
 	if(!user?.client?.prefs?.erp_visuals)
@@ -1026,6 +1027,10 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 		penis.update_erect_state()
 	var/obj/item/organ/tail/manticore/tail = get_manticore_tail(user)
 	tail?.update_maw_state()
+	// The oviduct reads arousal directly; the body cache detects sprite changes.
+	var/obj/item/organ/vagina/vagina = user.getorganslot(ORGAN_SLOT_VAGINA)
+	if(vagina && (vagina.accessory_type == /datum/sprite_accessory/vagina/bee_tail || vagina.has_bee_tail_oviduct()))
+		user.update_body_parts()
 
 /datum/sex_controller/proc/update_exposure()
 	user.regenerate_icons()

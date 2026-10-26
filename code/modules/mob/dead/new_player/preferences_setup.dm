@@ -96,10 +96,19 @@
 /datum/preferences/proc/apply_preview_erect_state_to_mannequin(mob/living/carbon/human/mannequin)
 	if(!mannequin)
 		return
+	// The oviduct reads the dummy's arousal controller, even when it has no penis.
+	if(mannequin.sexcon)
+		switch(preview_erect_state)
+			if(ERECT_STATE_HARD)
+				mannequin.sexcon.manual_arousal = SEX_MANUAL_AROUSAL_FULL
+			if(ERECT_STATE_PARTIAL)
+				mannequin.sexcon.manual_arousal = SEX_MANUAL_AROUSAL_PARTIAL
+			else
+				mannequin.sexcon.manual_arousal = SEX_MANUAL_AROUSAL_UNAROUSED
 	var/obj/item/organ/penis/preview_penis = mannequin.getorganslot(ORGAN_SLOT_PENIS)
 	if(preview_penis)
 		preview_penis.erect_state = preview_erect_state
-		mannequin.update_body_parts(TRUE)
+	mannequin.update_body_parts(TRUE)
 
 /datum/preferences/proc/spec_check(mob/user)
 	if(!istype(pref_species))
