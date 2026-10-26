@@ -715,3 +715,6 @@
   _Rarity:
   - bugfix: Delivery quests and recovery rumors now only select destinations present
       on the current map.
+  mypingishuge:
+  - rscadd: Added Folding Table for 2 points and Mess Kit for 3 points to the loadout
+      menu.
