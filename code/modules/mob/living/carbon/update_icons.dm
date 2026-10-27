@@ -234,6 +234,10 @@
 							observers = null
 							break
 
+		if(istype(I, /obj/item/broom))
+			var/obj/item/broom/B = I
+			if(B.inhand_spinning)
+				continue
 		var/mutable_appearance/inhand_overlay
 		var/mutable_appearance/behindhand_overlay
 		if(I.experimental_inhand && !hide_experimental)
