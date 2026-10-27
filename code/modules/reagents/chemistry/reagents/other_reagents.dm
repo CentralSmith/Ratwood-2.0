@@ -202,7 +202,7 @@
 			H.adjust_hydration(-hydration)  //saltwater dehydrates more than it hydrates
 			M.adjustToxLoss(0.25) // Slightly toxic
 			M.add_nausea(2)
-		else if(HAS_TRAIT(H, TRAIT_SEA_DRINKER))
+		else if(HAS_TRAIT(H, TRAIT_SEA_DRINKER) && !HAS_TRAIT(H, TRAIT_HEMOPHAGE))
 			H.adjust_hydration(hydration)
 	..()
 
@@ -345,7 +345,10 @@
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.adjust_hydration(hydration)
+		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
+			H.add_nausea(12)
+		else
+			H.adjust_hydration(hydration)
 	var/old_count = LAZYACCESS(data, "misc")
 	LAZYSET(data, "misc", old_count + 1)
 	M.jitteriness = min(M.jitteriness+4,10)
