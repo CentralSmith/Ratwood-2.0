@@ -90,6 +90,8 @@
 		return FALSE
 	if(!move_after(user, sheathe_time, target = user))
 		return FALSE
+	if(QDELETED(src) || QDELETED(A))
+		return FALSE
 
 	A.forceMove(src)
 	sheathed = A
@@ -105,8 +107,22 @@
 	return TRUE
 
 
+/obj/item/rogueweapon/scabbard/Exited(atom/movable/gone, atom/newLoc)
+	. = ..()
+	// Adapted from Azure Peak #8493 (KatTheFox), 2026-10-26.
+	if(gone != sheathed)
+		return
+	sheathed = null
+	var/mob/living/holder = loc
+	update_icon(istype(holder) ? holder : null)
+
+
 /obj/item/rogueweapon/scabbard/proc/puke_sword(mob/living/user)
 	if(!sheathed)
+		return FALSE
+	if(QDELETED(sheathed) || sheathed.loc != src)
+		sheathed = null
+		update_icon(user)
 		return FALSE
 	if(user.get_active_held_item())
 		to_chat(user, span_warning("My active hand needs to be empty."))
@@ -124,10 +140,13 @@
 
 	if(!sheathed || user.get_active_held_item())
 		return FALSE
-	sheathed.forceMove(user.loc)
-	sheathed.pickup(user)
-	if(!user.put_in_active_hand(sheathed))
-		sheathed.forceMove(src)
+	var/obj/item/rogueweapon/drawn = sheathed
+	drawn.forceMove(user.loc)
+	drawn.pickup(user)
+	if(!user.put_in_active_hand(drawn))
+		drawn.forceMove(src)
+		sheathed = drawn
+		update_icon(user)
 		return FALSE
 	sheathed = null
 	update_icon(user)
