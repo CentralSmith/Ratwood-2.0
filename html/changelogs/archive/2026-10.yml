@@ -747,3 +747,7 @@
   - rscadd: Added optional taur genital sprites and a taur vagina visibility toggle.
   - image: Added Ant, Wasp, and Spider ovipositors and Bee tail butt genital sprites.
   - rscadd: Added Oviduct alongside existing vagina appearances.
+2026-10-27:
+  _Rarity:
+  - qol: Clients now keep trying to reconnect for up to 10 minutes during announced
+      server restarts.
