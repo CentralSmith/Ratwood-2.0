@@ -75,7 +75,7 @@
 			user.setDir(dir)
 
 	// Adjacent placement must still be within reach when the positioning delay ends.
-	if(!check_loc && (!isturf(M.loc) || !Adjacent(M) || !Adjacent(user)))
+	if(!check_loc && (QDELETED(M) || !isturf(M.loc) || !Adjacent(M) || !Adjacent(user)))
 		return FALSE
 
 	return ..(M, force, FALSE)
@@ -176,6 +176,12 @@
 	. = ..()
 	M.reset_offsets("bed_buckle")
 	M.plane = initial(M.plane)
+
+/obj/structure/bondage/gloryhole/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
+	if(user != buckled_mob && (!isturf(user?.loc) || !Adjacent(user) || get_dir(src, user) != turn(dir, 180)))
+		to_chat(user, span_warning("I need to stand behind [src] to unbuckle someone else."))
+		return FALSE
+	return ..()
 
 /obj/structure/bondage/gloryhole/attack_right(mob/living/user)
 	. = ..()
