@@ -272,8 +272,8 @@
 
 /obj/item/clothing/suit/roguetown/armor/leather/bikini
 	name = "leather corslet"
-	desc = "Flexible cowhide armor. Lightweight, better than nothing. Trimmed to protect the heart and hips."
-	body_parts_covered = CHEST|GROIN
+	desc = "Flexible cowhide armor. Lightweight, better than nothing. A daring alternative to standard leather armor."
+	body_parts_covered = COVERAGE_TORSO
 	icon_state = "leatherkini"
 	item_state = "leatherkini"
 	allowed_sex = list(FEMALE, MALE)
@@ -282,8 +282,8 @@
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/bikini
 	name = "studded leather corslet"
-	desc = "Studded leather is the most durable of all hides and leathers and about as light. Trimmed to protect the heart and hips."
-	body_parts_covered = CHEST|GROIN
+	desc = "Studded leather is the most durable of all hides and leathers and about as light. A daring alternative to standard studded leather armor."
+	body_parts_covered = COVERAGE_TORSO
 	icon_state = "studleatherkini"
 	item_state = "studleatherkini"
 	allowed_sex = list(MALE, FEMALE)
@@ -291,8 +291,8 @@
 
 /obj/item/clothing/suit/roguetown/armor/leather/hide/bikini
 	name = "hide corslet"
-	desc = "A light armor of wildbeast hide. Far more durable than leather. Trimmed to protect the heart and hips."
-	body_parts_covered = CHEST|GROIN
+	desc = "A light armor of wildbeast hide. Far more durable than leather. A daring alternative to standard hide armor."
+	body_parts_covered = COVERAGE_TORSO
 	icon_state = "hidearmorkini"
 	item_state = "hidearmorkini"
 	allowed_sex = list(MALE, FEMALE)
