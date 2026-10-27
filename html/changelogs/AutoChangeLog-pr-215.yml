@@ -1,0 +1,5 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - balance: "Leather, hide, studded leather, chainmail, and plate corslets gain missing coverage compared with equivalent armor, including the harness and full-plate corsets."
+  - balance: "Armored chain skirts and plate tassets now protect the groin as well as both legs."
