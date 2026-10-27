@@ -1317,7 +1317,7 @@
 
 /datum/status_effect/debuff/stinky_contact
 	id = "stinky_contact"
-	duration = 15 MINUTES
+	duration = -1 // Remains until washed off.
 	tick_interval = 5 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/stinky_contact
@@ -1382,7 +1382,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/stinky_contact
 	name = "Musked"
-	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
+	desc = "Someone's scent rubbed off on me. It will stay until I wash it off."
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/enchantmenttriggered
