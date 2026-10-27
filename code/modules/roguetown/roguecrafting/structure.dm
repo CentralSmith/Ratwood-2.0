@@ -388,6 +388,15 @@
 	verbage = "builds"
 	craftsound = null
 
+/datum/crafting_recipe/roguetown/structure/slagkiln
+	name = "slag kiln"
+	result = /obj/machinery/light/rogue/smelter/slag_kiln
+	reqs = list(/obj/item/natural/stone = 8,
+			/obj/item/rogueore/coal = 1)
+	verbage_simple = "build"
+	verbage = "builds"
+	craftsound = null
+
 /datum/crafting_recipe/roguetown/structure/greatsmelter
 	name = "great furnace"
 	result = /obj/machinery/light/rogue/smelter/great

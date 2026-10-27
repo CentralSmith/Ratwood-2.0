@@ -11,6 +11,7 @@
 // END_PREFERENCES
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\roguetest.dm"
 #include "_maps\map_files\generic\CentCom.dmm"
 #include "_maps\templates\arcyne_fortress.dm"
 #include "_maps\templates\bog_shack_small.dm"
@@ -2742,6 +2743,7 @@
 #include "code\modules\roguetown\roguejobs\blacksmith\forge.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\grindwheel.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\items.dm"
+#include "code\modules\roguetown\roguejobs\blacksmith\scrap.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\smelter.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\smith_components.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\tools.dm"
@@ -2750,6 +2752,7 @@
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\blades.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\dwarven.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\kazengunite.dm"
+#include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\scrap.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\tools.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\valuables.dm"
 #include "code\modules\roguetown\roguejobs\blacksmith\anvil_recipes\weapons.dm"
