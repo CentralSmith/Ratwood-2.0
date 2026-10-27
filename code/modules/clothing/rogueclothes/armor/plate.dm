@@ -450,9 +450,14 @@
 /obj/item/clothing/suit/roguetown/armor/plate/bikini
 	name = "half-plate corslet"
 	desc = "A high breastplate and hip armor allowing flexibility and great protection."
+	body_parts_covered = COVERAGE_TORSO
 	icon_state = "halfplatekini"
 	item_state = "halfplatekini"
+	armor = ARMOR_CUIRASS
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL
 	allowed_sex = list(MALE, FEMALE)
+	armor_class = ARMOR_CLASS_MEDIUM
+	smelt_bar_num = 2
 
 /obj/item/clothing/suit/roguetown/armor/plate/half
 	slot_flags = ITEM_SLOT_ARMOR

@@ -123,7 +123,8 @@
 	gender = PLURAL
 	icon_state = "plate_skirt"
 	item_state = "plate_skirt"
-	body_parts_covered = COVERAGE_PANTS
+	body_parts_covered = LEGS
+	armor_class = ARMOR_CLASS_MEDIUM
 	dropshrink = null
 
 /obj/item/clothing/under/roguetown/platelegs/psydoniciron
