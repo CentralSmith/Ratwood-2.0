@@ -1,0 +1,8 @@
+author: "GarrusVakarian & Silvertail"
+delete-after: True
+changes:
+  - map: "Added inquisition shack"
+  - map: "Added heartblood for the apothecary"
+  - map: "Silvertail: Remodeled the ground floor of the baron's house to include a throne"
+  - map: "Silvertail: Added a nervmaster and contract ledger to the second story of the baron's house - Extended some roof tiles up there as well to accommodate lower floor changes"
+  - map: "Silvertail: Changed the area of the baron's house from \"Interior\" to \"Manor\""
