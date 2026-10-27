@@ -254,6 +254,12 @@
 /datum/quirk/hunted/apply_to_human(mob/living/carbon/human/recipient)
 	log_hunted_pick(recipient)
 
+/datum/quirk/hunted/handle_traits(mob/living/carbon/human/recipient)
+	. = ..()
+	if(recipient.islatejoin && !recipient.hunted_latejoin_announced)
+		// Finish applying the quirk and class setup before advertising a trackable target.
+		addtimer(CALLBACK(recipient, TYPE_PROC_REF(/mob/living/carbon/human, announce_hunted_latejoin)), 0)
+
 /datum/quirk/hunted/proc/log_hunted_pick(mob/living/carbon/human/H)
 	if(!H.name) // The vice version of hunted used Life() for its timing, so deleted mobs would automatically stop timing.
 		if(attempts_left <= 0) // We're not riding off of that anymore, so let's have it give up after ten attemps a la Lawless.
