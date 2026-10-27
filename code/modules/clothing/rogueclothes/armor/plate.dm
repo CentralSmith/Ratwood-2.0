@@ -358,7 +358,6 @@
 	unequip_delay_self = 8 SECONDS
 	equip_delay_other = 3 SECONDS
 	strip_delay = 6 SECONDS
-	smelt_bar_num = 3
 
 /obj/item/clothing/suit/roguetown/armor/heartfelt
 	slot_flags = ITEM_SLOT_ARMOR
@@ -451,14 +450,9 @@
 /obj/item/clothing/suit/roguetown/armor/plate/bikini
 	name = "half-plate corslet"
 	desc = "A high breastplate and hip armor allowing flexibility and great protection."
-	body_parts_covered = COVERAGE_VEST
 	icon_state = "halfplatekini"
 	item_state = "halfplatekini"
-	armor = ARMOR_CUIRASS // Identical protection and coverage to steel cuirass.
-	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL	// Identical to steel cuirasss. Same steel price.
 	allowed_sex = list(MALE, FEMALE)
-	armor_class = ARMOR_CLASS_MEDIUM
-	smelt_bar_num = 2
 
 /obj/item/clothing/suit/roguetown/armor/plate/half
 	slot_flags = ITEM_SLOT_ARMOR
