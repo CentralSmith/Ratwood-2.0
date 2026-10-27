@@ -82,11 +82,7 @@
 		/datum/job/roguetown/rockhillslave = 6,
 	)
 	title_adjust = list(
-		/datum/job/roguetown/lord = list(display_title = "Duke", f_title = "Duchess"),
-		/datum/job/roguetown/physician = list(display_title = "Court Physician"),
-		/datum/job/roguetown/niteman = list(display_title = "Nightmaster", f_title = "Nightmistress"),
-		/datum/job/roguetown/nightmaiden = list(display_title = "Nightswain", f_title = "Nightmaiden"),
-		// /datum/job/roguetown/marshal = list(display_title = "Mayor"),
+		/datum/job/roguetown/lord = list(display_title = "Baron", f_title = "Baroness"),
 	)
 	tutorial_adjust = list(
 		/datum/job/roguetown/warden = "Having proven yourself through years of scouting, skirmishing and survival in the vanguard, you have been initiated into the Wardens - an elite fraternity of ranger types who keep a vigil over the untamed wilderness. Trusted to venture deep into the uncivilised darkness south of lowtown, you act as a scout, soldier, sentinel and guide, performing long-range reconnaissance, culling dangerous wildlife, and protecting lowtown alongside the vanguard. You are subordinate to the Master Warden, whom in turn serves the baron and may be called upon as members of the garrison by the Marshal and Crown. Serve the baron's will as the first line of defence from threats beyond the borders of civilisation, keep the roads safe, and hold the vanguard fortress. The Crown is counting on you.",
