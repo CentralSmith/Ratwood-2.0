@@ -349,15 +349,15 @@
 			H.add_nausea(12)
 		else
 			H.adjust_hydration(hydration)
-	var/old_count = LAZYACCESS(data, "misc")
-	LAZYSET(data, "misc", old_count + 1)
+	var/count = LAZYACCESS(data, "misc") + 1
+	LAZYSET(data, "misc", count)
 	M.jitteriness = min(M.jitteriness+4,10)
-	if(data >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
+	if(count >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering+4, 10)
 		M.Dizzy(5)
-	if(data >= 60)	// 30 units, 135 seconds
+	if(count >= 60)	// 30 units, 135 seconds
 		M.jitteriness = 0
 		M.stuttering = 0
 		holder.remove_reagent(type, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
