@@ -755,3 +755,6 @@
       on Cooking skill, have some defense stats.
   - bugfix: Scabbards, dagger sheaths, and greatweapon straps no longer remain occupied
       after their stored weapon disappears or is moved elsewhere.
+  mypingishuge:
+  - rscadd: Added a craftable iron gloryhole costing one iron bar, with the durability
+      of regular iron bars.
