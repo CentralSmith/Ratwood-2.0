@@ -774,3 +774,8 @@
       quirk latejoins and becomes available to track.
   - qol: Becoming stuffed or fully hydrated now displays the corresponding mood message
       in chat.
+  - balance: Leather, hide, studded leather, chainmail, and plate corslets gain missing
+      coverage compared with equivalent armor, including the harness and full-plate
+      corsets.
+  - balance: Armored chain skirts and plate tassets now protect the groin as well
+      as both legs.
