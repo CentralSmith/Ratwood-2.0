@@ -751,3 +751,7 @@
   _Rarity:
   - qol: Clients now keep trying to reconnect for up to 10 minutes during announced
       server restarts.
+  - qol: Brooms now clean blood and additional types of debris, sweet faster based
+      on Cooking skill, have some defense stats.
+  - bugfix: Scabbards, dagger sheaths, and greatweapon straps no longer remain occupied
+      after their stored weapon disappears or is moved elsewhere.
