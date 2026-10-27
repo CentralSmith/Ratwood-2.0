@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - qol: "Clients now keep trying to reconnect for up to 10 minutes during announced server restarts."
