@@ -124,6 +124,7 @@
 	icon_state = "plate_skirt"
 	item_state = "plate_skirt"
 	body_parts_covered = COVERAGE_PANTS
+	max_integrity = 300
 	armor_class = ARMOR_CLASS_MEDIUM
 	dropshrink = null
 
