@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - bugfix: "Scabbards, dagger sheaths, and greatweapon straps no longer remain occupied after their stored weapon disappears or is moved elsewhere."
