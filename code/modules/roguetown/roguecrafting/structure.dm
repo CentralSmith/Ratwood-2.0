@@ -111,6 +111,13 @@
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
 
+/datum/crafting_recipe/roguetown/structure/gloryhole/iron
+	name = "iron gloryhole"
+	result = /obj/structure/bondage/gloryhole/iron
+	reqs = list(/obj/item/ingot/iron = 1)
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 1
+
 /datum/crafting_recipe/roguetown/structure/chains
 	name = "chains"
 	result = /obj/structure/bondage/chains
