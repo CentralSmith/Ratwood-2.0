@@ -620,10 +620,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	loadout_9_hex = preset["loadout_9_hex"]
 	loadout_10_hex = preset["loadout_10_hex"]
 	
-	// Always set languages from preset (including null/empty values)
-	extra_language = preset["extra_language"]
-	extra_language_1 = preset["extra_language_1"]
-	extra_language_2 = preset["extra_language_2"]
+	// JSON turns type paths into strings; restore and validate every language slot.
+	for(var/language_slot in list("extra_language", "extra_language_1", "extra_language_2"))
+		var/language_path = string_to_typepath(preset[language_slot])
+		vars[language_slot] = ispath(language_path, /datum/language) ? language_path : "None"
 	
 	return TRUE
 

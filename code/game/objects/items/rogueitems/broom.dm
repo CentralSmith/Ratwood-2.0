@@ -1,5 +1,5 @@
 // Adapted from Azure Peak commit 8035796e311b30a72027089e30c56a35f72d115b (AGPL-3.0).
-// Cleaning: Azure Peak PRs #8206 and #8710; broom-only twirling uses BD's overlay renderer.
+// Cleaning: Azure Peak PRs #8206 and #8710.
 /obj/item/broom
 	name = "broom"
 	desc = "A robust-looking broom, made from a bundle of twigs. Sweep a wide swathe of floor clear of debris, glass, blood, dirt, and time without a care in the world."
@@ -22,12 +22,9 @@
 	anvilrepair = /datum/skill/craft/carpentry
 	smeltresult = /obj/item/ash
 	resistance_flags = FLAMMABLE
-	var/twirly = SKILL_LEVEL_EXPERT
-	var/twirl_sound = 'sound/combat/sidesweep_hit.ogg'
+	twirly = SKILL_LEVEL_EXPERT
+	twirl_sound = 'sound/combat/sidesweep_hit.ogg'
 	var/sweeping = FALSE
-	var/inhand_spinning = FALSE
-	var/atom/movable/flick_visual/spin_visual
-	COOLDOWN_DECLARE(twirl_cooldown)
 
 /obj/item/broom/getonmobprop(tag)
 	. = ..()
@@ -260,77 +257,29 @@
 	duration = 7
 	layer = MOB_LAYER + 1
 
-/obj/item/broom/rmb_self(mob/user)
+/obj/item/broom/try_twirl(mob/living/user)
+	if(!sweep_alive(user))
+		return FALSE
+	return ..()
+
+/obj/item/broom/twirl_success(mob/living/user)
 	. = ..()
-	if(!isliving(user))
-		return
-	return try_twirl(user)
+	if((user.mobility_flags & MOBILITY_STAND) && prob(max(user.STALUC - 10, 0)))
+		var/matrix/previous_transform = user.transform
+		var/angle = (user.dir & (SOUTH|WEST)) ? -120 : 120
+		animate(user, transform = turn(previous_transform, angle), time = 1)
+		animate(transform = turn(previous_transform, angle * 2), time = 1)
+		animate(transform = turn(previous_transform, angle * 3), time = 1)
+		animate(transform = previous_transform, time = 0)
 
-/obj/item/broom/proc/try_twirl(mob/living/user)
-	if(!sweep_alive(user) || !COOLDOWN_FINISHED(src, twirl_cooldown))
-		return FALSE
-	if(wielded || altgripped)
-		balloon_alert(user, "one-handed only!")
-		return FALSE
-	COOLDOWN_START(src, twirl_cooldown, 3 SECONDS)
-	SpinAnimation(4, 1)
-	start_broom_spin(user)
-	if(user.get_skill_level(associated_skill) < twirly && prob(40))
-		twirl_fumble(user)
-	else
-		user.visible_message(span_notice("[user] twirls [src] in a dramatic flourish!"), span_notice("You twirl [src] dramatically."))
-		playsound(src, twirl_sound, 20, FALSE)
-		if((user.mobility_flags & MOBILITY_STAND) && prob(max(user.STALUC - 10, 0)))
-			var/matrix/previous_transform = user.transform
-			var/angle = (user.dir & (SOUTH|WEST)) ? -120 : 120
-			animate(user, transform = turn(previous_transform, angle), time = 1)
-			animate(transform = turn(previous_transform, angle * 2), time = 1)
-			animate(transform = turn(previous_transform, angle * 3), time = 1)
-			animate(transform = previous_transform, time = 0)
-	return TRUE
-
-/obj/item/broom/proc/twirl_fumble(mob/living/user)
-	var/crit = prob(60)
-	var/crit_message = crit ? " <span class='crit'><b>Critical hit!</b> [user] is knocked out!</span>" : ""
-	user.visible_message(span_danger("While trying to twirl [src] [user] hits [user.p_themselves()] in the head![crit_message]"), span_userdanger("While trying to twirl [src] you hit yourself in the head![crit_message]"))
-	user.apply_damage(force, BRUTE, BODY_ZONE_PRECISE_SKULL)
-	if(crit)
-		user.flash_fullscreen("whiteflash3")
-		user.Unconscious(5 SECONDS)
-		playsound(get_turf(user), 'sound/combat/tf2crit.ogg', 100, FALSE)
-	playsound(get_turf(user), 'sound/misc/bonk.ogg', 100, FALSE)
-	user.dropItemToGround(src, TRUE)
-
-/// Display a temporary spinning broom instead of its static in-hand overlay.
-/obj/item/broom/proc/start_broom_spin(mob/living/user)
-	if(!iscarbon(user) || inhand_spinning)
-		return
-	var/mob/living/carbon/holder = user
-	var/list/prop = getonmobprop("gen")
-	var/mirrored = !(holder.get_held_index_of_item(src) % 2 == 0)
-	var/behind = (holder.dir == NORTH || holder.dir == (mirrored ? EAST : WEST))
-	var/mutable_appearance/appearance = mutable_appearance(getmoboverlay("gen", prop, behind = behind, mirrored = mirrored), layer = holder.layer + (behind ? -0.1 : 0.1))
-	appearance = center_image(appearance, inhand_x_dimension, inhand_y_dimension)
-	inhand_spinning = TRUE
-	holder.update_inv_hands()
-	spin_visual = holder.flick_overlay_view(appearance, 6)
-	if(spin_visual)
-		spin_visual.dir = holder.dir
-		spin_visual.SpinAnimation(4, 1)
-	addtimer(CALLBACK(src, PROC_REF(end_broom_spin)), 4)
-
-/obj/item/broom/proc/end_broom_spin()
-	inhand_spinning = FALSE
-	QDEL_NULL(spin_visual)
-	var/mob/living/carbon/holder = loc
-	if(istype(holder))
-		holder.update_inv_hands()
+/obj/item/broom/twirl_fumble(mob/living/user)
+	return twirl_fumble_bonk(user)
 
 /obj/item/broom/Moved(atom/old_loc, movement_dir, forced, list/old_locs)
 	. = ..()
 	if(inhand_spinning && loc != old_loc)
-		end_broom_spin()
+		end_spin()
 
 /obj/item/broom/Destroy()
-	QDEL_NULL(spin_visual)
+	end_spin()
 	return ..()

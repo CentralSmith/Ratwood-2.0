@@ -705,6 +705,13 @@
   - config: Added optional autostart and minimum flavor-text/OOC-note settings, preserving
       BD's current defaults.
 2026-10-26:
+  GarrusVakarian:
+  - map: Fixes random map generation
+  - map: Removes one of the two soilson spots
+  - map: Moves slaughterhouse and the chicken coop to the removed soilson spot
+  - map: Moves the shop, stockpile and shipping thing to the main square
+  - map: Adds a guard tower where the shop used to be
+  - map: Adds hermes and jawbank to the church
   Lamasmaster, port by mypingishuge:
   - rscadd: Characters now have guts, which spill alongside the stomach during disembowelment
       instead of ejecting the liver.
@@ -715,10 +722,32 @@
   _Rarity:
   - bugfix: Delivery quests and recovery rumors now only select destinations present
       on the current map.
+  - qol: Port AP's Food examine text to include clickable recipe suggestions and clearer
+      preparation instructions.
+  - qol: Recipe pages link ingredients to their known cooking, slicing, drying, or
+      assembly instructions.
+  - bugfix: Fixed saved customization presets incorrectly restoring selected languages
+      and causing language runtime errors.
+  - bugfix: Background rankings no longer count the same character's background repeatedly
+      after fartravel and respawning.
+  kittysmooch, KatTheFox, Ryan180602, ToasterStrudes, zeskorion, port by mypingishuge:
+  - rscadd: More weapons and tools can be twirled, with skill requirements, visible
+      in-hand animations, and fumbles.
+  - rscadd: Added a configurable Alt-grip / Twirl hotkey, defaulting to Alt+G, for
+      the active held item's right-click action.
+  - rscadd: Weapon twirls display correctly in both hands and while facing east or
+      west.
   mypingishuge:
   - rscadd: Added Folding Table for 2 points and Mess Kit for 3 points to the loadout
       menu.
+  - bugfix: Grabs no longer break when dragging someone from a diagonal position.
+  - bugfix: Repeated clicks no longer bypass the wait between hammer repairs.
+  - balance: Hammer repair steps now use a 0.6-second base interval.
   tatsu:
   - rscadd: Added optional taur genital sprites and a taur vagina visibility toggle.
   - image: Added Ant, Wasp, and Spider ovipositors and Bee tail butt genital sprites.
   - rscadd: Added Oviduct alongside existing vagina appearances.
+2026-10-27:
+  _Rarity:
+  - qol: Clients now keep trying to reconnect for up to 10 minutes during announced
+      server restarts.
