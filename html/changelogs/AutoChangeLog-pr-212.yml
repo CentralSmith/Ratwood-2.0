@@ -1,4 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - bugfix: "Temporary mass and self-transformation hallucinations now clean up their appearance overrides reliably, including when the affected player ghosts or changes bodies."

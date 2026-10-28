@@ -822,6 +822,9 @@
   - rscadd: Added Heightened Sensitivity and Dulled Sensitivity, two free quirks that
       quadruple or halve received arousal gains, excluding standard masturbation and
       solo toy actions.
+  - bugfix: Temporary mass and self-transformation hallucinations now clean up their
+      appearance overrides reliably, including when the affected player ghosts or
+      changes bodies.
   mypingishuge (port), 7erracotta:
   - image: Updated loincloth sprites, including female and dwarf variants.
   - rscadd: Added belt shawls, available through sewing and the loadout menu for 0
