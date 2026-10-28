@@ -1,6 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - qol: "Renamed the pintle exposure control to Crotch Exposed/Concealed and added explanatory tooltips distinguishing it from Genitals Visible/Hidden."
-  - bugfix: "Explicitly exposed crotch sprites now render above clothing such as capes and tabards, and exposure/visibility toggles refresh correctly without reusing stale cached appearances."
-  - bugfix: "Exposed testicles no longer show through covering clothing in the rear-facing view."
