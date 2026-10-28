@@ -12,7 +12,7 @@
 	sellprice = 100
 
 /obj/item/clothing/wrists/roguetown/bracers/lirvas
-	name = "lirvasi pauldrons"
+	name = "gold-plated pauldrons"
 	desc = "Oversized gold pauldrons that protect the forearms and upper-arms. Surprisingly protective and flashy, but heavy...!"
 	icon = 'modular_drakian/icons/clothing/lirvan_wrists.dmi'
 	mob_overlay_icon = 'modular_drakian/icons/clothing/onmob/lirvan_wrists.dmi'
