@@ -202,9 +202,9 @@
 	for(var/manual_arousal in list(SEX_MANUAL_AROUSAL_UNAROUSED, SEX_MANUAL_AROUSAL_FULL))
 		human.sexcon.manual_arousal = manual_arousal
 		var/list/appearances = vagina_accessory.get_appearance(vagina, null, "#FFFFFF")
-		TEST_ASSERT_EQUAL(length(appearances), 2, "Insect tails must add their opening alongside the selected regular vagina.")
-		var/mutable_appearance/opening = appearances[2]
-		TEST_ASSERT_EQUAL(opening.icon_state, manual_arousal == SEX_MANUAL_AROUSAL_FULL ? "bee_tail_oviduct_hard" : "bee_tail_oviduct_normal", "The Insect-tail opening must follow arousal.")
+		TEST_ASSERT_EQUAL(length(appearances), 1, "Insect tails must not add an oviduct to a regular vagina selection.")
+		var/mutable_appearance/opening = appearances[1]
+		TEST_ASSERT_EQUAL(opening.icon_state, "[vagina_accessory.icon_state]_FRONT", "Regular vagina artwork must remain selected at every arousal state.")
 	human.obscured_flags = HIDETAIL
 	TEST_ASSERT_NULL(accessory.get_appearance(penis, null, "#FFFFFF"), "Hiding the Insect tail must hide its penis artwork.")
 	TEST_ASSERT_EQUAL(length(vagina_accessory.get_appearance(vagina, null, "#FFFFFF")), 1, "Hiding the Insect tail must leave only the regular vagina.")
@@ -213,7 +213,7 @@
 	human.obscured_flags = NONE
 	vagina.set_accessory_type(/datum/sprite_accessory/vagina/bee_tail)
 	vagina_accessory = SPRITE_ACCESSORY(vagina.accessory_type)
-	TEST_ASSERT_EQUAL(length(vagina_accessory.get_appearance(vagina, null, "#FFFFFF")), 1, "Selecting Oviduct must not duplicate the Insect-tail opening.")
+	TEST_ASSERT_EQUAL(length(vagina_accessory.get_appearance(vagina, null, "#FFFFFF")), 2, "Selecting Oviduct must render only its two directional layers.")
 	tail.Remove(human)
 	TEST_ASSERT_NULL(accessory.get_appearance(penis, null, "#FFFFFF"), "Removing the Insect tail must hide its penis artwork.")
 
@@ -367,7 +367,7 @@
 	TEST_ASSERT_EQUAL(accessory.get_icon_state(oviduct, null, human), "bee_tail_oviduct_normal", "Relaxed must select normal artwork.")
 	var/normal_key = oviduct.get_icon_cache_key()
 	var/list/normal_appearances = accessory.get_appearance(oviduct, null, "#FFFFFF")
-	var/mutable_appearance/normal_appearance = normal_appearances[1]
+	var/mutable_appearance/normal_appearance = normal_appearances[2]
 	var/icon/normal_south = icon(normal_appearance.icon, normal_appearance.icon_state, SOUTH)
 	TEST_ASSERT_NOTNULL(normal_south.GetPixel(16, 3), "Normal South artwork must stay visible at its original opening.")
 	human.sexcon.set_arousal(20)
@@ -376,12 +376,23 @@
 	TEST_ASSERT_EQUAL(accessory.get_icon_state(oviduct, null, human), "bee_tail_oviduct_hard", "Full arousal must use hard artwork on a standard vagina organ.")
 	TEST_ASSERT_NOTEQUAL(normal_key, oviduct.get_icon_cache_key(), "Arousal must invalidate the organ rendering cache.")
 	var/list/appearances = accessory.get_appearance(oviduct, null, "#FFFFFF")
-	TEST_ASSERT_EQUAL(length(appearances), 1, "Oviduct must use one standard accessory overlay.")
+	TEST_ASSERT_EQUAL(length(appearances), 2, "Oviduct must separate South-behind artwork from its other directions.")
 	var/mutable_appearance/appearance = appearances[1]
-	TEST_ASSERT(appearance.layer > -BODY_FRONT_LAYER, "Oviduct must draw above the body and tail.")
-	var/icon/hard_south = icon(appearance.icon, appearance.icon_state, SOUTH)
+	TEST_ASSERT(appearance.layer > -BODY_FRONT_LAYER, "Non-South oviduct artwork must retain its front layer.")
+	var/mutable_appearance/behind_appearance = appearances[2]
+	TEST_ASSERT_EQUAL(behind_appearance.layer, -BODY_BEHIND_LAYER, "South oviduct artwork must draw behind the body.")
+	for(var/direction in list(SOUTH, NORTH, EAST, WEST))
+		var/icon/front_icon = icon(appearance.icon, appearance.icon_state, direction)
+		var/icon/behind_icon = icon(behind_appearance.icon, behind_appearance.icon_state, direction)
+		for(var/x in 1 to 32)
+			for(var/y in 1 to 32)
+				if(direction == SOUTH)
+					TEST_ASSERT_NULL(front_icon.GetPixel(x, y), "South must not also draw on the front layer.")
+				else
+					TEST_ASSERT_NULL(behind_icon.GetPixel(x, y), "The behind layer must contain only South artwork.")
+	var/icon/hard_south = icon(behind_appearance.icon, behind_appearance.icon_state, SOUTH)
 	TEST_ASSERT_NOTNULL(hard_south.GetPixel(16, 3), "Hard South artwork must retain the supplied file position.")
-	TEST_ASSERT_NOTNULL(hard_south.GetPixel(15, 3), "Hard South artwork must retain the expanded supplied shape.")
+	TEST_ASSERT_NOTNULL(hard_south.GetPixel(17, 3), "Hard South artwork must retain the corrected supplied position.")
 	TEST_ASSERT_NULL(normal_south.GetPixel(15, 3), "Normal and hard must have distinct artwork.")
 	human.sexcon.adjust_arousal_manual(SEX_MANUAL_AROUSAL_UNAROUSED - SEX_MANUAL_AROUSAL_DEFAULT)
 	TEST_ASSERT_EQUAL(accessory.get_icon_state(oviduct, null, human), "bee_tail_oviduct_normal", "Manual Unaroused must override high automatic arousal.")
@@ -391,7 +402,7 @@
 	human.Taurize(/obj/item/bodypart/taur/ant)
 	TEST_ASSERT(accessory.is_visible(oviduct, null, human), "Oviduct must also support taur bodies.")
 	appearances = accessory.get_appearance(oviduct, null, "#FFFFFF")
-	appearance = appearances[1]
+	appearance = appearances[2]
 	hard_south = icon(appearance.icon, appearance.icon_state, SOUTH)
 	TEST_ASSERT_NOTNULL(hard_south.GetPixel(16, 3), "Taur rendering must preserve supplied directions without swapping North and South.")
 
@@ -429,39 +440,37 @@
 /datum/preferences/oviduct_preview_unit_test/New()
 	return
 
-/datum/unit_test/bee_tail_vagina_overlay/Run()
+/datum/unit_test/insect_tail_vagina_choices/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
 	var/obj/item/organ/tail/tail = allocate(/obj/item/organ/tail/cat)
-	tail.set_accessory_type(/datum/sprite_accessory/tail/bee)
 	tail.Insert(human)
 	var/obj/item/organ/vagina/vagina = allocate(/obj/item/organ/vagina)
 	vagina.Insert(human)
-	for(var/style in list(/datum/sprite_accessory/vagina/human, /datum/sprite_accessory/vagina/gaping, /datum/sprite_accessory/vagina/hairy, /datum/sprite_accessory/vagina/trimmed, /datum/sprite_accessory/vagina/spade, /datum/sprite_accessory/vagina/furred, /datum/sprite_accessory/vagina/cloaca))
-		vagina.set_accessory_type(style)
-		var/datum/sprite_accessory/vagina/accessory = SPRITE_ACCESSORY(style)
+	for(var/tail_type in list(/datum/sprite_accessory/tail/bee, /datum/sprite_accessory/tail/insect))
+		tail.set_accessory_type(tail_type)
+		for(var/style in list(/datum/sprite_accessory/vagina/human, /datum/sprite_accessory/vagina/gaping, /datum/sprite_accessory/vagina/hairy, /datum/sprite_accessory/vagina/trimmed, /datum/sprite_accessory/vagina/spade, /datum/sprite_accessory/vagina/furred, /datum/sprite_accessory/vagina/cloaca))
+			vagina.set_accessory_type(style)
+			var/datum/sprite_accessory/vagina/accessory = SPRITE_ACCESSORY(style)
+			human.sexcon.manual_arousal = SEX_MANUAL_AROUSAL_UNAROUSED
+			var/normal_key = vagina.get_icon_cache_key()
+			for(var/manual_arousal in list(SEX_MANUAL_AROUSAL_UNAROUSED, SEX_MANUAL_AROUSAL_FULL))
+				human.sexcon.manual_arousal = manual_arousal
+				var/list/appearances = accessory.get_appearance(vagina, null, "#FFFFFF")
+				TEST_ASSERT_EQUAL(length(appearances), 1, "Regular vagina choices must render only their selected artwork on Bee and Insect tails.")
+				var/mutable_appearance/appearance = appearances[1]
+				TEST_ASSERT_EQUAL(appearance.icon_state, "[accessory.icon_state]_FRONT", "Arousal must not add or substitute Oviduct artwork for a regular vagina.")
+				TEST_ASSERT_EQUAL(normal_key, vagina.get_icon_cache_key(), "Regular vagina caches must not depend on oviduct arousal states.")
+			human.obscured_flags = HIDECROTCH
+			TEST_ASSERT_NULL(accessory.get_appearance(vagina, null, "#FFFFFF"), "Crotch coverage must still hide regular vagina artwork.")
+			human.obscured_flags = NONE
+		vagina.set_accessory_type(/datum/sprite_accessory/vagina/bee_tail)
+		var/datum/sprite_accessory/vagina/oviduct = SPRITE_ACCESSORY(vagina.accessory_type)
 		human.sexcon.manual_arousal = SEX_MANUAL_AROUSAL_UNAROUSED
 		var/normal_key = vagina.get_icon_cache_key()
-		var/list/appearances = accessory.get_appearance(vagina, null, "#FFFFFF")
-		TEST_ASSERT_EQUAL(length(appearances), 2, "Every regular vagina style must keep its artwork and add the Bee-tail opening.")
-		var/mutable_appearance/extra = appearances[2]
-		TEST_ASSERT_EQUAL(extra.icon_state, "bee_tail_oviduct_normal", "The extra opening must use the normal pose while relaxed.")
-		human.sexcon.adjust_arousal_manual(SEX_MANUAL_AROUSAL_FULL - SEX_MANUAL_AROUSAL_UNAROUSED)
-		TEST_ASSERT_NOTEQUAL(normal_key, vagina.get_icon_cache_key(), "The extra opening must participate in the normal vagina's arousal cache key.")
-		appearances = accessory.get_appearance(vagina, null, "#FFFFFF")
-		extra = appearances[2]
-		TEST_ASSERT_EQUAL(extra.icon_state, "bee_tail_oviduct_hard", "The extra opening must switch to hard alongside the regular style.")
-		human.obscured_flags = HIDETAIL
-		appearances = accessory.get_appearance(vagina, null, "#FFFFFF")
-		TEST_ASSERT_EQUAL(length(appearances), 1, "Hiding the Bee tail must leave the selected vagina visible by itself.")
-		human.obscured_flags = HIDECROTCH
-		TEST_ASSERT_NULL(accessory.get_appearance(vagina, null, "#FFFFFF"), "Crotch-covering clothing must hide both openings.")
-		human.obscured_flags = NONE
-	vagina.set_accessory_type(/datum/sprite_accessory/vagina/bee_tail)
-	var/datum/sprite_accessory/vagina/oviduct = SPRITE_ACCESSORY(vagina.accessory_type)
-	TEST_ASSERT_EQUAL(length(oviduct.get_appearance(vagina, null, "#FFFFFF")), 1, "Selecting Oviduct directly must not duplicate its overlay on a Bee tail.")
-	vagina.set_accessory_type(/datum/sprite_accessory/vagina/human)
-	var/datum/sprite_accessory/vagina/plain = SPRITE_ACCESSORY(vagina.accessory_type)
-	var/bee_key = vagina.get_icon_cache_key()
-	tail.Remove(human)
-	TEST_ASSERT_EQUAL(length(plain.get_appearance(vagina, null, "#FFFFFF")), 1, "Removing the tail must restore the regular vagina's single overlay.")
-	TEST_ASSERT_NOTEQUAL(bee_key, vagina.get_icon_cache_key(), "Tail removal must invalidate the combined rendering cache.")
+		for(var/manual_arousal in list(SEX_MANUAL_AROUSAL_UNAROUSED, SEX_MANUAL_AROUSAL_FULL))
+			human.sexcon.manual_arousal = manual_arousal
+			var/list/appearances = oviduct.get_appearance(vagina, null, "#FFFFFF")
+			TEST_ASSERT_EQUAL(length(appearances), 2, "Explicit Oviduct selections must render their two directional layers without regular vagina artwork.")
+			var/mutable_appearance/appearance = appearances[1]
+			TEST_ASSERT_EQUAL(appearance.icon_state, manual_arousal == SEX_MANUAL_AROUSAL_FULL ? "bee_tail_oviduct_hard" : "bee_tail_oviduct_normal", "Explicit Oviduct selections must retain their arousal poses.")
+		TEST_ASSERT_NOTEQUAL(normal_key, vagina.get_icon_cache_key(), "Explicit Oviduct selections must still invalidate their cache on arousal changes.")
