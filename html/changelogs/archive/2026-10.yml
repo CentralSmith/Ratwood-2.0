@@ -778,6 +778,17 @@
       coverage compared with equivalent armor, including the harness and full-plate
       corsets.
 2026-10-28:
+  GarrusVakarian:
+  - map: added a far travel box for duke / duchess unintended spawn on Smollhill
+  - map: added one servant spawn to Smollhill
+  - map: added hermes to blacksmith and inn on Smollhill
+  - map: renamed hermes and keys for a few places to remove the "lowtown" branding
+      on Smollhill
+  - map: added mail master so people can actually send mail on Smollhill
+  - map: various fixes and improvements on Smollhill
+  - map: added Onyx Khan's royal loadout to the testing room
+  - map: added three underground rooms to Smollhill
+  - map: made Smollhill votable
   mypingishuge:
   - qol: Renamed the pintle exposure control to Crotch Exposed/Concealed and added
       explanatory tooltips distinguishing it from Genitals Visible/Hidden.
@@ -787,3 +798,7 @@
   - bugfix: Exposed testicles no longer show through covering clothing in the rear-facing
       view.
   - qol: Reduced the volume of gnoll speech sounds.
+  - qol: Garrison roles now pay 10 mammon instead of 50 to print a bounty list at
+      the Excidium.
+  - rscadd: The Rosewall now has a Slaves tab, automatically listing Slaves and Enslaved
+      Adventurers with a spawn link to edit status and advertisement for the round.

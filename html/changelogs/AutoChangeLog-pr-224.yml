@@ -1,4 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - rscadd: "The Rosewall now has a Slaves tab, automatically listing Slaves and Enslaved Adventurers with a spawn link to edit status and advertisement for the round."
