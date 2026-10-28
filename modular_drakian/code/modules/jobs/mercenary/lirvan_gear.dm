@@ -34,7 +34,7 @@
 //high and good armor, but full body, so constant dmg	U N G O D L Y	high regen time. get owned when it breaks or swap to a sidearm
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/lirvas
 	name = "hardened scales"
-	desc = "Scales hardened by Lirvan rituo. </br> </br>Who is more worthy to inherit the wealth of the Sun than those who fly closest?"
+	desc = "Scales hardened by Gilded rituo. </br> </br>Who is more worthy to inherit the wealth of the Sun than those who fly closest?"
 	repairmsg_begin = "My scales harden and begin mending."
 	repairmsg_continue = "Golden light seeps 'tween myne mending scales."
 	repairmsg_stop = "The onslaught stops my scales' regeneration!"
