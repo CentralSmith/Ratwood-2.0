@@ -6,7 +6,7 @@
 
 /datum/advclass/mercenary/lirvanmerc
 	name = "Gilded Tithebound"
-	tutorial = "Contrary to the name, you're not indebted. Far from it. Lirvas is well-known for its economically aggressive brand of Matthiosianism, and the Tithebound are no exception to this opportunistic mammon-making. With tough scales reinforced by Matthiosian rituo, and solid armor, stand 'gainst the tide, and turn thyne WEALTH to POWER. A few rare Tithebound are more aligned towards Astrata."
+	tutorial = "Contrary to the name, you're not indebted. Far from it. You hail from a secretive order of ritualists that wield the fact that WEALTH and AUTHORITY are the keys to POWER in its truest form as a weapon. Whether you stand by Astrata's order or Matthios' exchange, with tough scales hardened by your rituals and gilded armor to inspire the jealousy of all who'd stand against you, prove your might to the world, one Mammon at a time."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
 		/datum/species/dracon,
