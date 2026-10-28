@@ -69,6 +69,21 @@
 	)
 
 /datum/antagonist/zombie/Destroy()
+	if(has_turned)
+		var/datum/atom_hud/antag/deadite_hud = GLOB.huds[antag_hud_type]
+		if(owner?.antag_hud == deadite_hud)
+			if(!QDELETED(owner.current))
+				remove_antag_hud(antag_hud_type, owner.current)
+			owner.antag_hud = null
+		if(owner?.antag_hud_icon_state == antag_hud_name)
+			owner.antag_hud_icon_state = null
+		var/mob/living/carbon/human/body = deadite_body_ref?.resolve()
+		if(body && body != owner?.current)
+			deadite_hud.remove_from_hud(body)
+			deadite_hud.remove_hud_from(body)
+			var/image/marker = body.hud_list[ANTAG_HUD]
+			if(marker?.icon_state == antag_hud_name)
+				marker.icon_state = null
 	if(seek_spell)
 		owner?.spell_list -= seek_spell
 		QDEL_NULL(seek_spell)
@@ -154,8 +169,6 @@
 
 		zombie.infected = FALSE // Makes sure admins removing deadification removes the infected var if they do it before they turn
 		zombie.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
-		if(has_turned)
-			remove_antag_hud(antag_hud_type, zombie)
 		zombie.mind?.special_role = special_role
 		zombie.ambushable = ambushable
 

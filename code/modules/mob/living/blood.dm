@@ -461,6 +461,11 @@
 	if(safe)
 		. = safe
 
+/mob/living/proc/get_blood_color()
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		return C.dna?.species?.blood_color
+
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T)
 	if(!iscarbon(src))
@@ -479,8 +484,7 @@
 		W.water_volume = 10
 		W.update_icon()
 		return
-	new /obj/effect/decal/cleanable/blood/splatter(T)
-	. = locate(/obj/effect/decal/cleanable/blood/splatter) in T
+	new /obj/effect/decal/cleanable/blood/splatter(T, get_blood_color())
 	T?.pollute_turf(/datum/pollutant/metallic_scent, 30)
 
 
@@ -499,12 +503,7 @@
 		T = get_turf(src)
 	for(var/turf/closed/w in orange(abs(force_distance), T))
 		var/loc = get_step(T, M)
-		new /obj/effect/decal/cleanable/blood/splatter/walls(loc)
-		var/obj/effect/decal/cleanable/blood/splatter/walls/splatter = locate() in loc
-		if(iscarbon(src))
-			var/mob/living/carbon/C = src
-			if(splatter && C.dna?.species?.blood_color)
-				splatter.color = C.dna.species.blood_color
+		new /obj/effect/decal/cleanable/blood/splatter/walls(loc, get_blood_color())
 		if(spill_amount > 0)
 			spill_amount--
 			continue
@@ -532,33 +531,27 @@
 	var/obj/effect/decal/cleanable/blood/puddle/P = locate() in T
 	if(P)
 		P.blood_vol += amt
+		P.color = get_blood_color()
 		P.update_icon()
-		return P
 	else
 		var/obj/effect/decal/cleanable/blood/drip/D = locate() in T
 		if(D)
 			D.blood_vol += amt
 			D.drips++
+			D.color = get_blood_color()
 			D.update_icon()
-			return D
 		else
-			return new /obj/effect/decal/cleanable/blood/drip(T)
+			new /obj/effect/decal/cleanable/blood/drip(T, get_blood_color())
 
 //OV edit
 /mob/living/carbon/human/add_drip_floor(turf/T, amt)
 	if(!(NOBLOOD in dna.species.species_traits) && !(INVISBLOOD in dna.species.species_traits))
-		var/obj/effect/decal/cleanable/blood/blood = ..()
-		if(blood && dna.species.blood_color)
-			blood.color = dna.species.blood_color
-		return blood
+		..()
 //OV edit end
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
 	if(!(NOBLOOD in dna.species.species_traits) && !(INVISBLOOD in dna.species.species_traits)) //OV EDIT
-		var/obj/effect/decal/cleanable/blood/blood = ..()
-		if(blood && dna.species.blood_color)
-			blood.color = dna.species.blood_color
-		return blood
+		..()
 
 /mob/living/carbon/human/proc/deathgasp_visual()
 	var/le_gasp = pick("gasp", "choke", "gag", "wheeze", "gurgle", "sputter")
