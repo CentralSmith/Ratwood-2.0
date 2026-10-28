@@ -1,0 +1,4 @@
+author: "Yaki (code edit suggestion) & GarrusVakarian (execution)"
+delete-after: True
+changes:
+  - balance: "defiled keyholder now works for any faith, not just inhumen ones (there are heretic tennites after all)"
