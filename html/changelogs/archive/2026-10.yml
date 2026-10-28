@@ -796,6 +796,15 @@
   - map: added three underground rooms to Smollhill
   - map: made Smollhill votable
   - sound: changed the voting bell sound
+  Guidesu:
+  - rscadd: Scrap slag. Cook 3 rocks and 1 ore, coal or salt in any furnace with 4
+      or more slots.
+  - rscadd: Slag kiln, for turning rocks and coal into scrap slag in bulk. Break the
+      slag out with a hammer.
+  - rscadd: Scrap versions of all decrepit gear, forged from scrap slag with no skill
+      needed. They can't be repaired.
+  - rscadd: Bars ruined on the anvil now turn into scrap slag instead of vanishing.
+  - image: Rusted iron sprites for all scrap gear, scrap slag and the slag kiln.
   Yaki (code edit suggestion) & GarrusVakarian (execution):
   - balance: defiled keyholder now works for any faith, not just inhumen ones (there
       are heretic tennites after all)
