@@ -84,6 +84,8 @@
 			if(Z && !Z.has_turned && !Z.revived && C.stat == DEAD)
 				C.infected = TRUE
 				wake_zombie(C, infected_wake = TRUE, converted = FALSE)
+	if(C.mind?.key)
+		return
 
 	var/findonerotten = FALSE
 	var/shouldupdate = FALSE
