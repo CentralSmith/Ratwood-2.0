@@ -1,6 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - qol: "Crude branding sticks no longer require the target to enable Compliance Mode."
-  - balance: "Crude branding takes 50% longer than a proper branding iron."
-  - spellcheck: "Updated the crude branding stick description in-game and in the loadout menu."

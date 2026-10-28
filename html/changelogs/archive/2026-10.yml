@@ -802,3 +802,7 @@
       the Excidium.
   - rscadd: The Rosewall now has a Slaves tab, automatically listing Slaves and Enslaved
       Adventurers with a spawn link to edit status and advertisement for the round.
+  - qol: Crude branding sticks no longer require the target to enable Compliance Mode.
+  - balance: Crude branding takes 50% longer than a proper branding iron.
+  - spellcheck: Updated the crude branding stick description in-game and in the loadout
+      menu.
