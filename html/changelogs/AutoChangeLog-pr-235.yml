@@ -1,0 +1,5 @@
+author: "mypingishuge (port), borneblood (original)"
+delete-after: True
+changes:
+  - balance: "Newly risen deadites receive 3 minutes of damage protection and movement/grabbing bonuses, ending early when attacking characters with a mind or receiving a surgical incision."
+  - balance: "Player weapon attacks, punches, kicks, bites, damaging projectiles and thrown items now end a deadite's rising protection before damage is applied; NPC attacks do not."
