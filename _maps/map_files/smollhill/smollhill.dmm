@@ -7030,6 +7030,12 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cavewet)
+"dna" = (
+/obj/machinery/light/rogue/torchholder{
+	dir = 4
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/rtfield/rockhill)
 "dne" = (
 /mob/living/simple_animal/hostile/retaliate/goose,
 /obj/structure/curtain/green,
@@ -12980,6 +12986,10 @@
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors)
+"giM" = (
+/obj/machinery/light/rogue/torchholder/r,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield/rockhill)
 "giS" = (
 /obj/structure/deadbody/adventurer_leather,
 /turf/open/floor/rogue/churchrough{
@@ -176944,7 +176954,7 @@ xvN
 fxx
 fxx
 sjP
-sjP
+uYP
 qvR
 iNT
 wSn
@@ -180877,7 +180887,7 @@ qvR
 qvR
 qvR
 sjP
-fxx
+dna
 uaL
 qvR
 wSn
@@ -185108,7 +185118,7 @@ qvR
 spp
 qvR
 qvR
-qvR
+giM
 spp
 qvR
 qvR
