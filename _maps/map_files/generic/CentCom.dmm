@@ -225,7 +225,6 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue)
 "ay" = (
-/obj/effect/proc_holder/spell/invoked/heal,
 /obj/structure/table/wood{
 	icon_state = "tablewood2";
 	dir = 10
@@ -251,6 +250,7 @@
 /obj/item/clothing/under/roguetown/platelegs/blacksteel/modern,
 /obj/item/flowercrown/rosa,
 /obj/item/storage/belt/rogue/leather/steel/tasset,
+/obj/item/clothing/ring/dragon_ring,
 /turf/open/floor/rogue/carpet,
 /area/rogue)
 "az" = (
