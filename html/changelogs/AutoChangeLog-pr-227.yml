@@ -1,0 +1,4 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - qol: "Garrison roles now pay 10 mammon instead of 50 to print a bounty list at the Excidium."
