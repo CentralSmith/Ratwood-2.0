@@ -1,6 +1,6 @@
 /datum/virtue/utility/noble
 	name = "Nobility (-1 Triumph)"
-	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. \
+	desc = "By birth, blade or brain, I am a titled noble known to the royalty of these lands, supported by an estate and enjoying the standing of my peers. \
 			I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
 	added_traits = list(TRAIT_NOBLE)
 	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
@@ -10,6 +10,7 @@
 
 /datum/virtue/utility/noble/apply_to_human(mob/living/carbon/human/recipient)
 	SStreasury.noble_incomes[recipient] += 15
+	recipient.social_rank = max(recipient.social_rank, SOCIAL_RANK_NOBLE)
 
 /datum/virtue/utility/socialite
 	name = "Socialite"
