@@ -5499,6 +5499,15 @@
 "cBf" = (
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement)
+"cBq" = (
+/obj/machinery/light/rogue/candle/l,
+/obj/machinery/light/rogue/candle/r,
+/obj/structure/fluff/customsign{
+	icon_state = "signwrote";
+	wrotesign = "This map is not supposed to have a duke/duchess. Please far travel and pick a different role."
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave)
 "cBv" = (
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/dirt/road,
@@ -9934,6 +9943,8 @@
 /area/rogue/outdoors/woodsrat/north)
 "eJd" = (
 /obj/structure/far_travel,
+/obj/machinery/light/rogue/candle/l,
+/obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "eJi" = (
@@ -23147,6 +23158,10 @@
 /area/rogue/under/dungeon/wizarddungeon)
 "lcQ" = (
 /obj/effect/landmark/start/lord,
+/obj/machinery/light/rogue/candle/l,
+/obj/machinery/light/rogue/candle/r,
+/obj/effect/landmark/start/lady,
+/obj/effect/landmark/start/suitor,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "lcR" = (
@@ -26903,6 +26918,10 @@
 	dir = 4
 	},
 /area/rogue/indoors/town/manor)
+"mNN" = (
+/obj/effect/landmark/start/servant,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/manor/rockhill)
 "mNP" = (
 /mob/living/simple_animal/hostile/rogue/haunt,
 /obj/structure/fluff/railing/border/east,
@@ -53635,7 +53654,7 @@ pMX
 pMX
 pMX
 pMX
-pMX
+fyc
 fyc
 fyc
 fyc
@@ -53937,7 +53956,7 @@ pMX
 pMX
 pMX
 pMX
-pMX
+fyc
 fyc
 fyc
 fyc
@@ -54239,7 +54258,7 @@ pMX
 pMX
 pMX
 pMX
-pMX
+fyc
 fyc
 fyc
 fyc
@@ -130646,7 +130665,7 @@ lhT
 lhT
 lhT
 lhT
-lhT
+sYw
 sYw
 sYw
 sYw
@@ -130948,8 +130967,8 @@ lhT
 lhT
 lhT
 lhT
-lhT
 sYw
+cBq
 lcQ
 ioP
 eJd
@@ -131250,7 +131269,7 @@ lhT
 lhT
 lhT
 lhT
-lhT
+sYw
 sYw
 sYw
 sYw
@@ -164206,7 +164225,7 @@ ldU
 aGW
 ooF
 ueH
-tZu
+mNN
 lLx
 aEQ
 vQc
@@ -207657,7 +207676,7 @@ lhT
 lhT
 lhT
 lhT
-lhT
+sYw
 sYw
 sYw
 sYw
@@ -207959,7 +207978,7 @@ lhT
 lhT
 lhT
 lhT
-lhT
+sYw
 sYw
 sYw
 sYw
@@ -208261,7 +208280,7 @@ lhT
 lhT
 lhT
 lhT
-lhT
+sYw
 sYw
 sYw
 sYw

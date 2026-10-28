@@ -30,7 +30,6 @@
 		/datum/job/roguetown/steward,
 		/datum/job/roguetown/clerk,
 		/datum/job/roguetown/wapprentice,
-		/datum/job/roguetown/servant,
 		/datum/job/roguetown/butler,
 		/datum/job/roguetown/chaplain,
 		/datum/job/roguetown/magician,
@@ -79,6 +78,7 @@
 		/datum/job/roguetown/warden = 6,
 		/datum/job/roguetown/templar = 2,
 		/datum/job/roguetown/rockhillslave = 6,
+		/datum/job/roguetown/servant = 1,
 	)
 	title_adjust = list(
 		/datum/job/roguetown/lord = list(display_title = "Out-of-barony Duke", f_title = "Out-of-barony Duchess"),
