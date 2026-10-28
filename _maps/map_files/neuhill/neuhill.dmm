@@ -12222,6 +12222,11 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
+"cAq" = (
+/obj/structure/flora/roguegrass,
+/obj/structure/roguemachine/rosewall,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield/rockhill)
 "cAv" = (
 /obj/structure/roguemachine/scomm/r{
 	scom_tag = "Guild - 2nd Floor"
@@ -31596,6 +31601,9 @@
 	},
 /obj/item/kitchen/rollingpin{
 	pixel_x = 25
+	},
+/obj/structure/roguemachine/mail{
+	mailtag = "Lowtown Slaver House"
 	},
 /turf/open/floor/rogue/deserttile{
 	icon_state = "tiledrab2"
@@ -107570,11 +107578,6 @@
 /area/rogue/indoors/town/tavern)
 "wwI" = (
 /obj/structure/stairs,
-/obj/structure/roguemachine/mail{
-	pixel_x = 32;
-	pixel_y = 0;
-	mailtag = "Lowtown Slaver House"
-	},
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "wwM" = (
@@ -114284,6 +114287,12 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
+"xNK" = (
+/obj/structure/roguemachine/rosewall,
+/turf/open/floor/rogue/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area/rogue/indoors)
 "xNM" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/roguegrass/herb/taraxacum,
@@ -287375,7 +287384,7 @@ lrS
 iDw
 iOV
 ryI
-bQt
+xNK
 qzY
 rpb
 mEi
@@ -292151,7 +292160,7 @@ ryI
 nqU
 lUo
 nqU
-xvN
+cAq
 fxx
 fxx
 mAI
