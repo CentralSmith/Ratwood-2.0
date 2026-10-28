@@ -58,6 +58,24 @@
 	custom_text = "Adds an Orgasm Denial toggle to your ERP panel, off by default. During paired panel actions, it can prevent your partner's climax and reset their arousal to 30, if they have Enable Edging Content turned on. Denial adds 6 stress for 5 minutes without stacking; a successful climax clears it."
 	added_traits = list(TRAIT_ORGASM_DENIER)
 
+/datum/quirk/heightened_sensitivity
+	name = "Heightened Sensitivity"
+	point_cost = 0
+	desc = "Even the slightest stimulation sends a shiver through me."
+	custom_text = "Receive four times the usual arousal from arousal gains, excluding standard solo panel actions."
+	added_traits = list(TRAIT_HEIGHTENED_SENSITIVITY)
+	incompatible_quirks = list(/datum/quirk/dulled_sensitivity)
+	incompatible_traits = list(TRAIT_DULLED_SENSITIVITY)
+
+/datum/quirk/dulled_sensitivity
+	name = "Dulled Sensitivity"
+	point_cost = 0
+	desc = "It takes more stimulation to stir my senses."
+	custom_text = "Receive half the usual arousal from arousal gains, excluding standard solo panel actions."
+	added_traits = list(TRAIT_DULLED_SENSITIVITY)
+	incompatible_quirks = list(/datum/quirk/heightened_sensitivity)
+	incompatible_traits = list(TRAIT_HEIGHTENED_SENSITIVITY)
+
 /datum/quirk/annoyingface
 	name = "Annoying Face"
 	desc = "I am cursed with an odd voice and appearance."
