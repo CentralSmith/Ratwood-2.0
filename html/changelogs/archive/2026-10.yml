@@ -829,3 +829,8 @@
   mypingishuge (port), KatTheFox:
   - rscadd: Guard can now deflect animal and monster melee attacks, briefly leaving
       the attacker exposed.
+  mypingishuge (port), WeNeedMorePhoron:
+  - bugfix: Weapon hits against simple animals now consume Exposed or Vulnerable,
+      applying the appropriate damage bonus and feedback.
+  - bugfix: Critical wounds and resisted criticals on carbon mobs now consume Exposed
+      or Vulnerable instead of leaving the opening active.
