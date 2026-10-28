@@ -789,6 +789,9 @@
   - map: added Onyx Khan's royal loadout to the testing room
   - map: added three underground rooms to Smollhill
   - map: made Smollhill votable
+  Yaki (code edit suggestion) & GarrusVakarian (execution):
+  - balance: defiled keyholder now works for any faith, not just inhumen ones (there
+      are heretic tennites after all)
   mypingishuge:
   - qol: Renamed the pintle exposure control to Crotch Exposed/Concealed and added
       explanatory tooltips distinguishing it from Genitals Visible/Hidden.
