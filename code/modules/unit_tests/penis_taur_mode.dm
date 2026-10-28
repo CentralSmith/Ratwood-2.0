@@ -165,6 +165,58 @@
 	TEST_ASSERT(!accessory.is_visible(penis, null, human), "Removing the Bee tail must hide its accessory.")
 	TEST_ASSERT_NOTEQUAL(bee_key, penis.get_icon_cache_key(), "Tail removal must invalidate the genital rendering cache.")
 
+/datum/unit_test/insect_tail_genitals/Run()
+	var/datum/preferences/oviduct_preview_unit_test/prefs = new
+	var/datum/customizer_entry/organ/tail/tail_entry = new
+	tail_entry.customizer_type = /datum/customizer/organ/tail/anthro
+	prefs.customizer_entries = list(tail_entry)
+	var/datum/customizer_entry/organ/penis/penis_entry = new
+	var/datum/customizer/organ/penis/customizer = CUSTOMIZER(/datum/customizer/organ/penis/anthro)
+	for(var/tail_type in list(/datum/sprite_accessory/tail/bee, /datum/sprite_accessory/tail/insect))
+		tail_entry.accessory_type = tail_type
+		TEST_ASSERT(/datum/customizer_choice/organ/penis/bee_tail in customizer.get_available_choices(prefs, penis_entry), "Both Bee and Insect tails must offer their shared genital artwork.")
+	tail_entry.disabled = TRUE
+	TEST_ASSERT(!(/datum/customizer_choice/organ/penis/bee_tail in customizer.get_available_choices(prefs, penis_entry)), "A disabled tail must not enable tail genital choices.")
+	tail_entry.disabled = FALSE
+	prefs.taur_type = /obj/item/bodypart/taur/ant
+	TEST_ASSERT(!prefs.has_selected_insect_tail(), "Regular insect-tail genital artwork must remain outside taur mode.")
+	qdel(penis_entry)
+	qdel(tail_entry)
+	qdel(prefs)
+
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
+	var/obj/item/organ/tail/tail = allocate(/obj/item/organ/tail/cat)
+	tail.set_accessory_type(/datum/sprite_accessory/tail/insect)
+	tail.Insert(human)
+	var/obj/item/organ/penis/penis = allocate(/obj/item/organ/penis/bee_tail)
+	penis.Insert(human)
+	var/datum/sprite_accessory/penis/accessory = SPRITE_ACCESSORY(penis.accessory_type)
+	for(var/size in SMALL_PENIS_SIZE to MAX_PENIS_SIZE)
+		penis.penis_size = size
+		for(var/erection in list(ERECT_STATE_NONE, ERECT_STATE_PARTIAL, ERECT_STATE_HARD))
+			penis.erect_state = erection
+			TEST_ASSERT_EQUAL(length(accessory.get_appearance(penis, null, "#FFFFFF")), erection == ERECT_STATE_NONE ? 0 : 2, "Insect tails must show both genital layers only during partial/full arousal at every supported size.")
+	var/obj/item/organ/vagina/vagina = allocate(/obj/item/organ/vagina)
+	vagina.Insert(human)
+	var/datum/sprite_accessory/vagina/vagina_accessory = SPRITE_ACCESSORY(vagina.accessory_type)
+	for(var/manual_arousal in list(SEX_MANUAL_AROUSAL_UNAROUSED, SEX_MANUAL_AROUSAL_FULL))
+		human.sexcon.manual_arousal = manual_arousal
+		var/list/appearances = vagina_accessory.get_appearance(vagina, null, "#FFFFFF")
+		TEST_ASSERT_EQUAL(length(appearances), 2, "Insect tails must add their opening alongside the selected regular vagina.")
+		var/mutable_appearance/opening = appearances[2]
+		TEST_ASSERT_EQUAL(opening.icon_state, manual_arousal == SEX_MANUAL_AROUSAL_FULL ? "bee_tail_oviduct_hard" : "bee_tail_oviduct_normal", "The Insect-tail opening must follow arousal.")
+	human.obscured_flags = HIDETAIL
+	TEST_ASSERT_NULL(accessory.get_appearance(penis, null, "#FFFFFF"), "Hiding the Insect tail must hide its penis artwork.")
+	TEST_ASSERT_EQUAL(length(vagina_accessory.get_appearance(vagina, null, "#FFFFFF")), 1, "Hiding the Insect tail must leave only the regular vagina.")
+	human.obscured_flags = HIDECROTCH
+	TEST_ASSERT_NULL(vagina_accessory.get_appearance(vagina, null, "#FFFFFF"), "Crotch coverage must hide the Insect-tail opening and regular vagina.")
+	human.obscured_flags = NONE
+	vagina.set_accessory_type(/datum/sprite_accessory/vagina/bee_tail)
+	vagina_accessory = SPRITE_ACCESSORY(vagina.accessory_type)
+	TEST_ASSERT_EQUAL(length(vagina_accessory.get_appearance(vagina, null, "#FFFFFF")), 1, "Selecting Oviduct must not duplicate the Insect-tail opening.")
+	tail.Remove(human)
+	TEST_ASSERT_NULL(accessory.get_appearance(penis, null, "#FFFFFF"), "Removing the Insect tail must hide its penis artwork.")
+
 /datum/unit_test/ovipositor_ant/Run()
 	var/datum/customizer_choice/organ/penis/choice = CUSTOMIZER_CHOICE(/datum/customizer_choice/organ/penis/ovipositor_ant)
 	var/datum/customizer_entry/organ/penis/entry = new

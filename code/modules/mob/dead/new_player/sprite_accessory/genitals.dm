@@ -204,7 +204,7 @@
 /datum/sprite_accessory/penis/bee_tail
 	icon = 'icons/mob/sprite_accessory/genitals/bee_tail_genitals.dmi'
 	icon_state = "bee_tail_penis_small_base"
-	name = "Penis (Bee Tail)"
+	name = "Ovipositor"
 	color_keys = 1
 	color_key_name = "Member"
 	color_key_defaults = list(KEY_MUT_COLOR_ONE)
@@ -221,7 +221,7 @@
 		return null
 	var/state = get_bee_tail_icon_state(penis.penis_size)
 	var/top_state = get_bee_tail_icon_state(penis.penis_size, TRUE)
-	// Regular Bee tails also draw on BODY_FRONT_LAYER; UP must sit above it.
+	// Bee and Insect tails also draw on BODY_FRONT_LAYER; UP must sit above it.
 	var/list/appearances = get_paired_overlay(state, top_state, color_string, -BODY_FRONT_LAYER + 0.1)
 	adjust_appearance_list(appearances, organ, bodypart, organ.owner)
 	return appearances
@@ -241,7 +241,7 @@
 	if(!owner || owner.get_taur_tail() || !..())
 		return FALSE
 	var/obj/item/organ/tail/tail = owner.getorganslot(ORGAN_SLOT_TAIL)
-	if(tail?.accessory_type != /datum/sprite_accessory/tail/bee || !tail.is_visible())
+	if(!(tail?.accessory_type in list(/datum/sprite_accessory/tail/bee, /datum/sprite_accessory/tail/insect)) || !tail.is_visible())
 		return FALSE
 	var/datum/sprite_accessory/tail/tail_accessory = SPRITE_ACCESSORY(tail.accessory_type)
 	return tail_accessory.is_visible(tail, null, owner)
