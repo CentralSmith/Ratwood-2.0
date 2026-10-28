@@ -1,5 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - balance: "Otherwise eligible DNR characters can now rise as deadites. DNR still prevents normal revival."
-  - qol: "Eligible characters receive a death message explaining the deadite wait and how to seek recovery in town, with separate instructions for DNR characters."
