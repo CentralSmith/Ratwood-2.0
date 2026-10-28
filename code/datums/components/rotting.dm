@@ -56,7 +56,7 @@
 
 	var/mob/living/carbon/C = parent
 	var/is_zombie
-	if(HAS_TRAIT(C, TRAIT_DNR) || isconstruct(C))
+	if(isconstruct(C))
 		return
 	if(C.mind)
 		if(C.mind.has_antag_datum(/datum/antagonist/zombie))
@@ -92,6 +92,8 @@
 			if(Z && !Z.has_turned && !Z.revived && C.stat == DEAD)
 				C.infected = TRUE
 				wake_zombie(C, infected_wake = TRUE, converted = FALSE)
+	if(HAS_TRAIT(C, TRAIT_DNR))
+		return
 
 	var/findonerotten = FALSE
 	var/shouldupdate = FALSE
