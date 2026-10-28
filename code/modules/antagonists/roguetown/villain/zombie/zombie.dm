@@ -499,6 +499,8 @@
 	if(!ishuman(owner))
 		return FALSE
 	. = ..()
+	RegisterSignal(owner, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_projectile))
+	RegisterSignal(owner, COMSIG_LIVING_IMPACT_ZONE, PROC_REF(on_thrown_item))
 	had_godmode = owner.status_flags & GODMODE
 	owner.status_flags |= GODMODE
 	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, id)
@@ -506,10 +508,25 @@
 	ADD_TRAIT(owner, TRAIT_STRONG_GRABBER, id)
 	to_chat(owner, span_userdanger("I feel my body tense up immensely in response to this hunger, tendrils of darkness crawling under my skin."))
 
+/datum/status_effect/debuff/deadite_grace/proc/on_projectile(mob/living/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+	if(!projectile.nodamage && projectile.damage > 0)
+		end_on_player_attack(projectile.firer)
+
+/datum/status_effect/debuff/deadite_grace/proc/on_thrown_item(mob/living/source, obj/item/item)
+	SIGNAL_HANDLER
+	if(item.throwforce > 0)
+		end_on_player_attack(item.thrownby)
+
+/datum/status_effect/debuff/deadite_grace/proc/end_on_player_attack(mob/attacker)
+	if(ismob(attacker) && attacker != owner && attacker.client)
+		owner.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
+
 /datum/status_effect/debuff/deadite_grace/on_remove()
 	. = ..()
 	if(!ishuman(owner))
 		return
+	UnregisterSignal(owner, list(COMSIG_ATOM_BULLET_ACT, COMSIG_LIVING_IMPACT_ZONE))
 	if(!had_godmode)
 		owner.status_flags &= ~GODMODE
 	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, id)

@@ -146,6 +146,9 @@
 
 //	if(force)
 //		user.emote("attackgrunt")
+	if(user != M && user.client && M.has_status_effect(/datum/status_effect/debuff/deadite_grace))
+		M.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
+
 	user.mob_timers[MT_SNEAKATTACK] = world.time
 	var/swingdelay = user.used_intent.swingdelay
 	var/_swingdelay_mod = SEND_SIGNAL(src, COMSIG_LIVING_SWINGDELAY_MOD)

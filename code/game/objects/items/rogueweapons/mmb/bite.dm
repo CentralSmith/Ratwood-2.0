@@ -68,6 +68,9 @@
 		to_chat(user, span_warning("My mouth has something in it."))
 		return FALSE
 
+	if(user != src && user.client && has_status_effect(/datum/status_effect/debuff/deadite_grace))
+		remove_status_effect(/datum/status_effect/debuff/deadite_grace)
+
 	var/datum/intent/bite/bitten = new()
 	if(checkdefense(bitten, user))
 		return FALSE

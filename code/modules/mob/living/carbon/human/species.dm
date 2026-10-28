@@ -1273,6 +1273,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(target.mind && user.has_status_effect(/datum/status_effect/debuff/deadite_grace))
 		to_chat(user, span_warning("Ah, Lux... I calm down considerably, but my hunger only increases."))
 		user.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
+	if(user != target && user.client && target.has_status_effect(/datum/status_effect/debuff/deadite_grace))
+		target.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
 	if(target.check_block())
 		target.visible_message(span_warning("[target] blocks [user]'s attack!"), \
 						span_danger("I block [user]'s attack!"), span_hear("I hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
@@ -1624,6 +1626,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	if(user == target)
 		return FALSE
+	if(user != target && user.client && target.has_status_effect(/datum/status_effect/debuff/deadite_grace))
+		target.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
 	SEND_SIGNAL(user, COMSIG_MOB_KICKED, target)
 	if(!HAS_TRAIT(user, TRAIT_GARROTED))
 		if(user.check_leg_grabbed(1) || user.check_leg_grabbed(2))
