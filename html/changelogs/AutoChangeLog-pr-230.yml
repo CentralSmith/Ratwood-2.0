@@ -1,6 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - bugfix: "Hemophages can no longer sustain themselves with ordinary food and drinks or restore blood through healing foods."
-  - bugfix: "Bodily fluids no longer provide nutrition or hydration to Hemophages but remain safe for them to consume."
-  - bugfix: "Fixed holy-water metabolism runtimes that prevented its timed effects."
