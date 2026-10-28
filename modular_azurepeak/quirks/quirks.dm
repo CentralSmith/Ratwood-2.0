@@ -313,22 +313,20 @@
 // Who fucking cares, bro.
 /datum/quirk/noble
 	name = "Noble"
-	desc = "By birth, blade or brain, I carry noble blood, if only a minor and untitled line of it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
-	custom_text = "This quirk grants you MINOR nobility, meaning you are still subjected to the Great Writ and poll tax."
+	desc = "By birth, blade or brain, I carry noble blood, if only a minor and untitled line of it, with no estate to support me. I've kept a familial heirloom as a reminder of my lineage."
+	custom_text = "This quirk grants only MINOR nobility, without estate income or the Great Writ's tax exemption."
 	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a noble!"
-	point_cost = 4
+	point_cost = 1
 	added_traits = list(TRAIT_NOBLE)
 	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
 	added_stashed_items = list(
-	"Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
-	"Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch
+	"Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble
 	)
 	incompatible_vices = list(/datum/charflaw/lawless)
 	incompatible_quirks = list(/datum/quirk/disgracednoble, /datum/quirk/gossiper)
 	incompatible_traits = list(TRAIT_NOBLE)
 
 /datum/quirk/noble/apply_to_human(mob/living/carbon/human/recipient)
-	SStreasury.noble_incomes[recipient] += 15
 	recipient.social_rank = max(recipient.social_rank, SOCIAL_RANK_MINOR_NOBLE)
 
 /datum/quirk/outdoorsy

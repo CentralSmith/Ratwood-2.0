@@ -778,6 +778,12 @@
       coverage compared with equivalent armor, including the harness and full-plate
       corsets.
 2026-10-28:
+  CentralSmith:
+  - balance: Sojourners receive a gilded silver psycross for prayer, Inquisition rituals
+      and silver protections, retaining its golden appearance.
+  - balance: Sojourners start with psydonic leather gloves.
+  - balance: Sojourner staff integrity increased from 150 to 200.
+  - balance: Sojourners start with Journeyman Polearms instead of Apprentice.
   GarrusVakarian:
   - map: added a far travel box for duke / duchess unintended spawn on Smollhill
   - map: added one servant spawn to Smollhill
@@ -789,6 +795,7 @@
   - map: added Onyx Khan's royal loadout to the testing room
   - map: added three underground rooms to Smollhill
   - map: made Smollhill votable
+  - sound: changed the voting bell sound
   Yaki (code edit suggestion) & GarrusVakarian (execution):
   - balance: defiled keyholder now works for any faith, not just inhumen ones (there
       are heretic tennites after all)
@@ -825,6 +832,10 @@
   - bugfix: Temporary mass and self-transformation hallucinations now clean up their
       appearance overrides reliably, including when the affected player ghosts or
       changes bodies.
+  - balance: The Noble quirk now costs 1 quirk point and grants minor nobility without
+      estate income or a starting coinpurse.
+  - balance: The Nobility virtue now grants at least Noble social rank, retaining
+      its estate income.
   mypingishuge (port), 7erracotta:
   - image: Updated loincloth sprites, including female and dwarf variants.
   - rscadd: Added belt shawls, available through sewing and the loadout menu for 0
@@ -837,3 +848,7 @@
       applying the appropriate damage bonus and feedback.
   - bugfix: Critical wounds and resisted criticals on carbon mobs now consume Exposed
       or Vulnerable instead of leaving the opening active.
+  mypingishuge (port), Yuckuza (original):
+  - balance: Dying inside town no longer prevents otherwise eligible characters from
+      becoming deadites. Only the physician's clinic and town church areas protect
+      eligible corpses from rising, instead of every indoor town building.
