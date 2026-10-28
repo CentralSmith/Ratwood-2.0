@@ -61,9 +61,15 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("I don't want to harm [src]!"))
 		return FALSE
+	if(mind && user.has_status_effect(/datum/status_effect/debuff/deadite_grace))
+		to_chat(user, span_warning("Ah, Lux... I calm down considerably, but my hunger only increases."))
+		user.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
 	if(!user.can_bite())
 		to_chat(user, span_warning("My mouth has something in it."))
 		return FALSE
+
+	if(user != src && user.client && has_status_effect(/datum/status_effect/debuff/deadite_grace))
+		remove_status_effect(/datum/status_effect/debuff/deadite_grace)
 
 	var/datum/intent/bite/bitten = new()
 	if(checkdefense(bitten, user))

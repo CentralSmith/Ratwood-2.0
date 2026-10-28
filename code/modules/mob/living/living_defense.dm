@@ -330,6 +330,9 @@
 	if(HAS_TRAIT(M, TRAIT_PACIFISM))
 		to_chat(M, span_warning("I don't want to hurt anyone!"))
 		return FALSE
+	if(mind && M.has_status_effect(/datum/status_effect/debuff/deadite_grace))
+		to_chat(M, span_warning("Ah, Lux... I calm down considerably, but my hunger only increases."))
+		M.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
 
 	M.do_attack_animation(src, visual_effect_icon = M.a_intent.animname)
 	playsound(get_turf(M), pick(M.attack_sound), 100, FALSE)

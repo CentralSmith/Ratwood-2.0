@@ -158,6 +158,7 @@
 	if(zombie)
 
 		zombie.infected = FALSE // Makes sure admins removing deadification removes the infected var if they do it before they turn
+		zombie.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
 		zombie.verbs -= /mob/living/carbon/human/proc/zombie_seek
 		zombie.mind?.special_role = special_role
 		zombie.ambushable = ambushable
@@ -307,8 +308,9 @@
 //Add claws here if wanted.
 
 	zombie.update_body()
-	to_chat(zombie, span_narsiesmall("Hungry... so hungry... I CRAVE FLESH!"))
+	to_chat(zombie, span_red("Hungry... so hungry... I CRAVE FLESH!"))
 	zombie.cmode_music = 'sound/music/combat_weird.ogg'
+	zombie.apply_status_effect(/datum/status_effect/debuff/deadite_grace)
 
 
 	// This is the original first commit values for it, aka 5-7
@@ -481,4 +483,54 @@
 	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
 		return
 	return mind.add_antag_datum(/datum/antagonist/zombie)
+
+/atom/movable/screen/alert/status_effect/debuff/deadite_grace
+	name = "Necrotic Overdrive"
+	desc = "My corroded Lux is ravaging throughout my decaying corpse. I cannot be stopped now, not while this lasts."
+	icon_state = "rotted_body"
+
+/datum/status_effect/debuff/deadite_grace
+	id = "deadite_grace_period"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/deadite_grace
+	duration = 3 MINUTES
+	var/had_godmode = FALSE
+
+/datum/status_effect/debuff/deadite_grace/on_apply()
+	if(!ishuman(owner))
+		return FALSE
+	. = ..()
+	RegisterSignal(owner, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_projectile))
+	RegisterSignal(owner, COMSIG_LIVING_IMPACT_ZONE, PROC_REF(on_thrown_item))
+	had_godmode = owner.status_flags & GODMODE
+	owner.status_flags |= GODMODE
+	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, id)
+	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, id)
+	ADD_TRAIT(owner, TRAIT_STRONG_GRABBER, id)
+	to_chat(owner, span_userdanger("I feel my body tense up immensely in response to this hunger, tendrils of darkness crawling under my skin."))
+
+/datum/status_effect/debuff/deadite_grace/proc/on_projectile(mob/living/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+	if(!projectile.nodamage && projectile.damage > 0)
+		end_on_player_attack(projectile.firer)
+
+/datum/status_effect/debuff/deadite_grace/proc/on_thrown_item(mob/living/source, obj/item/item)
+	SIGNAL_HANDLER
+	if(item.throwforce > 0)
+		end_on_player_attack(item.thrownby)
+
+/datum/status_effect/debuff/deadite_grace/proc/end_on_player_attack(mob/attacker)
+	if(ismob(attacker) && attacker != owner && attacker.client)
+		owner.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
+
+/datum/status_effect/debuff/deadite_grace/on_remove()
+	. = ..()
+	if(!ishuman(owner))
+		return
+	UnregisterSignal(owner, list(COMSIG_ATOM_BULLET_ACT, COMSIG_LIVING_IMPACT_ZONE))
+	if(!had_godmode)
+		owner.status_flags &= ~GODMODE
+	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, id)
+	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, id)
+	REMOVE_TRAIT(owner, TRAIT_STRONG_GRABBER, id)
+	to_chat(owner, span_userdanger("I feel my body relax a little, and that is the last thing I feel as my Lux wanes... I am fading."))
 

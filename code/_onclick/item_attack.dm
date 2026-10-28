@@ -124,6 +124,9 @@
 	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("I don't want to harm other living beings!"))
 		return
+	if(force && M.mind && user.has_status_effect(/datum/status_effect/debuff/deadite_grace))
+		to_chat(user, span_warning("Ah, Lux... I calm down considerably, but my hunger only increases."))
+		user.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
 
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
@@ -143,6 +146,9 @@
 
 //	if(force)
 //		user.emote("attackgrunt")
+	if(user != M && user.client && M.has_status_effect(/datum/status_effect/debuff/deadite_grace))
+		M.remove_status_effect(/datum/status_effect/debuff/deadite_grace)
+
 	user.mob_timers[MT_SNEAKATTACK] = world.time
 	var/swingdelay = user.used_intent.swingdelay
 	var/_swingdelay_mod = SEND_SIGNAL(src, COMSIG_LIVING_SWINGDELAY_MOD)
