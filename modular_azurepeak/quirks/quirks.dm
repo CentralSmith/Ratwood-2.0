@@ -29,6 +29,13 @@
 	added_stashed_items = list("Bag of Cursed Fetish Gear" = /obj/item/storage/roguebag/cursed_keepsakes)
 	incompatible_quirks = list(/datum/quirk/acquiredtastes)
 
+/datum/quirk/dream_dust
+	name = "Dream Dust"
+	point_cost = 3
+	desc = "I keep a little dream dust tucked away for when the occasion calls for it."
+	custom_text = "Adds a bag containing three portions of Zizo's Bane powder to your stash."
+	added_stashed_items = list("Bag of Zizo's Bane Powder" = /obj/item/storage/roguebag/zizobane_stash)
+
 /datum/quirk/overly_fertile
 	name = "Overly Fertile"
 	point_cost = 0
@@ -50,6 +57,24 @@
 	desc = "I know just when to hold back, leaving my partner wanting more."
 	custom_text = "Adds an Orgasm Denial toggle to your ERP panel, off by default. During paired panel actions, it can prevent your partner's climax and reset their arousal to 30, if they have Enable Edging Content turned on. Denial adds 6 stress for 5 minutes without stacking; a successful climax clears it."
 	added_traits = list(TRAIT_ORGASM_DENIER)
+
+/datum/quirk/heightened_sensitivity
+	name = "Heightened Sensitivity"
+	point_cost = 0
+	desc = "Even the slightest stimulation sends a shiver through me."
+	custom_text = "Receive four times the usual arousal from arousal gains, excluding standard solo panel actions."
+	added_traits = list(TRAIT_HEIGHTENED_SENSITIVITY)
+	incompatible_quirks = list(/datum/quirk/dulled_sensitivity)
+	incompatible_traits = list(TRAIT_DULLED_SENSITIVITY)
+
+/datum/quirk/dulled_sensitivity
+	name = "Dulled Sensitivity"
+	point_cost = 0
+	desc = "It takes more stimulation to stir my senses."
+	custom_text = "Receive half the usual arousal from arousal gains, excluding standard solo panel actions."
+	added_traits = list(TRAIT_DULLED_SENSITIVITY)
+	incompatible_quirks = list(/datum/quirk/heightened_sensitivity)
+	incompatible_traits = list(TRAIT_HEIGHTENED_SENSITIVITY)
 
 /datum/quirk/annoyingface
 	name = "Annoying Face"

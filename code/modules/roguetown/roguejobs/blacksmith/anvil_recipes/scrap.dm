@@ -92,7 +92,6 @@
 /datum/anvil_recipe/armor/scrap/chaingaunts
 	name = "Chain Gauntlets, Scrap"
 	created_item = /obj/item/clothing/gloves/roguetown/chain/ancient/decrepit/scrap
-	createditem_num = 2
 	display_category = ITEM_CAT_ARMOR_GLOVES
 
 /datum/anvil_recipe/armor/scrap/plategaunts

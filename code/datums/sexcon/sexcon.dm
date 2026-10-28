@@ -1035,7 +1035,12 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 /datum/sex_controller/proc/update_exposure()
 	user.regenerate_icons()
 
-/datum/sex_controller/proc/adjust_arousal(amount)
+/datum/sex_controller/proc/adjust_arousal(amount, apply_sensitivity = TRUE)
+	if(amount > 0 && apply_sensitivity)
+		if(HAS_TRAIT(user, TRAIT_HEIGHTENED_SENSITIVITY))
+			amount *= 4
+		else if(HAS_TRAIT(user, TRAIT_DULLED_SENSITIVITY))
+			amount *= 0.5
 	if(aphrodisiac > 1 && amount > 0)
 		set_arousal(arousal + (amount * aphrodisiac))
 	else set_arousal(arousal + amount)
@@ -1120,7 +1125,7 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 			multiplier *= target_penis.get_size_arousal_multiplier(action_target)
 	return multiplier
 
-/datum/sex_controller/proc/perform_sex_action(mob/living/carbon/human/action_target, arousal_amt, pain_amt, giving, obj/item/organ/penis/involved_penis = null)
+/datum/sex_controller/proc/perform_sex_action(mob/living/carbon/human/action_target, arousal_amt, pain_amt, giving, obj/item/organ/penis/involved_penis = null, apply_sensitivity = TRUE)
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
 		arousal_amt *=1.5
 		if(prob(10))
@@ -1133,18 +1138,18 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 	if(islist(modular_adjustments) && modular_adjustments.len >= 2)
 		arousal_amt = modular_adjustments[1]
 		pain_amt = modular_adjustments[2]
-	if(arousal_amt > 0)
+	if(arousal_amt > 0 && !(apply_sensitivity && (HAS_TRAIT(action_target, TRAIT_HEIGHTENED_SENSITIVITY) || HAS_TRAIT(action_target, TRAIT_DULLED_SENSITIVITY))))
 		if(involved_penis)
 			arousal_amt *= involved_penis.get_size_arousal_multiplier(action_target)
 		else
 			arousal_amt *= get_penis_size_arousal_multiplier(action_target)
-	action_target.sexcon.receive_sex_action(arousal_amt, pain_amt, giving, force, speed)
+	action_target.sexcon.receive_sex_action(arousal_amt, pain_amt, giving, force, speed, apply_sensitivity)
 	/// modular signal to let other systems know about the sex action, currently used for chastity course to track arousal and apply pain, but can be used for other things in the future
 	modular_emit_received_sex_action_signal(action_target, arousal_amt, pain_amt, giving)
 	if(modular_should_play_chastitycourse_noise(action_target))
 		chastitycourse_noise(action_target)
 
-/datum/sex_controller/proc/receive_sex_action(arousal_amt, pain_amt, giving, applied_force, applied_speed)
+/datum/sex_controller/proc/receive_sex_action(arousal_amt, pain_amt, giving, applied_force, applied_speed, apply_sensitivity = TRUE)
 	arousal_amt *= get_force_pleasure_multiplier(applied_force, giving)
 	pain_amt *= get_force_pain_multiplier(applied_force)
 	pain_amt *= get_speed_pain_multiplier(applied_speed)
@@ -1154,7 +1159,7 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 		pain_amt = 0
 
 	if(!arousal_frozen)
-		adjust_arousal(arousal_amt)
+		adjust_arousal(arousal_amt, apply_sensitivity)
 
 	damage_from_pain(pain_amt)
 	try_do_moan(arousal_amt, pain_amt, applied_force, giving)
@@ -1488,17 +1493,12 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_subtle'>[do_subtle_action ? "DOING SUBTLY" : "DOING VISIBLY"]</a></td>"
 	dat += "<td class='sexcon-control'>"
 	if(got_cock || got_pussy || user.getorganslot(ORGAN_SLOT_TESTICLES))
-		dat += "<a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_hide_pintle_visuals'>[hide_pintle_visuals ? "GENITALS HIDDEN" : "GENITALS VISIBLE"]</a>"
+		dat += "<a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_hide_pintle_visuals' title='Show or hide genital sprites. This does not change physical access or examine descriptions.'>GENITALS [hide_pintle_visuals ? "HIDDEN" : "VISIBLE"]</a>"
 	dat += "</td></tr></table>"
 	dat += "<table class='sexcon-settings'><tr>"
 	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_finished'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a></td>"
 	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=set_arousal'>SET AROUSAL</a></td></tr><tr>"
-	var/exposure_name = "CROTCH"
-	if(got_cock && !got_pussy)
-		exposure_name = "PINTLE"
-	else if(!got_cock && got_pussy)
-		exposure_name = "PUSSY"
-	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_bottom_exposed'>[exposure_name] [bottom_exposed ? "EXPOSED" : "CONCEALED"]</a></td>"
+	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_bottom_exposed' title='Expose the crotch through clothing for access, examine descriptions, and permitted sprites.'>CROTCH [bottom_exposed ? "EXPOSED" : "CONCEALED"]</a></td>"
 	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a></td></tr></table>"
 	var/knot_control = "<span class='sexcon-toggle sexcon-placeholder'></span>"
 	if(current_action && !desire_stop)

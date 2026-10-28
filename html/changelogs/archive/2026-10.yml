@@ -774,3 +774,63 @@
       quirk latejoins and becomes available to track.
   - qol: Becoming stuffed or fully hydrated now displays the corresponding mood message
       in chat.
+  - balance: Leather, hide, studded leather, chainmail, and plate corslets gain missing
+      coverage compared with equivalent armor, including the harness and full-plate
+      corsets.
+2026-10-28:
+  GarrusVakarian:
+  - map: added a far travel box for duke / duchess unintended spawn on Smollhill
+  - map: added one servant spawn to Smollhill
+  - map: added hermes to blacksmith and inn on Smollhill
+  - map: renamed hermes and keys for a few places to remove the "lowtown" branding
+      on Smollhill
+  - map: added mail master so people can actually send mail on Smollhill
+  - map: various fixes and improvements on Smollhill
+  - map: added Onyx Khan's royal loadout to the testing room
+  - map: added three underground rooms to Smollhill
+  - map: made Smollhill votable
+  Yaki (code edit suggestion) & GarrusVakarian (execution):
+  - balance: defiled keyholder now works for any faith, not just inhumen ones (there
+      are heretic tennites after all)
+  _Rarity:
+  - bugfix: Hemophages can no longer sustain themselves with ordinary food and drinks
+      or restore blood through healing foods.
+  - bugfix: Bodily fluids no longer provide nutrition or hydration to Hemophages but
+      remain safe for them to consume.
+  - bugfix: Fixed holy-water metabolism runtimes that prevented its timed effects.
+  mypingishuge:
+  - qol: Renamed the pintle exposure control to Crotch Exposed/Concealed and added
+      explanatory tooltips distinguishing it from Genitals Visible/Hidden.
+  - bugfix: Explicitly exposed crotch sprites now render above clothing such as capes
+      and tabards, and exposure/visibility toggles refresh correctly without reusing
+      stale cached appearances.
+  - bugfix: Exposed testicles no longer show through covering clothing in the rear-facing
+      view.
+  - qol: Reduced the volume of gnoll speech sounds.
+  - qol: Garrison roles now pay 10 mammon instead of 50 to print a bounty list at
+      the Excidium.
+  - rscadd: The Rosewall now has a Slaves tab, automatically listing Slaves and Enslaved
+      Adventurers with a spawn link to edit status and advertisement for the round.
+  - qol: Crude branding sticks no longer require the target to enable Compliance Mode.
+  - balance: Crude branding takes 50% longer than a proper branding iron.
+  - spellcheck: Updated the crude branding stick description in-game and in the loadout
+      menu.
+  - rscadd: Slavers receive a one-time chat notification when a Slave or Enslaved
+      Adventurer latejoins and finishes class setup.
+  - rscadd: Added Dream Dust, a 3-point quirk that provides a stashed bag containing
+      three portions of Zizo's Bane powder.
+  - rscadd: Added Heightened Sensitivity and Dulled Sensitivity, two free quirks that
+      quadruple or halve received arousal gains, excluding standard masturbation and
+      solo toy actions.
+  mypingishuge (port), 7erracotta:
+  - image: Updated loincloth sprites, including female and dwarf variants.
+  - rscadd: Added belt shawls, available through sewing and the loadout menu for 0
+      points. Loincloths remain available for 0 points.
+  mypingishuge (port), KatTheFox:
+  - rscadd: Guard can now deflect animal and monster melee attacks, briefly leaving
+      the attacker exposed.
+  mypingishuge (port), WeNeedMorePhoron:
+  - bugfix: Weapon hits against simple animals now consume Exposed or Vulnerable,
+      applying the appropriate damage bonus and feedback.
+  - bugfix: Critical wounds and resisted criticals on carbon mobs now consume Exposed
+      or Vulnerable instead of leaving the opening active.

@@ -347,6 +347,9 @@
 	if(M.incapacitated())
 		return FALSE
 
+	if(checkguard(M))
+		return FALSE
+
 	if(checkmiss(M))
 		return FALSE
 
@@ -360,6 +363,15 @@
 
 	return TRUE
 
+
+/mob/living/proc/checkguard(mob/living/simple_animal/attacker)
+	if(!ishuman(src))
+		return FALSE
+	var/mob/living/carbon/human/target = src
+	if(!target.has_status_effect(/datum/status_effect/buff/clash))
+		return FALSE
+	target.simple_clash(attacker, target.get_active_held_item())
+	return TRUE
 
 /mob/living/ex_act(severity, target)
 	..()

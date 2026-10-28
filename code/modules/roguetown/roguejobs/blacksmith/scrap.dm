@@ -562,23 +562,24 @@
 
 /obj/machinery/light/rogue/smelter/slag_kiln/add_item(obj/item/smelting_item, mob/user)
 	if(!smelting_item)
-		return
+		return FALSE
 	if(!is_scrap_rock(smelting_item) && !istype(smelting_item, /obj/item/rogueore/coal))
 		to_chat(user, span_warning("\The [src] only takes rocks and coal."))
-		return
+		return FALSE
 	if(length(slag_heap) + length(contained_items) >= max_slag)
 		to_chat(user, span_warning("\The [src] is choked with slag. Break some of it loose first."))
-		return
+		return FALSE
 	if(!molten)
 		return ..()
 	if(!on)
 		to_chat(user, span_warning("\The [src] has gone cold."))
-		return
+		return FALSE
 	user.dropItemToGround(smelting_item)
 	user.visible_message(span_notice("[user] feeds [smelting_item] into \the [src], and it slumps into the molten slag."))
 	slag_heap += roll_smelt_quality(user)
 	qdel(smelting_item)
 	playsound(src, 'sound/misc/smelter_sound.ogg', 50, FALSE)
+	return TRUE
 
 /obj/machinery/light/rogue/smelter/slag_kiln/handle_smelting()
 	var/rocks = 0

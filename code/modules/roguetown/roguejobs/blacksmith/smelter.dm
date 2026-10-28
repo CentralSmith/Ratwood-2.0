@@ -55,9 +55,9 @@
 			if(length(contained_items) >= max_contained_items)
 				to_chat(user, span_warn("\The [src] is already full!"))
 				return
-			add_item(tongs.hingot, user)
-			tongs.hingot = null
-			tongs.update_icon()
+			if(add_item(tongs.hingot, user))
+				tongs.hingot = null
+				tongs.update_icon()
 		else
 			if(actively_smelting) // Prevents an exp gain exploit. - Foxtrot
 				to_chat(user, span_warning("\The [src] is currently smelting. Wait for it to finish, or douse it with water to retrieve items from it."))
@@ -127,13 +127,14 @@
 
 	return ..()
 
+/// Puts [smelting_item] inside to be smelted. Returns TRUE if it went in.
 /obj/machinery/light/rogue/smelter/proc/add_item(obj/item/smelting_item, mob/user)
 	if(!smelting_item)
-		return
+		return FALSE
 
 	if(length(contained_items) >= max_contained_items)
 		to_chat(user, span_warning("\The [smelting_item.name] can be smelted, but \the [src] is full."))
-		return
+		return FALSE
 
 	user.dropItemToGround(smelting_item)
 	smelting_item.forceMove(src)
@@ -141,6 +142,7 @@
 	contained_items[smelting_item] = roll_smelt_quality(user)
 	user.visible_message(span_warning("[user] puts something in \the [src]."))
 	smelting_progress = 0
+	return TRUE
 
 /// Rolls the quality of whatever [user] puts in to be smelted, based on their smelting skill.
 /obj/machinery/light/rogue/smelter/proc/roll_smelt_quality(mob/user)

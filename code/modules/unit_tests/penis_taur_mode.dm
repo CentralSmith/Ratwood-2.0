@@ -354,7 +354,7 @@
 		TEST_ASSERT_EQUAL(accessory.get_icon_state(oviduct, null, human), expected_state, "Arousal Preview must switch the oviduct without a penis, and reset when leaving Hard.")
 	qdel(prefs)
 
-	// Both poses obey the existing modular clothing visibility rules.
+	// Both poses obey clothing coverage unless deliberately exposed.
 	var/original_obscured_flags = human.obscured_flags
 	var/obj/item/undies/undies = allocate(/obj/item/undies)
 	for(var/manual_state in list(SEX_MANUAL_AROUSAL_UNAROUSED, SEX_MANUAL_AROUSAL_FULL))
@@ -367,7 +367,7 @@
 		human.underwear = undies
 		TEST_ASSERT_NULL(accessory.get_appearance(oviduct, null, "#FFFFFF"), "Underwear must hide both oviduct poses.")
 		human.sexcon.bottom_exposed = TRUE
-		TEST_ASSERT(!accessory.is_visible(oviduct, null, human), "Underwear must retain the existing modular visibility rule even with bottom exposure enabled.")
+		TEST_ASSERT(accessory.is_visible(oviduct, null, human), "Explicit crotch exposure must override underwear for both oviduct poses.")
 		human.underwear = null
 		human.sexcon.bottom_exposed = FALSE
 		TEST_ASSERT(accessory.is_visible(oviduct, null, human), "Removing coverage must restore oviduct visibility.")
