@@ -245,7 +245,7 @@
 	desc = "After years of training in the wilds, I've learned to traverse the woods confidently, without breaking any twigs. I can even step lightly on leaves without falling, and I can gather twice as many things from bushes. I can also sleep comfortably on a tree branch."
 	added_traits = list(TRAIT_WOODWALKER, TRAIT_OUTDOORSMAN)
 
-/datum/virtue/heretic/zchurch_keyholder
+/datum/virtue/utility/zchurch_keyholder
 	name = "Defiled Keyholder"
 	desc = "The 'Holy' See has their blood-stained grounds, and so do we. Underneath their noses, we pray to the true gods - I know the location of the local heretic conclave. Secrecy is paramount. If found out, I will surely be killed."
 	added_traits = list(TRAIT_ZURCH)
@@ -327,3 +327,5 @@
 		list(/datum/skill/craft/cooking, 1, 2),
 		list(/datum/skill/combat/knives, 1, 2)
 	)
+
+/datum/virtue/heretic
