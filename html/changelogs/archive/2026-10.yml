@@ -789,6 +789,7 @@
   - map: added Onyx Khan's royal loadout to the testing room
   - map: added three underground rooms to Smollhill
   - map: made Smollhill votable
+  - sound: changed the voting bell sound
   Yaki (code edit suggestion) & GarrusVakarian (execution):
   - balance: defiled keyholder now works for any faith, not just inhumen ones (there
       are heretic tennites after all)
@@ -837,3 +838,7 @@
       applying the appropriate damage bonus and feedback.
   - bugfix: Critical wounds and resisted criticals on carbon mobs now consume Exposed
       or Vulnerable instead of leaving the opening active.
+  mypingishuge (port), Yuckuza (original):
+  - balance: Dying inside town no longer prevents otherwise eligible characters from
+      becoming deadites. Only the physician's clinic and town church areas protect
+      eligible corpses from rising, instead of every indoor town building.

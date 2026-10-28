@@ -1,4 +1,0 @@
-author: "mypingishuge (port), Yuckuza (original)"
-delete-after: True
-changes:
-  - balance: "Dying inside town no longer prevents otherwise eligible characters from becoming deadites. Only the physician's clinic and town church areas protect eligible corpses from rising, instead of every indoor town building."
