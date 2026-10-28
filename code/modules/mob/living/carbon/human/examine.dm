@@ -68,11 +68,17 @@
 	var/obscure_name = FALSE
 	var/race_name = "<a href='?src=[REF(src)];species_lore=1'><u>[dna.species.name]</u></A>"
 	var/datum/antagonist/maniac/maniac = user.mind?.has_antag_datum(/datum/antagonist/maniac)
-	var/datum/antagonist/skeleton/skeleton = user.mind?.has_antag_datum(/datum/antagonist/skeleton)
-	if(maniac && (user != src))
+	var/datum/antagonist/zombie/zombie = user.mind?.has_antag_datum(/datum/antagonist/zombie)
+	var/datum/antagonist/skeleton/skeleton = mind?.has_antag_datum(/datum/antagonist/skeleton)
+	var/datum/antagonist/lich/lich = mind?.has_antag_datum(/datum/antagonist/lich)
+	if(maniac && user != src && !observer_privilege)
 		race_name = "disgusting pig"
-	if(skeleton && (user != src))
-		race_name = "[pick("shambling", "taut", "decrepit")]"
+	if(zombie?.has_turned && user != src && !observer_privilege)
+		race_name = span_boldred("[pick("Shambling Thing", "Taut Thing", "Decrepit Thing", "Wyrd Thing", "UHHHHHHH...", "Something", "Walking Thing", "Decaying Thing")]")
+	if(skeleton && !lich)
+		race_name = span_boldred("[pick("Shambling Skeleton", "Ancient Skeleton", "Taut Skeleton", "Decrepit Skeleton")]")
+	if(lich)
+		race_name = span_boldred("[pick("Ancient Skeleton", "Unnatural Skeleton", "Decrepit Skeleton")]")
 
 	var/m1 = "[t_He] [t_is]"
 	var/m2 = "[t_his]"
@@ -99,7 +105,7 @@
 		obscure_name = FALSE
 
 	if(user.client?.prefs?.top_examine)
-		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names)
+		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names, zombie?.has_turned)
 
 	if(HAS_TRAIT(src, TRAIT_GNOLL_HUNTED) && ishuman(user) && istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -125,6 +131,12 @@
 					var/datum/status_effect/debuff/stinky_contact/contact_stink = has_status_effect(/datum/status_effect/debuff/stinky_contact)
 					if(contact_stink)
 						. += contact_stink.get_examine_text()
+
+	if(HAS_TRAIT(src, TRAIT_DEADITE))
+		. += span_userdanger("DEADITE!")
+		. += span_warning("Uneasy steps, the sound of profane flesh and bone knitting together, and the stench of rot. A walking corpse!")
+	if(!observer_privilege && HAS_TRAIT(user, TRAIT_DEADITE) && !HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE) && stat != DEAD)
+		. += span_cult(pick("KILL IT. KILL IT.", "FLESH. HUNGER.", "KILL. CONSUME.", "CONSUME.", "CLAW. BITE. KILL.", "EAT. FLESH. HUNGER.", "KILL THE RASPING THING.", "HUNGER.", "EAT IT.", "MUST HAVE FLESH."))
 
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -883,7 +895,7 @@
 			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [temporary_flavortext]</span>"
 
 	if(!user.client?.prefs?.top_examine)
-		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names)
+		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names, zombie?.has_turned)
 
 	//Keep these at the bottom
 	if(Adjacent(user))
@@ -923,7 +935,7 @@
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
-/mob/living/carbon/human/proc/generate_main_examine_body(mob/user, m1, m2, m3, obscure_name, race_name, observer_privilege, list/unknown_names)
+/mob/living/carbon/human/proc/generate_main_examine_body(mob/user, m1, m2, m3, obscure_name, race_name, observer_privilege, list/unknown_names, deadite_viewer = FALSE)
 	. = list()
 	if(!user.client?.prefs?.top_examine)
 		. += "ø ------------ ø"
@@ -1114,7 +1126,10 @@
 
 
 		if(origin && origin != "Unknown")
-			. += span_info("[capitalize(m2)] ancestry is [origin].")
+			if(deadite_viewer && user != src && !observer_privilege)
+				. += span_info(pick("Where...", "Home...", "I remember...", "Where am I..."))
+			else
+				. += span_info("[capitalize(m2)] ancestry is [origin].")
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -1393,8 +1408,6 @@
 				villain_text = span_notice("Free man!")
 			if(HAS_TRAIT(src,TRAIT_KNOWNCRIMINAL))
 				villain_text = span_userdanger("OUTLAW!")
-		if(mind.special_role == "Deadite")
-			villain_text = span_userdanger("DEADITE!")
 		if(mind.special_role == "Vampire Lord")
 			var/datum/antagonist/vampire/VD = mind.has_antag_datum(/datum/antagonist/vampire)
 			if(!SEND_SIGNAL(VD.owner, COMSIG_DISGUISE_STATUS))

@@ -480,6 +480,7 @@
 		W.update_icon()
 		return
 	new /obj/effect/decal/cleanable/blood/splatter(T)
+	. = locate(/obj/effect/decal/cleanable/blood/splatter) in T
 	T?.pollute_turf(/datum/pollutant/metallic_scent, 30)
 
 
@@ -499,6 +500,11 @@
 	for(var/turf/closed/w in orange(abs(force_distance), T))
 		var/loc = get_step(T, M)
 		new /obj/effect/decal/cleanable/blood/splatter/walls(loc)
+		var/obj/effect/decal/cleanable/blood/splatter/walls/splatter = locate() in loc
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			if(splatter && C.dna?.species?.blood_color)
+				splatter.color = C.dna.species.blood_color
 		if(spill_amount > 0)
 			spill_amount--
 			continue
@@ -527,24 +533,32 @@
 	if(P)
 		P.blood_vol += amt
 		P.update_icon()
+		return P
 	else
 		var/obj/effect/decal/cleanable/blood/drip/D = locate() in T
 		if(D)
 			D.blood_vol += amt
 			D.drips++
 			D.update_icon()
+			return D
 		else
-			new /obj/effect/decal/cleanable/blood/drip(T)
+			return new /obj/effect/decal/cleanable/blood/drip(T)
 
 //OV edit
 /mob/living/carbon/human/add_drip_floor(turf/T, amt)
 	if(!(NOBLOOD in dna.species.species_traits) && !(INVISBLOOD in dna.species.species_traits))
-		..()
+		var/obj/effect/decal/cleanable/blood/blood = ..()
+		if(blood && dna.species.blood_color)
+			blood.color = dna.species.blood_color
+		return blood
 //OV edit end
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
 	if(!(NOBLOOD in dna.species.species_traits) && !(INVISBLOOD in dna.species.species_traits)) //OV EDIT
-		..()
+		var/obj/effect/decal/cleanable/blood/blood = ..()
+		if(blood && dna.species.blood_color)
+			blood.color = dna.species.blood_color
+		return blood
 
 /mob/living/carbon/human/proc/deathgasp_visual()
 	var/le_gasp = pick("gasp", "choke", "gag", "wheeze", "gurgle", "sputter")
@@ -575,3 +589,13 @@
 		gaspnoise = pick('sound/vo/female/gen/femchoke1.ogg', 'sound/vo/female/gen/femchoke2.ogg', 'sound/vo/female/gen/femchoke3.ogg', 'sound/vo/female/gen/femchoke4.ogg')
 	if(gaspnoise)
 		playsound(get_turf(src), gaspnoise, 90, FALSE)
+
+/// Used after deadite revival restores the body's blood supply.
+/mob/living/carbon/proc/clear_blood_loss_effects()
+	bleeding_tier = 0
+	remove_status_effect(/datum/status_effect/debuff/bleeding)
+	remove_status_effect(/datum/status_effect/debuff/bleedingworse)
+	remove_status_effect(/datum/status_effect/debuff/bleedingworst)
+	remove_status_effect(/datum/status_effect/buff/journey_ending)
+	remove_status_effect(/datum/status_effect/buff/journey_end)
+	remove_status_effect(/datum/status_effect/buff/journey_end_final)

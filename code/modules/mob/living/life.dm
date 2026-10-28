@@ -52,6 +52,13 @@
 				if(!istype(wound, /datum/wound/slash/incision))
 					wound.heal_wound(0.4)
 
+	if(!stat && HAS_TRAIT(src, TRAIT_DEADITE))
+		if(fire_stacks <= 0)
+			handle_wounds()
+			heal_overall_damage(3, 2)
+			for(var/datum/wound/wound as anything in get_wounds())
+				wound.heal_wound(0.5)
+
 	if(blood_volume <= BLOOD_VOLUME_SURVIVE && stat)
 		handle_passive_blood()
 
