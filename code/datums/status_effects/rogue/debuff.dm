@@ -1382,7 +1382,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/stinky_contact
 	name = "Musked"
-	desc = "Someone's scent rubbed off on me. It will stay until I wash it off."
+	desc = "Someone's scent rubbed off on me. It will stay until I wash it off with soap and water"
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/enchantmenttriggered
