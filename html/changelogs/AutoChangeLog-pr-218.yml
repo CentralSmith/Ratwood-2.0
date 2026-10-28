@@ -1,0 +1,8 @@
+author: "Guidesu"
+delete-after: True
+changes:
+  - rscadd: "Scrap slag. Cook 3 rocks and 1 ore, coal or salt in any furnace with 4 or more slots."
+  - rscadd: "Slag kiln, for turning rocks and coal into scrap slag in bulk. Break the slag out with a hammer."
+  - rscadd: "Scrap versions of all decrepit gear, forged from scrap slag with no skill needed. They can't be repaired."
+  - rscadd: "Bars ruined on the anvil now turn into scrap slag instead of vanishing."
+  - image: "Rusted iron sprites for all scrap gear, scrap slag and the slag kiln."
