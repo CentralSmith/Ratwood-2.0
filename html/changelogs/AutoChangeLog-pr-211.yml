@@ -1,0 +1,5 @@
+author: "mypingishuge (port), 7erracotta"
+delete-after: True
+changes:
+  - image: "Updated loincloth sprites, including female and dwarf variants."
+  - rscadd: "Added belt shawls, available through sewing and the loadout menu for 0 points. Loincloths remain available for 0 points."
