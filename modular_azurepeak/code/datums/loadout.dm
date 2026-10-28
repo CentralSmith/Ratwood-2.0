@@ -857,6 +857,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/loincloth
 	name = "Loincloth"
 	path = /obj/item/clothing/under/roguetown/loincloth
+	triumph_cost = 0
 
 /datum/loadout_item/tights
 	name = "Cloth Tights"
@@ -1115,6 +1116,11 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/breechskirt
 	name = "Belt with Breechcloth"
 	path = /obj/item/storage/belt/rogue/leather/battleskirt/breechcloth
+
+/datum/loadout_item/beltshawl
+	name = "Belt Shawl"
+	path = /obj/item/storage/belt/rogue/leather/beltshawl
+	triumph_cost = 0
 
 /datum/loadout_item/tri_cloth_belt
 	name = "Cloth Belt"
