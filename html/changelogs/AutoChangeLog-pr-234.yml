@@ -1,0 +1,5 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - balance: "The Noble quirk now costs 1 quirk point and grants minor nobility without estate income or a starting coinpurse."
+  - balance: "The Nobility virtue now grants at least Noble social rank, retaining its estate income."
