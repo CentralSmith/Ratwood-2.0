@@ -1,4 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - rscadd: "Slavers receive a one-time chat notification when a Slave or Enslaved Adventurer latejoins and finishes class setup."

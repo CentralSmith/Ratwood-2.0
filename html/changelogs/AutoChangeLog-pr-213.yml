@@ -1,4 +1,0 @@
-author: "mypingishuge (port), KatTheFox"
-delete-after: True
-changes:
-  - rscadd: "Guard can now deflect animal and monster melee attacks, briefly leaving the attacker exposed."

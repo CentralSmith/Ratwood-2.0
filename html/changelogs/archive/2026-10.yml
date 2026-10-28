@@ -806,3 +806,10 @@
   - balance: Crude branding takes 50% longer than a proper branding iron.
   - spellcheck: Updated the crude branding stick description in-game and in the loadout
       menu.
+  - rscadd: Slavers receive a one-time chat notification when a Slave or Enslaved
+      Adventurer latejoins and finishes class setup.
+  - rscadd: Added Dream Dust, a 3-point quirk that provides a stashed bag containing
+      three portions of Zizo's Bane powder.
+  mypingishuge (port), KatTheFox:
+  - rscadd: Guard can now deflect animal and monster melee attacks, briefly leaving
+      the attacker exposed.
