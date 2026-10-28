@@ -100,9 +100,8 @@
 			var/rid = /datum/reagent/vampsolution
 			reagents.add_reagent(rid, ramount)
 			rid = /datum/reagent/vampsolution
-	var/datum/wound/caused_wound
 	if(!nodmg)
-		caused_wound = affecting.bodypart_attacked_by(BCLASS_BITE, dam2do, user, user.zone_selected, crit_message = TRUE)
+		affecting.bodypart_attacked_by(BCLASS_BITE, dam2do, user, user.zone_selected, crit_message = TRUE)
 	visible_message(span_danger("[user] bites [src]'s [parse_zone(user.zone_selected)]![next_attack_msg.Join()]"), \
 					span_userdanger("[user] bites my [parse_zone(user.zone_selected)]![next_attack_msg.Join()]"))
 
@@ -115,14 +114,12 @@
 		if(ishuman(src) && user.mind)
 			var/mob/living/carbon/human/bite_victim = src
 			/*
-				WEREWOLF INFECTION VIA BITE
+				WEREWOLF FEEDING VIA BITE
 			*/
 			if(istype(user.dna.species, /datum/species/werewolf))
 				if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
-					to_chat(user, span_warning("BLEH! [bite_victim] tastes of SILVER! My gift cannot take hold."))
+					to_chat(user, span_warning("BLEH! [bite_victim] tastes of SILVER!"))
 				else
-					if(caused_wound?.werewolf_infect_attempt())
-						to_chat(user, span_danger("You feel your beastly gift trickling from your mouth into [bite_victim]'s wound..."))
 					if(prob(30))
 						user.werewolf_feed(bite_victim, 10)
 			if(istype(user.dna.species, /datum/species/gnoll))
@@ -255,14 +252,12 @@
 		var/datum/wound/caused_wound = limb_grabbed.bodypart_attacked_by(BCLASS_BITE, damage, user, sublimb_grabbed, crit_message = TRUE)
 		if(user.mind && caused_wound)
 			/*
-				WEREWOLF CHEW. WEREWOLFIFICATION
+				WEREWOLF FEEDING VIA CHEW
 			*/
 			if(istype(user.dna.species, /datum/species/werewolf))
 				if(HAS_TRAIT(C, TRAIT_SILVER_BLESSED))
-					to_chat(user, span_warning("BLEH! [C] tastes of SILVER! My gift cannot take hold."))
+					to_chat(user, span_warning("BLEH! [C] tastes of SILVER!"))
 				else
-					if(caused_wound?.werewolf_infect_attempt())
-						to_chat(user, span_danger("You feel your beastly gift trickling into [C]'s wound..."))
 					if(prob(30))
 						user.werewolf_feed(C, 10)
 
