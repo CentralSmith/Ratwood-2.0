@@ -30,7 +30,6 @@
 		/datum/job/roguetown/steward,
 		/datum/job/roguetown/clerk,
 		/datum/job/roguetown/wapprentice,
-		/datum/job/roguetown/servant,
 		/datum/job/roguetown/butler,
 		/datum/job/roguetown/chaplain,
 		/datum/job/roguetown/magician,
@@ -68,7 +67,6 @@
 		/datum/job/roguetown/tailor,
 		/datum/job/roguetown/knavewench,
 		/datum/job/roguetown/adventurer/courtagent,
-		/datum/job/roguetown/adventurer/courtslave,
 
 		/datum/job/roguetown/orthodoxist,
 		/datum/job/roguetown/absolver,
@@ -80,9 +78,10 @@
 		/datum/job/roguetown/warden = 6,
 		/datum/job/roguetown/templar = 2,
 		/datum/job/roguetown/rockhillslave = 6,
+		/datum/job/roguetown/servant = 1,
 	)
 	title_adjust = list(
-		/datum/job/roguetown/lord = list(display_title = "Baron", f_title = "Baroness"),
+		/datum/job/roguetown/lord = list(display_title = "Out-of-barony Duke", f_title = "Out-of-barony Duchess"),
 	)
 	tutorial_adjust = list(
 		/datum/job/roguetown/warden = "Having proven yourself through years of scouting, skirmishing and survival in the vanguard, you have been initiated into the Wardens - an elite fraternity of ranger types who keep a vigil over the untamed wilderness. Trusted to venture deep into the uncivilised darkness south of lowtown, you act as a scout, soldier, sentinel and guide, performing long-range reconnaissance, culling dangerous wildlife, and protecting lowtown alongside the vanguard. You are subordinate to the Master Warden, whom in turn serves the baron and may be called upon as members of the garrison by the Marshal and Crown. Serve the baron's will as the first line of defence from threats beyond the borders of civilisation, keep the roads safe, and hold the vanguard fortress. The Crown is counting on you.",
