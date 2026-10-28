@@ -1488,17 +1488,12 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_subtle'>[do_subtle_action ? "DOING SUBTLY" : "DOING VISIBLY"]</a></td>"
 	dat += "<td class='sexcon-control'>"
 	if(got_cock || got_pussy || user.getorganslot(ORGAN_SLOT_TESTICLES))
-		dat += "<a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_hide_pintle_visuals'>[hide_pintle_visuals ? "GENITALS HIDDEN" : "GENITALS VISIBLE"]</a>"
+		dat += "<a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_hide_pintle_visuals' title='Show or hide genital sprites. This does not change physical access or examine descriptions.'>GENITALS [hide_pintle_visuals ? "HIDDEN" : "VISIBLE"]</a>"
 	dat += "</td></tr></table>"
 	dat += "<table class='sexcon-settings'><tr>"
 	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_finished'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a></td>"
 	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=set_arousal'>SET AROUSAL</a></td></tr><tr>"
-	var/exposure_name = "CROTCH"
-	if(got_cock && !got_pussy)
-		exposure_name = "PINTLE"
-	else if(!got_cock && got_pussy)
-		exposure_name = "PUSSY"
-	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_bottom_exposed'>[exposure_name] [bottom_exposed ? "EXPOSED" : "CONCEALED"]</a></td>"
+	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=toggle_bottom_exposed' title='Expose the crotch through clothing for access, examine descriptions, and permitted sprites.'>CROTCH [bottom_exposed ? "EXPOSED" : "CONCEALED"]</a></td>"
 	dat += "<td class='sexcon-control'><a class='sexcon-toggle' href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a></td></tr></table>"
 	var/knot_control = "<span class='sexcon-toggle sexcon-placeholder'></span>"
 	if(current_action && !desire_stop)

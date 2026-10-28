@@ -1990,6 +1990,8 @@ generate/load female uniform sprites matching all previously decided variables
 		. += BP.generate_limb_cache_key(hideaux = should_hide_bodypart_aux(BP))
 
 	. += "[obscured_flags]"	//features are drawn through is_visible(), which reads this
+	// These change organ visibility/layers without changing clothing or organ appearance keys.
+	. += "crotch:[sexcon?.bottom_exposed]-sprites:[sexcon?.hide_pintle_visuals]-underwear:[!!underwear]"
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "husk"
