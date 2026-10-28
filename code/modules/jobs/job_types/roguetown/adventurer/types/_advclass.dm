@@ -146,6 +146,8 @@
 		if((H.job in list("Bathmaster", "Bathhouse Attendant")) && length(SSroguemachine.rosewalls))
 			var/obj/structure/roguemachine/rosewall/board = SSroguemachine.rosewalls[1]
 			board?.auto_register(H)
+		if(H.islatejoin && (H.job in list("Slave", "Enslaved Adventurer")))
+			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, announce_slave_latejoin)), 0)
 
 /datum/advclass/proc/post_equip(mob/living/carbon/human/H)
 	addtimer(CALLBACK(H,TYPE_PROC_REF(/mob/living/carbon/human, add_credit), TRUE), 20)
