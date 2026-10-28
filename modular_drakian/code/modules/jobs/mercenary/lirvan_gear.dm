@@ -2,7 +2,7 @@
 
 /obj/item/clothing/cloak/ordinatorcape/lirvas
 	name = "ornate silks"
-	desc = "Fine silks. Only the best for me, of course. You need to look good while beating someone to death. </br> </br>...In Lirvan society, this isn't even a well-off fellow's shirt; truth be told, this is the sort a yeoman would wear. How terrible to be the wretched 'mongst wealthy; but how glorious that the wretched look so glorious, here."
+	desc = "Fine silks. Only the best for me, of course. You need to look good while beating someone to death. </br> </br>...In truth, this garb only wields but a fraction of the golden might you wish to attain, but they needn't know that."
 	icon = 'modular_drakian/icons/clothing/lirvan_cloak.dmi'
 	mob_overlay_icon = 'modular_drakian/icons/clothing/onmob/lirvan_cloak.dmi'
 	sleeved = 'modular_drakian/icons/clothing/onmob/lirvan_cloak.dmi'
