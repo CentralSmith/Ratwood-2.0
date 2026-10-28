@@ -29,6 +29,13 @@
 	added_stashed_items = list("Bag of Cursed Fetish Gear" = /obj/item/storage/roguebag/cursed_keepsakes)
 	incompatible_quirks = list(/datum/quirk/acquiredtastes)
 
+/datum/quirk/dream_dust
+	name = "Dream Dust"
+	point_cost = 3
+	desc = "I keep a little dream dust tucked away for when the occasion calls for it."
+	custom_text = "Adds a bag containing three portions of Zizo's Bane powder to your stash."
+	added_stashed_items = list("Bag of Zizo's Bane Powder" = /obj/item/storage/roguebag/zizobane_stash)
+
 /datum/quirk/overly_fertile
 	name = "Overly Fertile"
 	point_cost = 0
