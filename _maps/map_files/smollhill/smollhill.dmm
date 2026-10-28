@@ -9932,6 +9932,10 @@
 /obj/structure/closet/dirthole/closed/loot,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woodsrat/north)
+"eJd" = (
+/obj/structure/far_travel,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave)
 "eJi" = (
 /turf/open/floor/rogue/rooftop/green/north,
 /area/rogue/outdoors/bograt/above)
@@ -17532,6 +17536,11 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/manor/rockhill)
+"ioP" = (
+/obj/machinery/light/rogue/candle/l,
+/obj/machinery/light/rogue/candle/r,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave)
 "ioZ" = (
 /obj/structure/fluff/statue/gargoyle/candles,
 /turf/open/floor/rogue/naturalstone,
@@ -21964,11 +21973,6 @@
 	keylock = 1;
 	lockid = "puritan"
 	},
-/obj/structure/lever/wall{
-	dir = 8;
-	pixel_y = 9;
-	redstone_id = "inqsecret"
-	},
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/inq/office)
@@ -23141,6 +23145,10 @@
 	},
 /turf/open/floor/rogue/greenstone/runed,
 /area/rogue/under/dungeon/wizarddungeon)
+"lcQ" = (
+/obj/effect/landmark/start/lord,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cave)
 "lcR" = (
 /obj/structure/chair/wood/rogue{
 	dir = 8
@@ -25620,6 +25628,10 @@
 /obj/machinery/light/rogue/firebowl/standing/green,
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/under/cavewet)
+"mjL" = (
+/obj/machinery/light/rogue/campfire/fireplace,
+/turf/closed/wall/mineral/rogue/decostone/fluffstone,
+/area/rogue/indoors/town/manor)
 "mjT" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -32714,6 +32726,10 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors)
+"pCj" = (
+/obj/item/roguemachine/mastermail,
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/indoors/town/manor/rockhill)
 "pCo" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -53620,11 +53636,11 @@ pMX
 pMX
 pMX
 pMX
-pMX
-pMX
-pMX
-pMX
-pMX
+fyc
+fyc
+fyc
+fyc
+fyc
 pMX
 pMX
 pMX
@@ -53922,11 +53938,11 @@ pMX
 pMX
 pMX
 pMX
-pMX
-pMX
-pMX
-pMX
-pMX
+fyc
+fyc
+fyc
+fyc
+fyc
 pMX
 pMX
 pMX
@@ -54224,11 +54240,11 @@ pMX
 pMX
 pMX
 pMX
-pMX
-pMX
-pMX
-pMX
-pMX
+fyc
+fyc
+fyc
+fyc
+fyc
 pMX
 pMX
 pMX
@@ -130631,11 +130647,11 @@ lhT
 lhT
 lhT
 lhT
-lhT
-lhT
-lhT
-lhT
-lhT
+sYw
+sYw
+sYw
+sYw
+sYw
 lhT
 lhT
 lhT
@@ -130933,11 +130949,11 @@ lhT
 lhT
 lhT
 lhT
-lhT
-lhT
-lhT
-lhT
-lhT
+sYw
+lcQ
+ioP
+eJd
+sYw
 lhT
 lhT
 lhT
@@ -131235,11 +131251,11 @@ lhT
 lhT
 lhT
 lhT
-lhT
-lhT
-lhT
-lhT
-lhT
+sYw
+sYw
+sYw
+sYw
+sYw
 lhT
 lhT
 lhT
@@ -207642,11 +207658,11 @@ lhT
 lhT
 lhT
 lhT
-lhT
-lhT
-lhT
-lhT
-lhT
+sYw
+sYw
+sYw
+sYw
+sYw
 lhT
 lhT
 lhT
@@ -207944,11 +207960,11 @@ lhT
 lhT
 lhT
 lhT
-lhT
-lhT
-lhT
-lhT
-lhT
+sYw
+sYw
+sYw
+sYw
+sYw
 lhT
 lhT
 lhT
@@ -208246,11 +208262,11 @@ lhT
 lhT
 lhT
 lhT
-lhT
-lhT
-lhT
-lhT
-lhT
+sYw
+sYw
+sYw
+sYw
+sYw
 lhT
 lhT
 lhT
@@ -316394,7 +316410,7 @@ pLf
 rVX
 rVX
 rVX
-dOZ
+pCj
 fWV
 lMx
 jxe
@@ -316695,7 +316711,7 @@ xlA
 pLf
 rVX
 qzS
-ykh
+mjL
 dOZ
 vGG
 oKn
