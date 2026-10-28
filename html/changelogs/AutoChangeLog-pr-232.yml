@@ -1,0 +1,7 @@
+author: "CentralSmith"
+delete-after: True
+changes:
+  - balance: "Sojourners receive a gilded silver psycross for prayer, Inquisition rituals and silver protections, retaining its golden appearance."
+  - balance: "Sojourners start with psydonic leather gloves."
+  - balance: "Sojourner staff integrity increased from 150 to 200."
+  - balance: "Sojourners start with Journeyman Polearms instead of Apprentice."
