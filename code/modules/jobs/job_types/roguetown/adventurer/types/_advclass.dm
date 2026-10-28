@@ -143,7 +143,7 @@
 		if(!statue && length(SSroguemachine.mercenary_statues))
 			statue = SSroguemachine.mercenary_statues[1]
 		statue?.auto_register(H)
-		if((H.job in list("Bathmaster", "Bathhouse Attendant")) && length(SSroguemachine.rosewalls))
+		if((H.job in list("Bathmaster", "Bathhouse Attendant", "Slave", "Enslaved Adventurer")) && length(SSroguemachine.rosewalls))
 			var/obj/structure/roguemachine/rosewall/board = SSroguemachine.rosewalls[1]
 			board?.auto_register(H)
 
