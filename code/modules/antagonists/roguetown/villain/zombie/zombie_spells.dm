@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/self/zombie_seek
-	name = "Seek the Living"
-	desc = "Sniff out the nearest living player you can infect."
+	name = "Seek the Lyving"
+	desc = "Sniff out the nearest lyving player you can infect."
 	panel = "Deadite"
 	recharge_time = 15 SECONDS
 	is_cdr_exempt = TRUE
@@ -54,9 +54,9 @@
 			closest = target
 			closest_dist = distance
 	if(!closest)
-		to_chat(user, span_warning("I cannot smell any living prey..."))
+		to_chat(user, span_warning("I cannot smell any lyving prey..."))
 		return TRUE
 	var/direction = get_dir(source_turf, get_turf(closest))
-	to_chat(user, span_cult("[pick("Flesh", "Food", "Living prey")] [closest_dist] meters away[direction ? ", [dir2text(direction)]" : ", right here"]..."))
+	to_chat(user, span_cult("[pick("Flesh", "Food", "Lyving prey")] [closest_dist] meters away[direction ? ", [dir2text(direction)]" : ", right here"]..."))
 	user.playsound_local(user, 'sound/misc/notice.ogg', 30, TRUE)
 	return TRUE
