@@ -5515,7 +5515,8 @@
 /area/rogue/indoors)
 "cAo" = (
 /obj/structure/fluff/railing/border{
-	dir = 9
+	dir = 9;
+	pixel_x = -11
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tavern)
@@ -5614,7 +5615,7 @@
 	locked = 1;
 	lockid = "foodshopug"
 	},
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/open/floor/rogue/greenstone,
 /area/rogue/indoors)
 "cDa" = (
 /obj/structure/fluff/railing/corner/south_west,
@@ -6171,6 +6172,15 @@
 /obj/item/rogueweapon/pick/copper,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
+"cQU" = (
+/obj/structure/fluff/railing/border{
+	dir = 10
+	},
+/obj/structure/roguemachine/mail{
+	mailtag = "Inn"
+	},
+/turf/open/floor/rogue/wood,
+/area/rogue/indoors)
 "cRj" = (
 /turf/open/floor/rogue/wood/herringbone,
 /area/rogue/outdoors/mountains/decap/rockhill)
@@ -16464,7 +16474,9 @@
 /area/rogue/indoors/town/church)
 "hKX" = (
 /obj/structure/fluff/railing/border{
-	dir = 5
+	dir = 1;
+	layer = 2;
+	pixel_x = -3
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tavern)
@@ -31147,9 +31159,6 @@
 /obj/structure/stairs{
 	dir = 1
 	},
-/obj/structure/fluff/railing/border{
-	dir = 10
-	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tavern)
 "oPt" = (
@@ -35827,11 +35836,8 @@
 	},
 /obj/structure/fluff/railing/border{
 	dir = 1;
-	layer = 2
-	},
-/obj/structure/fluff/railing/border{
-	dir = 2;
-	layer = 2
+	layer = 2;
+	pixel_x = -3
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tavern)
@@ -50381,6 +50387,15 @@
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor/rockhill)
+"xTV" = (
+/obj/structure/roguemachine/mail{
+	mailtag = "Smithy"
+	},
+/turf/open/floor/rogue/ruinedwood{
+	icon_state = "vertw";
+	dir = 1
+	},
+/area/rogue/indoors)
 "xTW" = (
 /obj/effect/decal/carpet{
 	dir = 8;
@@ -248458,7 +248473,7 @@ xlA
 xlA
 qjU
 nqU
-sfE
+xTV
 sfE
 fuP
 egq
@@ -253589,7 +253604,7 @@ kGS
 tFv
 wOD
 ryI
-xrx
+cQU
 hml
 pOX
 yhQ
