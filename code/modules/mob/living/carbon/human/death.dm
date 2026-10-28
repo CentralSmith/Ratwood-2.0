@@ -111,7 +111,7 @@
 				else if(!HAS_TRAIT(src, TRAIT_DNR))
 					to_chat(src, span_notice("<b>You have died, but this need not be the end.</b> Stay in your body: you can normally rise as a deadite after about [DEAD_TO_ZOMBIE_TIME / (1 MINUTES)] minutes. Once you rise, head towards town and seek help to have the rot removed and be revived."))
 				else
-					to_chat(src, span_notice("<b>You have died, but this need not be the end.</b> Stay in your body: you can normally rise as a deadite after about [DEAD_TO_ZOMBIE_TIME / (1 MINUTES)] minutes, even with DNR. Once you rise, head towards town and seek a Cure Rot miracle to recover. DNR still prevents normal revival."))
+					to_chat(src, span_notice("<b>You have died, but this need not be the end.</b> Stay in your body: you can normally rise as a deadite after about [DEAD_TO_ZOMBIE_TIME / (1 MINUTES)] minutes, even with DNR. Once you rise, head towards town and seek a Cure Rot miracle to recover. Alternatively, have the rot removed surgically, then ask a Necran ritualist to revive you through The Toll. The rot must be removed first: The Toll destroys undead. DNR still prevents standard revival."))
 
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
