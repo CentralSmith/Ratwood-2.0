@@ -873,6 +873,14 @@
       thrown items now end a deadite's rising protection before damage is applied;
       NPC attacks do not.
 2026-10-29:
+  GarrusVakarian:
+  - map: 'Smollhill: Brassface for slaver.'
+  - map: 'Smollhill: Purity right outside of slaver.'
+  - map: 'Smollhill: Xylix''s fortune at the tavern/inn.'
+  - map: 'Smollhill: Sack, cloth, soap, bucket in the baron''s kitchen.'
+  - map: 'Smollhill: Statue in the mercenary spawn spot.'
+  - map: 'Smollhill: Church service bell at the chapel.'
+  - map: 'Smollhill: Removed travel spot to Whitevein (since there is no Whitevein).'
   _Rarity:
   - bugfix: Ported AP's Mechanized ore bags handling. Will automatically collect matching
       materials while worn or held.
