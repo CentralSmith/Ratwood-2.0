@@ -1,4 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - rscadd: "All pot types can be placed on campfires to heat liquids and cook food. Left-click with an empty hand removes the pot."

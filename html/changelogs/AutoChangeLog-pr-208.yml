@@ -1,5 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - spellcheck: "Expert Homesteader's description correctly lists its Mining limit as Expert instead of Legendary."
-  - bugfix: "Moved new rolling verbs into Emotes tab were they should be."

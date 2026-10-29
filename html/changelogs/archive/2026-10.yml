@@ -897,6 +897,9 @@
   - rscdel: Removed Verevolf infection through bites, chewing, wound licking, and
       ERP.
   - spellcheck: Updated Verevolf greeting and objective wording.
+  - spellcheck: Expert Homesteader's description correctly lists its Mining limit
+      as Expert instead of Legendary.
+  - bugfix: Moved new rolling verbs into Emotes tab were they should be.
   bearrrrrrrr:
   - rscadd: tithebound mercenaries
   mypingishuge:
@@ -917,6 +920,11 @@
       and black blood retains its tint when pooling.
   - rscadd: Gnoll Berserkers, Knights, Templars and Shamans now start with the Message
       spell.
+  - qol: Soup and stew taste messages now include all their cooked flavours, even
+      when diluted by other ingredients.
+  - rscadd: All pot types can be placed on campfires to heat liquids and cook food.
+      Left-click with an empty hand removes the pot.
+  - balance: Adventurer and Refugee now require at least 1 PQ on Neuhill and Smolhill.
   tatsu:
   - rscadd: Insect tails can now use the existing tail ovipositor artwork.
   - qol: Renamed the Bee tail penis option to Ovipositor.
