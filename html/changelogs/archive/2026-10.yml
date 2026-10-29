@@ -925,6 +925,8 @@
   - rscadd: All pot types can be placed on campfires to heat liquids and cook food.
       Left-click with an empty hand removes the pot.
   - balance: Adventurer and Refugee now require at least 1 PQ on Neuhill and Smolhill.
+  - rscadd: Added colorable Monarch wings and Mothra antennae alongside the existing
+      Fluvian customization options.
   tatsu:
   - rscadd: Insect tails can now use the existing tail ovipositor artwork.
   - qol: Renamed the Bee tail penis option to Ovipositor.
