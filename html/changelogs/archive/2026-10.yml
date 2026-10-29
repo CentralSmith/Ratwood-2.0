@@ -915,6 +915,8 @@
   - bugfix: Deadite regeneration no longer repeats normal wound processing.
   - bugfix: Deadite recognition clears after curing a character whose mind has moved,
       and black blood retains its tint when pooling.
+  - rscadd: Gnoll Berserkers, Knights, Templars and Shamans now start with the Message
+      spell.
   tatsu:
   - rscadd: Insect tails can now use the existing tail ovipositor artwork.
   - qol: Renamed the Bee tail penis option to Ovipositor.
