@@ -1,0 +1,11 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - rscadd: "Deadites gain clearer infection warnings, a reanimation sequence, improved recognition and a Seek the Lyving action."
+  - balance: "Deadites retain their existing stats, can run and reattach limbs, and regenerate while conscious without fire stacks. Weapons and advanced techniques are restricted."
+  - balance: "The deadite grace period lasts two minutes."
+  - bugfix: "Rising as a deadite clears lingering blood-loss penalties."
+  - bugfix: "Rot-removal and black-rot surgery can only be performed on the chest."
+  - bugfix: "Damaging grab actions cancel deadite grace, and wetness cannot bypass fire restrictions on regeneration."
+  - bugfix: "Deadite regeneration no longer repeats normal wound processing."
+  - bugfix: "Deadite recognition clears after curing a character whose mind has moved, and black blood retains its tint when pooling."
