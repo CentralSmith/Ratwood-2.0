@@ -913,3 +913,9 @@
   - bugfix: Deadite regeneration no longer repeats normal wound processing.
   - bugfix: Deadite recognition clears after curing a character whose mind has moved,
       and black blood retains its tint when pooling.
+  tatsu:
+  - rscadd: Insect tails can now use the existing tail ovipositor artwork.
+  - qol: Renamed the Bee tail penis option to Ovipositor.
+  - bugfix: Regular vagina selections no longer automatically display Oviduct artwork.
+  - image: Corrected the hard state Oviduct sprite placement.
+  - bugfix: South facing Oviduct sprites was offset and showing. Now it is not.
