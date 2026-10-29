@@ -1,5 +1,0 @@
-author: "mypingishuge (oops i broke the server teehee)"
-delete-after: True
-changes:
-  - bugfix: "Character examines no longer fail for viewers without a deadite antagonist datum, restoring recognition of people whose faces they examine."
-  - bugfix: "Speech language icons no longer cause null-client runtimes and link to the receiving player's client."
