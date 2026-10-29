@@ -1,6 +1,0 @@
-author: "PPooch, annikaRU, port by mypingishuge"
-delete-after: True
-changes:
-  - rscadd: "Councillors may establish ministries with important town roles at the Ministry bureau in Neuhill, improving their skills."
-  - code_imp: "Added support for Ratwood maple trees."
-  - bugfix: "Seated ministers can use the bureau to clear an office whose sponsor was deleted and petition again."
