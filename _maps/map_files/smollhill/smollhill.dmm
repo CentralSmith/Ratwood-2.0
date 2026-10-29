@@ -6482,9 +6482,6 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "cYP" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
-	},
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/indoors/town/manor)
 "cYX" = (
@@ -9117,9 +9114,6 @@
 /area/rogue/indoors/town/warden)
 "enV" = (
 /obj/machinery/light/rogue/candle/l,
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
-	},
 /turf/open/floor/rogue/carpet/lord/left,
 /area/rogue/indoors/town/manor)
 "eob" = (
@@ -11258,9 +11252,6 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "fmW" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
-	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor)
 "fns" = (
@@ -43483,11 +43474,6 @@
 /obj/item/natural/feather,
 /obj/item/natural/feather,
 /obj/item/natural/feather,
-/obj/item/storage/keyring,
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baronguest,
-/obj/item/roguekey/baron,
-/obj/item/roguekey/baronguest,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor/rockhill)
 "uGl" = (
@@ -50353,6 +50339,9 @@
 	pixel_x = 8;
 	pixel_y = 24
 	},
+/obj/item/storage/keyring,
+/obj/item/roguekey/baron,
+/obj/item/roguekey/baron,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor/rockhill)
 "xOw" = (
