@@ -876,3 +876,6 @@
   _Rarity:
   - bugfix: Ported AP's Mechanized ore bags handling. Will automatically collect matching
       materials while worn or held.
+  mypingishuge:
+  - balance: Bodies containing player minds are protected from further ordinary corpse
+      decay without preventing deadite rising.
