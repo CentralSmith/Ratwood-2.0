@@ -110,6 +110,7 @@
 	if(user.mind?.assigned_role != /datum/job/roguetown/councillor::title)
 		to_chat(user, span_warning("These records are the council chamber's own."))
 		return
+	prune_ministries()
 	if(user.ministry_active)
 		to_chat(user, span_warning("I already hold an office."))
 		return
@@ -119,7 +120,6 @@
 			to_chat(user, span_notice(line))
 		return
 
-	prune_ministries()
 	var/datum/ministry/ministry = user.ministry_pending
 	var/charter = ministry.type
 	if(active_ministries[charter])
