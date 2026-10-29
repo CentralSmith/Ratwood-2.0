@@ -877,6 +877,7 @@
 	// the lower the minimum percent, the more sensitive the message is.
 	var/list/out = list()
 	var/list/tastes = list() //descriptor = strength
+	var/list/soup_tastes
 	if(minimum_percent <= 100)
 		for(var/datum/reagent/R in reagent_list)
 			if(!R.taste_mult)
@@ -893,6 +894,8 @@
 						tastes[taste] = amount
 			else
 				var/taste_desc = R.taste_description
+				if(istype(R, /datum/reagent/consumable/soup))
+					LAZYADD(soup_tastes, taste_desc)
 				var/taste_amount = R.volume * R.taste_mult
 				if(taste_desc in tastes)
 					tastes[taste_desc] += taste_amount
@@ -904,7 +907,7 @@
 		if(total_taste > 0)
 			for(var/taste_desc in tastes)
 				var/percent = tastes[taste_desc]/total_taste * 100
-				if(percent < minimum_percent)
+				if(percent < minimum_percent && !(taste_desc in soup_tastes))
 					continue
 				var/intensity_desc = ""
 				if(percent > minimum_percent * 2 || percent == 100)
