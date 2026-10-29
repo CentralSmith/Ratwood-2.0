@@ -623,6 +623,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	//Healing while sleeping in a bed
 	if(IsSleeping())
 		SEND_SIGNAL(src, COMSIG_CARBON_HANDLE_SLEEP)
+		var/can_heal_critical_wounds = HAS_TRAIT(src, TRAIT_NOBREATH) || HAS_TRAIT(src, TRAIT_DEATHLESS) || HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE)
 		var/sleepy_mod = 0.5
 		var/doesnt_hunger = HAS_TRAIT(src, TRAIT_NOHUNGER)
 		if(HAS_TRAIT(src, TRAIT_BETTER_SLEEP))
@@ -660,7 +661,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				if (!affecting)
 					continue
 
-				if (affecting.get_bleed_rate() >= 1)
+				if (!can_heal_critical_wounds && affecting.get_bleed_rate() >= 1)
 					continue
 
 				if (affecting.heal_damage(sleepy_mod, sleepy_mod, required_status = BODYPART_ORGANIC))
@@ -670,6 +671,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				if (islist(wlist))
 					for (var/datum/wound/W in wlist)
 						var/sh = W?.sleep_healing
+						if(W && !sh && can_heal_critical_wounds)
+							sh = 0.5
 						if (sh)
 							W.heal_wound(sh * sleepy_mod)
 			adjustToxLoss(-sleepy_mod)
