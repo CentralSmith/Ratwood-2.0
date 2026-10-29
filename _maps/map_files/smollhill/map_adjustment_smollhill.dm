@@ -36,7 +36,6 @@
 		/datum/job/roguetown/physician,
 
 		/datum/job/roguetown/prince,
-		/datum/job/roguetown/councillor,
 		/datum/job/roguetown/hand,
 		/datum/job/roguetown/lady,
 		/datum/job/roguetown/lord,
@@ -79,10 +78,11 @@
 		/datum/job/roguetown/pilgrim = 1,
 	)
 	slot_adjust = list(
+		/datum/job/roguetown/councillor = 1,
 		/datum/job/roguetown/warden = 6,
 		/datum/job/roguetown/templar = 2,
-		/datum/job/roguetown/rockhillslave = 6,
 		/datum/job/roguetown/servant = 1,
+		/datum/job/roguetown/rockhillslave = 6,
 	)
 	title_adjust = list(
 		/datum/job/roguetown/lord = list(display_title = "Out-of-barony Duke", f_title = "Out-of-barony Duchess"),
