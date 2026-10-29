@@ -902,7 +902,7 @@
 /obj/machinery/light/rogue/campfire/examine(mob/user)
 	. = ..()
 	if(pot)
-		. += span_notice("[pot] is on the fire. Middle-click to remove it.")
+		. += span_notice("[pot] is on the fire. Left-click with an empty hand to remove it.")
 
 /obj/machinery/light/rogue/campfire/update_icon()
 	. = ..()
@@ -916,18 +916,6 @@
 		pot_overlay.pixel_y = -6
 		pot_overlay.layer = layer + 0.1
 		add_overlay(pot_overlay)
-
-/obj/machinery/light/rogue/campfire/MiddleClick(mob/user, params)
-	. = ..()
-	if(. || !pot || !user.CanReach(src))
-		return
-	if(!user.put_in_active_hand(pot))
-		pot.forceMove(get_turf(user))
-	pot = null
-	cooking_generation++
-	boilloop?.stop()
-	update_icon()
-	return TRUE
 
 /obj/machinery/light/rogue/campfire/attack_right(mob/user)
 	if(!on || !pot)
@@ -1092,6 +1080,17 @@
 		burn_out()
 
 /obj/machinery/light/rogue/campfire/attack_hand(mob/user)
+	if(pot)
+		if(!user.CanReach(src))
+			return TRUE
+		if(!user.put_in_active_hand(pot))
+			pot.forceMove(get_turf(user))
+		pot = null
+		cooking_generation++
+		boilloop?.stop()
+		update_icon()
+		return TRUE
+
 	. = ..()
 	if(.)
 		return

@@ -23,7 +23,7 @@
 
 /obj/item/reagent_containers/glass/bucket/pot/get_mechanics_examine(mob/user)
 	. = ..()
-	. += span_info("Pots can be placed atop a hearth or campfire by left-clicking it. A lit fire heats the contents. Middle-click a campfire to remove its pot.")
+	. += span_info("Pots can be placed atop a hearth or campfire by left-clicking it. A lit fire heats the contents. Left-click a campfire with an empty hand to remove its pot.")
 	. += span_info("Right-click a hearth or ordinary campfire to fan its flames and heat the pot faster. Right-clicking a fireplace extinguishes it instead.")
 	. += span_info("Once boiling, left-clicking the hearthbound pot with an ingredient will drop it inside. The larger a pot is, the more ingredients can be dropped in at any given time.")
 	. += span_info("After the first ingredient is placed in, the pot will begin turning it - and any other subsequent ingredients - into a brew, over the course of a minute.")
