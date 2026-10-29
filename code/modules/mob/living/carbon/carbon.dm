@@ -223,6 +223,9 @@
 	return
 
 /mob/living/carbon/throw_item(atom/target, offhand = FALSE)
+	if(HAS_TRAIT(src, TRAIT_DEADITE))
+		to_chat(src, span_warning("...What?"))
+		return
 	. = ..()
 	throw_mode_off()
 	if(!target || !isturf(loc))

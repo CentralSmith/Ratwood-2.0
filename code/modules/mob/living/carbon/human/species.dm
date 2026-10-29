@@ -3,6 +3,8 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species
+	/// Optional tint for blood spilled by this species; null preserves the normal blood sprites.
+	var/blood_color = null
 	/// if the game needs to manually check my race to do something not included in a proc here, it will use this
 	var/id
 	///this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
