@@ -876,6 +876,13 @@
   _Rarity:
   - bugfix: Ported AP's Mechanized ore bags handling. Will automatically collect matching
       materials while worn or held.
+  - rscadd: Enabled the Verevolf event for normal selection and added one Verevolf
+      selection attempt to Chaos rounds.
+  - rscadd: Transformed Verevolfs can offer eligible nearby players conversion through
+      Voluntary Bite.
+  - rscdel: Removed Verevolf infection through bites, chewing, wound licking, and
+      ERP.
+  - spellcheck: Updated Verevolf greeting and objective wording.
   mypingishuge:
   - balance: Bodies containing player minds are protected from further ordinary corpse
       decay without preventing deadite rising.
