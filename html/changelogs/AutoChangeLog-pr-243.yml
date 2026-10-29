@@ -1,0 +1,4 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - qol: "Soup and stew taste messages now include all their cooked flavours, even when diluted by other ingredients."
