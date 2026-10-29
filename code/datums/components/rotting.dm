@@ -92,7 +92,7 @@
 			if(Z && !Z.has_turned && !Z.revived && C.stat == DEAD)
 				C.infected = TRUE
 				wake_zombie(C, infected_wake = TRUE, converted = FALSE)
-	if(HAS_TRAIT(C, TRAIT_DNR))
+	if(HAS_TRAIT(C, TRAIT_DNR) || C.mind?.key)
 		return
 
 	var/findonerotten = FALSE
