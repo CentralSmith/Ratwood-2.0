@@ -511,7 +511,6 @@
 	if((source_part & SEX_PART_TAIL_MAW) && !get_manticore_tail(user))
 		return
 	log_combat(user, effective_target, "Came inside the target")
-	werewolf_sex_infect_attempt(user, effective_target)
 	deadite_sex_infect_attempt(user, effective_target)
 	if(oral)
 		playsound(user, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
@@ -2068,42 +2067,6 @@ GLOBAL_LIST_EMPTY(panel_triumph_received)
 	name = "Quivering"
 	desc = "I can barely walk..."
 	icon_state = "quivering"
-
-/datum/proc/werewolf_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
-
-	if(!top || !bottom || !top.mind || !bottom.mind)
-		return
-
-	var/datum/antagonist/werewolf/WWtop
-	var/datum/antagonist/werewolf/WWbottom
-	var/infection_probability = 40
-	if(top.mind.has_antag_datum(/datum/antagonist/werewolf))
-		WWtop = top.mind.has_antag_datum(/datum/antagonist/werewolf/)
-
-	if(bottom.mind.has_antag_datum(/datum/antagonist/werewolf))
-		WWbottom = bottom.mind.has_antag_datum(/datum/antagonist/werewolf/)
-
-	if(WWtop && WWbottom)
-		return
-
-	if(WWtop && WWtop.transformed && !WWbottom)
-		if(prob(infection_probability))
-			var/answer = tgui_alert(top, "Infect your mate?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
-			if(!answer || answer == "Nae")
-				return
-			if(answer == "Yae")
-				bottom.werewolf_infect_attempt()
-		return
-
-
-	if(WWbottom && WWbottom.transformed && !WWtop)
-		if(prob(infection_probability))
-			var/answer = tgui_alert(bottom, "Infect your mate?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
-			if(!answer || answer == "Nae")
-				return
-			if(answer == "Yae")
-				top.werewolf_infect_attempt()
-		return
 
 /datum/proc/deadite_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
 

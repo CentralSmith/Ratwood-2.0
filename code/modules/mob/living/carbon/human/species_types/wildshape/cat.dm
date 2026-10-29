@@ -224,9 +224,3 @@
 			target.visible_message(span_green("[user] is licking [target]'s wounds with its tongue!"), span_notice("That thing... Did it lick my wounds?"))
 			rid = /datum/reagent/water
 			target.reagents.add_reagent(rid, ramount)
-			if(prob(10))
-				for(var/obj/item/bodypart/BP in target.bodyparts)
-					if(!BP?.wounds)
-						continue
-					for(var/datum/wound/W in BP.wounds)
-						W.werewolf_infect_attempt()
