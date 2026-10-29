@@ -69,11 +69,12 @@
 	var/race_name = "<a href='?src=[REF(src)];species_lore=1'><u>[dna.species.name]</u></A>"
 	var/datum/antagonist/maniac/maniac = user.mind?.has_antag_datum(/datum/antagonist/maniac)
 	var/datum/antagonist/zombie/zombie = user.mind?.has_antag_datum(/datum/antagonist/zombie)
+	var/deadite_viewer = zombie && zombie.has_turned
 	var/datum/antagonist/skeleton/skeleton = mind?.has_antag_datum(/datum/antagonist/skeleton)
 	var/datum/antagonist/lich/lich = mind?.has_antag_datum(/datum/antagonist/lich)
 	if(maniac && user != src && !observer_privilege)
 		race_name = "disgusting pig"
-	if(zombie?.has_turned && user != src && !observer_privilege)
+	if(deadite_viewer && user != src && !observer_privilege)
 		race_name = span_boldred("[pick("Shambling Thing", "Taut Thing", "Decrepit Thing", "Wyrd Thing", "UHHHHHHH...", "Something", "Walking Thing", "Decaying Thing")]")
 	if(skeleton && !lich)
 		race_name = span_boldred("[pick("Shambling Skeleton", "Ancient Skeleton", "Taut Skeleton", "Decrepit Skeleton")]")
@@ -105,7 +106,7 @@
 		obscure_name = FALSE
 
 	if(user.client?.prefs?.top_examine)
-		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names, zombie?.has_turned)
+		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names, deadite_viewer)
 
 	if(HAS_TRAIT(src, TRAIT_GNOLL_HUNTED) && ishuman(user) && istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -895,7 +896,7 @@
 			. += " <span class='info' style='color: #eaeaea'> ø ------------ ø\n [temporary_flavortext]</span>"
 
 	if(!user.client?.prefs?.top_examine)
-		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names, zombie?.has_turned)
+		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names, deadite_viewer)
 
 	//Keep these at the bottom
 	if(Adjacent(user))

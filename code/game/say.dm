@@ -161,7 +161,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 			// Make only the language icon clickable; do not display the language name inline
 			var/ln = url_encode(D.name)
 			var/ldesc = url_encode(D.desc)
-			languageicon = "<a href='byond://?src=\\ref[usr.client];lang_name=[ln];lang_desc=[ldesc]'><span style=\"position: relative; bottom: 4px;\">[D.get_icon()]</span></a>"
+			languageicon = "<span style=\"position: relative; bottom: 4px;\">[D.get_icon()]</span>"
+			if(ismob(src))
+				var/mob/listener = src
+				if(listener.client)
+					languageicon = "<a href='byond://?src=[REF(listener.client)];lang_name=[ln];lang_desc=[ldesc]'>[languageicon]</a>"
 
 	return "[spanpart1][spanpart2][colorpart][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][arrowpart][endspanpart][messagepart]"
 
