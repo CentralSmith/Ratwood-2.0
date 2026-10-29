@@ -1,4 +1,0 @@
-author: "_Rarity"
-delete-after: True
-changes:
-  - bugfix: "Ported AP's Mechanized ore bags handling. Will automatically collect matching materials while worn or held."

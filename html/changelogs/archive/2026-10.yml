@@ -872,3 +872,7 @@
   - balance: Player weapon attacks, punches, kicks, bites, damaging projectiles and
       thrown items now end a deadite's rising protection before damage is applied;
       NPC attacks do not.
+2026-10-29:
+  _Rarity:
+  - bugfix: Ported AP's Mechanized ore bags handling. Will automatically collect matching
+      materials while worn or held.
