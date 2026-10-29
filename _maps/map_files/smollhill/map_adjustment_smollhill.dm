@@ -74,6 +74,10 @@
 		/datum/job/roguetown/martyr,
 
 		)
+	min_pq_adjust = list(
+		/datum/job/roguetown/adventurer = 1,
+		/datum/job/roguetown/pilgrim = 1,
+	)
 	slot_adjust = list(
 		/datum/job/roguetown/warden = 6,
 		/datum/job/roguetown/templar = 2,
