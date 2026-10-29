@@ -1,0 +1,7 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - rscadd: "Enabled the Verevolf event for normal selection and added one Verevolf selection attempt to Chaos rounds."
+  - rscadd: "Transformed Verevolfs can offer eligible nearby players conversion through Voluntary Bite."
+  - rscdel: "Removed Verevolf infection through bites, chewing, wound licking, and ERP."
+  - spellcheck: "Updated Verevolf greeting and objective wording."
