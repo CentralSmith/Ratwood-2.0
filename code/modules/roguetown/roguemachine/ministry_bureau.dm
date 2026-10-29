@@ -85,7 +85,7 @@
 	if(!ministry || !ministry.active)
 		to_chat(user, span_warning("I hold no office. A new charter must be agreed before this ring means anything."))
 		return
-	if(ministry.ring == ring)
+	if(ministry.ring != ring)
 		to_chat(user, span_warning("The bureau has already struck my mark anew. This one is spent."))
 		return
 	if(QDELETED(ministry.partner))
@@ -93,9 +93,8 @@
 		return
 	if(!do_after(user, 5 SECONDS, target = src))
 		return
-	if(user.ministry_active != ministry || !ministry.active || QDELETED(ring) || !QDELETED(ring.paired_writ) || partner_gone(ministry))
+	if(user.ministry_active != ministry || !ministry.active || QDELETED(ring) || ministry.ring != ring || !QDELETED(ring.paired_writ) || partner_gone(ministry))
 		return
-	QDEL_NULL(ministry.ring)
 	QDEL_NULL(ministry.writ)
 	issue_regalia(ministry, user, ring)
 	playsound(src, 'sound/items/book_open.ogg', 60, FALSE)

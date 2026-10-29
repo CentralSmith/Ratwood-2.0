@@ -555,6 +555,9 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	return TRUE
 
 /obj/item/paper/scroll/ministry_writ/proc/relay_ministry_message(msg)
+	msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	if(!length(msg))
+		return
 	playsound(src, 'sound/misc/scom.ogg', 80, FALSE, -1)
 	say("<font color='#C8A84B'>[msg]</font>")
 
@@ -633,6 +636,9 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	return TRUE
 
 /obj/item/clothing/ring/minister/proc/relay_ministry_message(msg)
+	msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	if(!length(msg))
+		return
 	playsound(src, 'sound/misc/scom.ogg', 80, FALSE, -1)
 	say("<font color='#C8A84B'>[msg]</font>")
 
