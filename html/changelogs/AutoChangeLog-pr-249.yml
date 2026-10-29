@@ -1,0 +1,4 @@
+author: "mypingishuge"
+delete-after: True
+changes:
+  - bugfix: "Deathless and deadite-immune characters can slowly recover from severe wounds while sleeping, including wounds whose bleeding previously blocked recovery."
