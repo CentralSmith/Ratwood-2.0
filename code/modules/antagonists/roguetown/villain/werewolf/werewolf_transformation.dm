@@ -240,6 +240,7 @@
 	W.AddSpell(new /obj/effect/proc_holder/spell/self/howl)
 	W.AddSpell(new /obj/effect/proc_holder/spell/self/claws)
 	W.AddSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
+	W.AddSpell(new /obj/effect/proc_holder/spell/invoked/voluntary_bite)
 	W.AddSpell(new /obj/effect/proc_holder/spell/invoked/shiftback)
 
 	ADD_TRAIT(src, TRAIT_NOSLEEP, TRAIT_GENERIC)
