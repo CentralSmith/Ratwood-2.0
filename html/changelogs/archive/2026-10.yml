@@ -881,6 +881,7 @@
   - map: 'Smollhill: Statue in the mercenary spawn spot.'
   - map: 'Smollhill: Church service bell at the chapel.'
   - map: 'Smollhill: Removed travel spot to Whitevein (since there is no Whitevein).'
+  - map: Smollhill has a councillor now, with their own bedroom
   PPooch, annikaRU, port by mypingishuge:
   - rscadd: Councillors may establish ministries with important town roles at the
       Ministry bureau in Neuhill, improving their skills.
@@ -927,6 +928,8 @@
   - balance: Adventurer and Refugee now require at least 1 PQ on Neuhill and Smolhill.
   - rscadd: Added colorable Monarch wings and Mothra antennae alongside the existing
       Fluvian customization options.
+  - bugfix: Deathless and deadite-immune characters can slowly recover from severe
+      wounds while sleeping, including wounds whose bleeding previously blocked recovery.
   tatsu:
   - rscadd: Insect tails can now use the existing tail ovipositor artwork.
   - qol: Renamed the Bee tail penis option to Ovipositor.
