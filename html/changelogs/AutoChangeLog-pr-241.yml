@@ -1,0 +1,10 @@
+author: "GarrusVakarian"
+delete-after: True
+changes:
+  - map: "Smollhill: Brassface for slaver."
+  - map: "Smollhill: Purity right outside of slaver."
+  - map: "Smollhill: Xylix's fortune at the tavern/inn."
+  - map: "Smollhill: Sack, cloth, soap, bucket in the baron's kitchen."
+  - map: "Smollhill: Statue in the mercenary spawn spot."
+  - map: "Smollhill: Church service bell at the chapel."
+  - map: "Smollhill: Removed travel spot to Whitevein (since there is no Whitevein)."
