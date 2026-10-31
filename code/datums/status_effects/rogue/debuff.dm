@@ -229,8 +229,14 @@
 /datum/status_effect/debuff/devitalised/lux_ripped
 	id = "lux_ripped"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/devitalised/lux_ripped
-	effectedstats = list(STATKEY_STR = -5, STATKEY_WIL = -5, STATKEY_CON = -5, STATKEY_SPD = -5, STATKEY_LCK = -5)	//apparently zizite miraclists killing people is BAD so we have to make the debuff so much worse than death to encourage people to just lacrima rather than remove gorget neck chop. this also prevents necromancers from doing a lacrima circle-jerk to farm lux. have fun.
+	effectedstats = null // Keep the harvest lockout separate from Lacrima's shorter stat penalty.
 	duration = 30 MINUTES
+
+/datum/status_effect/debuff/lux_trauma
+	id = "lux_trauma"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/lux_trauma
+	effectedstats = list(STATKEY_STR = -2, STATKEY_WIL = -2, STATKEY_CON = -2, STATKEY_SPD = -2, STATKEY_LCK = -2)
+	duration = 15 MINUTES
 
 /atom/movable/screen/alert/status_effect/debuff/devitalised
 	name = "Devitalised"
@@ -238,7 +244,11 @@
 
 /atom/movable/screen/alert/status_effect/debuff/devitalised/lux_ripped
 	name = "Lux Ripped"
-	desc = "The very essence of my lyfe was roughly torn from me."
+	desc = "My lux has been torn out and needs time to replenish."
+
+/atom/movable/screen/alert/status_effect/debuff/lux_trauma
+	name = "Lux Trauma"
+	desc = "Having my lux torn out has weakened my body and spirit."
 
 /datum/status_effect/debuff/vamp_dreams
 	id = "sleepytime"

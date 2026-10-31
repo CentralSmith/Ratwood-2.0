@@ -181,15 +181,19 @@
 		to_chat(user, span_alert("I begin reaching my hand towards [target], preparing to tear their lux from their body..."))
 		user.visible_message(span_alert("[user] reaches towards [target]'s chest, inhumen flames wreathing [user.p_their()] hand..."))
 	var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
+	if(!chest)
+		return
 	if(!chest.has_wound(/datum/wound/fracture/chest))
-		if(!do_after(user, break_time, target = target))
+		if(!do_after(user, break_time, target = target, extra_checks = CALLBACK(src, PROC_REF(can_lux_rip), target, user)) || !can_lux_rip(target, user))
+			return
+		if(QDELETED(chest) || chest != target.get_bodypart(BODY_ZONE_CHEST))
 			return
 		if(chest)
 			if(!HAS_TRAIT(target, TRAIT_NOPAIN))
 				target.emote("painscream")
 			target.apply_damage(50, BRUTE, BODY_ZONE_CHEST)
 			user.visible_message(span_alert("[user] plunges their fist into [target]'s ribcage, phasing through it spectacularly!"))
-	if(!do_after(user, tear_time, target = target))
+	if(!do_after(user, tear_time, target = target, extra_checks = CALLBACK(src, PROC_REF(can_lux_rip), target, user)) || !can_lux_rip(target, user))
 		return
 	if(!HAS_TRAIT(target, TRAIT_NOPAIN))
 		target.emote("painscream")
@@ -200,8 +204,20 @@
 	SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
 	record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 	record_round_statistic(STATS_LUX_HARVESTED)
-	target.apply_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped) // -5 omnistat. prevents harvesting lux again for much longer than regular devitalised
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped)
+	target.apply_status_effect(/datum/status_effect/debuff/lux_trauma)
 	qdel(src)
+
+/obj/item/melee/touch_attack/lacrima/proc/can_lux_rip(mob/living/carbon/human/target, mob/living/carbon/human/user)
+	if(QDELETED(src) || QDELETED(target) || QDELETED(user))
+		return FALSE
+	if(!target.mind || target.stat == DEAD || !target.Adjacent(user))
+		return FALSE
+	if(target.mobility_flags & MOBILITY_STAND || target.mob_biotypes & MOB_UNDEAD)
+		return FALSE
+	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
+		return FALSE
+	return TRUE
 
 /datum/stressevent/myfuckingluxman
 	desc = span_boldred("THE ESSENCE OF MY LYFE HAS BEEN DEFILED!!")
